@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bảng kê LD · Bảng kê Thẻ</title>
+  <style>
+    :root {
+      --bg1: #020617;
+      --bg2: #0b1120;
+      --bg3: #020617;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --panel: rgba(15, 23, 42, 0.9);
+      --border: rgba(148, 163, 184, 0.7);
+      --shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
+      --radius-xl: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI Rounded", "SF Pro Rounded", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.25), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(244, 114, 182, 0.25), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(52, 211, 153, 0.3), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+      background-attachment: fixed;
+      color: var(--text);
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .panel {
+      position: relative;
+      background: radial-gradient(circle at top, rgba(248, 250, 252, 0.04), transparent 60%),
+                  var(--panel);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      padding: 20px 18px 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent 65%);
+      top: -110px;
+      right: -80px;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .title-wrap {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.92);
+      margin-bottom: 6px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.4);
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 650;
+      letter-spacing: 0.06em;
+      text-transform: none;
+    }
+
+    .subtitle {
+      margin-top: 2px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      justify-items: center;
+    }
+
+    .tile {
+      width: 100%;
+      max-width: 260px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .tile-inner {
+      border-radius: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.18), transparent 65%),
+                  rgba(15, 23, 42, 0.96);
+      padding: 16px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.95);
+      transition:
+        transform 0.14s ease,
+        box-shadow 0.14s ease,
+        border-color 0.14s ease,
+        background 0.14s ease;
+    }
+
+    .tile-inner:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.98);
+      border-color: rgba(248, 250, 252, 0.95);
+      background: radial-gradient(circle at top, rgba(96, 165, 250, 0.24), transparent 65%),
+                  rgba(15, 23, 42, 0.98);
+    }
+
+    .icon-ring {
+      position: relative;
+      width: 84px;
+      height: 84px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 6px rgba(15, 23, 42, 1),
+        0 18px 40px rgba(15, 23, 42, 0.95);
+    }
+
+    .icon-ring.ld {
+      background:
+        radial-gradient(circle at 20% 0%, #bbf7d0 0, transparent 55%),
+        linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .icon-ring.th {
+      background:
+        radial-gradient(circle at 20% 0%, #dbeafe 0, transparent 55%),
+        linear-gradient(135deg, #38bdf8, #6366f1);
+    }
+
+    .icon-core {
+      width: 64px;
+      height: 64px;
+      border-radius: inherit;
+      background: rgba(15, 23, 42, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-text {
+      font-size: 24px;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+    }
+
+    .icon-text.ld {
+      background: linear-gradient(140deg, #bbf7d0, #ecfdf5);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .icon-text.th {
+      background: linear-gradient(140deg, #e0f2fe, #eef2ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .label-main {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .label-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .label-main,
+    .label-sub {
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      .panel {
+        padding: 18px 14px 16px;
+        border-radius: 22px;
+      }
+      h1 {
+        font-size: 19px;
+      }
+      .icon-ring {
+        width: 78px;
+        height: 78px;
+      }
+      .icon-core {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <div class="inner">
+        <header class="title-wrap">
+          <div class="badge">
+            <span class="dot"></span>
+            <span>Bộ bảng kê tính lãi</span>
+          </div>
+          <h1>Bảng kê LD · Bảng kê Thẻ</h1>
+          <p class="subtitle">Chọn loại bảng kê bạn muốn sử dụng</p>
+        </header>
+
+        <div class="grid">
+          <!-- BẢNG KÊ LD -->
+          <a class="tile" href="bang-ke-ld.html">
+            <div class="tile-inner">
+              <div class="icon-ring ld">
+                <div class="icon-core">
+                  <span class="icon-text ld">LD</span>
+                </div>
+              </div>
+              <div class="label-main">Bảng kê LD</div>
+              <div class="label-sub">Mẫu Excel LD</div>
+            </div>
+          </a>
+
+          <!-- BẢNG KÊ THẺ -->
+          <a class="tile" href="bang-ke-the.html">
+            <div class="tile-inner">
+              <div class="icon-ring th">
+                <div class="icon-core">
+                  <span class="icon-text th">TH</span>
+                </div>
+              </div>
+              <div class="label-main">Bảng kê Thẻ</div>
+              <div class="label-sub">Mẫu Excel Thẻ</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
