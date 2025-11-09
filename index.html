@@ -3,26 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bảng kê LD · Bảng kê Thẻ</title>
+  <title>Bảng kê tính lãi</title>
   <style>
-    :root {
-      --bg1: #020617;
-      --bg2: #0b1120;
-      --bg3: #020617;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --panel: rgba(15, 23, 42, 0.9);
-      --border: rgba(148, 163, 184, 0.7);
-      --shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
-      --radius-xl: 26px;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                   "Segoe UI Rounded", "SF Pro Rounded", sans-serif;
+                   "Segoe UI", sans-serif;
     }
 
     body {
@@ -30,261 +18,695 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.25), transparent 55%),
-        radial-gradient(circle at 100% 0%, rgba(244, 114, 182, 0.25), transparent 55%),
-        radial-gradient(circle at 50% 100%, rgba(52, 211, 153, 0.3), transparent 60%),
-        linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
-      background-attachment: fixed;
+      padding: 24px;
+      background: var(--bg);
       color: var(--text);
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    body[data-theme="dark"] {
+      --bg: radial-gradient(circle at 0% 0%, #020617, #020617 40%, #020617 100%);
+      --card: #020617;
+      --border: #1f2937;
+      --border-soft: #0f172a;
+      --border-strong: #374151;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --primary: #60a5fa;
+      --primary-soft: rgba(37,99,235,0.23);
+      --accent-green: #22c55e;
+      --accent-blue: #38bdf8;
+      --chip-bg: #020617;
+      --pill-bg: #020617;
+      --shadow-main: 0 28px 80px rgba(15,23,42,0.95);
+      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.15);
+    }
+
+    body[data-theme="light"] {
+      --bg: #e5e7eb;
+      --card: #ffffff;
+      --border: #d4d4d8;
+      --border-soft: #e5e7eb;
+      --border-strong: #9ca3af;
+      --text: #020617;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-soft: rgba(37,99,235,0.10);
+      --accent-green: #16a34a;
+      --accent-blue: #2563eb;
+      --chip-bg: #f9fafb;
+      --pill-bg: #eef2ff;
+      --shadow-main: 0 22px 60px rgba(15,23,42,0.18);
+      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.08);
     }
 
     .shell {
       width: 100%;
-      max-width: 720px;
+      max-width: 1040px;
     }
 
     .panel {
-      position: relative;
-      background: radial-gradient(circle at top, rgba(248, 250, 252, 0.04), transparent 60%),
-                  var(--panel);
-      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(148, 163, 184, 0.22), transparent 60%),
+        radial-gradient(circle at 100% 0%, rgba(59,130,246,0.25), transparent 55%),
+        var(--card);
+      border-radius: 30px;
+      border: 1px solid var(--border-soft);
+      padding: 22px 22px 18px;
+      box-shadow: var(--shadow-main);
+    }
+
+    .panel-inner {
+      border-radius: 26px;
       border: 1px solid var(--border);
-      padding: 20px 18px 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      overflow: hidden;
+      padding: 18px 18px 14px;
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.35), transparent 55%);
+      box-shadow: var(--shadow-inner);
     }
 
-    .panel::before {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent 65%);
-      top: -110px;
-      right: -80px;
-      opacity: 0.7;
-      pointer-events: none;
+    body[data-theme="light"] .panel-inner {
+      background: linear-gradient(135deg, #ffffff, #f9fafb);
     }
 
-    .inner {
-      position: relative;
-      z-index: 1;
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
     }
 
     .title-wrap {
-      text-align: center;
-      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 4px 12px;
+      gap: 6px;
+      padding: 4px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      font-size: 11px;
+      border: 1px solid var(--border);
+      font-size: 12px;
       color: var(--muted);
-      background: rgba(15, 23, 42, 0.92);
-      margin-bottom: 6px;
+      background: var(--chip-bg);
     }
 
     .dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
-      background: #4ade80;
-      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.4);
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.28);
     }
 
     h1 {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 650;
-      letter-spacing: 0.06em;
-      text-transform: none;
+      letter-spacing: 0.01em;
     }
 
     .subtitle {
-      margin-top: 2px;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
-      letter-spacing: 0.06em;
     }
 
-    .grid {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      justify-items: center;
-    }
-
-    .tile {
-      width: 100%;
-      max-width: 260px;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .tile-inner {
-      border-radius: 22px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.18), transparent 65%),
-                  rgba(15, 23, 42, 0.96);
-      padding: 16px 14px 14px;
-      display: flex;
-      flex-direction: column;
+    .theme-toggle {
+      display: inline-flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.95);
-      transition:
-        transform 0.14s ease,
-        box-shadow 0.14s ease,
-        border-color 0.14s ease,
-        background 0.14s ease;
-    }
-
-    .tile-inner:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.98);
-      border-color: rgba(248, 250, 252, 0.95);
-      background: radial-gradient(circle at top, rgba(96, 165, 250, 0.24), transparent 65%),
-                  rgba(15, 23, 42, 0.98);
-    }
-
-    .icon-ring {
-      position: relative;
-      width: 84px;
-      height: 84px;
+      padding: 6px;
       border-radius: 999px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.18), transparent 55%);
+      cursor: pointer;
+      position: relative;
+      min-width: 190px;
+    }
+
+    .theme-pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 6px);
+      border-radius: 999px;
+      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.7), transparent 55%);
+      box-shadow: 0 12px 26px rgba(15,23,42,0.6);
+      transform: translateX(100%);
+      transition: transform 0.22s ease;
+    }
+
+    body[data-theme="light"] .theme-pill {
+      transform: translateX(0);
+    }
+
+    body[data-theme="dark"] .theme-pill {
+      transform: translateX(100%);
+    }
+
+    .theme-option {
+      position: relative;
+      z-index: 1;
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow:
-        0 0 0 6px rgba(15, 23, 42, 1),
-        0 18px 40px rgba(15, 23, 42, 0.95);
-    }
-
-    .icon-ring.ld {
-      background:
-        radial-gradient(circle at 20% 0%, #bbf7d0 0, transparent 55%),
-        linear-gradient(135deg, #22c55e, #16a34a);
-    }
-
-    .icon-ring.th {
-      background:
-        radial-gradient(circle at 20% 0%, #dbeafe 0, transparent 55%),
-        linear-gradient(135deg, #38bdf8, #6366f1);
-    }
-
-    .icon-core {
-      width: 64px;
-      height: 64px;
-      border-radius: inherit;
-      background: rgba(15, 23, 42, 0.96);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .icon-text {
-      font-size: 24px;
-      font-weight: 750;
-      letter-spacing: 0.08em;
-    }
-
-    .icon-text.ld {
-      background: linear-gradient(140deg, #bbf7d0, #ecfdf5);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .icon-text.th {
-      background: linear-gradient(140deg, #e0f2fe, #eef2ff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .label-main {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .label-sub {
+      gap: 6px;
       font-size: 12px;
       color: var(--muted);
     }
 
-    .label-main,
-    .label-sub {
-      text-align: center;
+    .theme-option span.icon {
+      font-size: 17px;
     }
 
-    @media (max-width: 520px) {
+    .theme-option span.label {
+      white-space: nowrap;
+    }
+
+    .list {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item {
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.85);
+      padding: 12px 14px 10px;
+      transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.12s ease;
+    }
+
+    body[data-theme="light"] .item {
+      background: #ffffff;
+    }
+
+    .item-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+    }
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.18;
+      background: radial-gradient(circle at 0% 0%, #ffffff, transparent 60%);
+    }
+
+    .icon.ld {
+      background: linear-gradient(135deg, #22c55e, #a3e635);
+    }
+
+    .icon.the {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+    }
+
+    .icon-inner {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      color: #f9fafb;
+    }
+
+    .icon-code {
+      font-size: 18px;
+      font-weight: 750;
+      letter-spacing: 0.14em;
+    }
+
+    .icon-mini {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .text-box {
+      flex: 1;
+    }
+
+    .name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .name {
+      font-size: 16px;
+      font-weight: 620;
+    }
+
+    .chips {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: var(--pill-bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .chip-color {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-blue);
+    }
+
+    .chip-update {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.45);
+      border: 1px solid rgba(148,163,184,0.5);
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+      width: fit-content;
+    }
+
+    body[data-theme="light"] .chip-update {
+      background: #f3f4f6;
+      border-color: #e5e7eb;
+      color: #4b5563;
+    }
+
+    .chip-update-icon {
+      font-size: 13px;
+    }
+
+    .chevron {
+      font-size: 18px;
+      color: var(--muted);
+      transition: transform 0.18s ease;
+    }
+
+    .item.active {
+      border-color: var(--primary);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.75);
+      background: var(--primary-soft);
+      transform: translateY(-2px);
+    }
+
+    body[data-theme="light"] .item.active {
+      background: #eef2ff;
+    }
+
+    .item.active .chevron {
+      transform: rotate(180deg);
+    }
+
+    .extra {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-strong);
+      display: none;
+    }
+
+    .extra.visible {
+      display: block;
+    }
+
+    .detail-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 15px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(37,99,235,0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-icon {
+      font-size: 16px;
+    }
+
+    .guide {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--chip-bg);
+      padding: 7px 9px;
+      font-size: 12px;
+      color: var(--muted);
+      display: none;
+      margin-top: 4px;
+    }
+
+    .guide.visible {
+      display: block;
+    }
+
+    .guide h2 {
+      font-size: 12px;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .guide ul {
+      padding-left: 18px;
+    }
+
+    .guide li {
+      margin-bottom: 3px;
+    }
+
+    footer {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 12px;
+      }
       .panel {
-        padding: 18px 14px 16px;
-        border-radius: 22px;
+        padding: 16px 12px 12px;
+        border-radius: 24px;
+      }
+      .panel-inner {
+        padding: 14px 12px 10px;
       }
       h1 {
-        font-size: 19px;
+        font-size: 22px;
       }
-      .icon-ring {
-        width: 78px;
-        height: 78px;
-      }
-      .icon-core {
-        width: 60px;
-        height: 60px;
+      .icon {
+        width: 54px;
+        height: 54px;
       }
     }
   </style>
 </head>
-<body>
+<body data-theme="dark">
   <main class="shell">
     <section class="panel">
-      <div class="inner">
-        <header class="title-wrap">
-          <div class="badge">
-            <span class="dot"></span>
-            <span>Bộ bảng kê tính lãi</span>
+      <div class="panel-inner">
+        <header class="panel-header">
+          <div class="title-wrap">
+            <div class="badge-row">
+              <div class="badge">
+                <span class="dot"></span>
+                <span>Bộ bảng kê tính lãi</span>
+              </div>
+            </div>
+            <div>
+              <h1>Bảng kê</h1>
+              <p class="subtitle">Bấm vào từng bảng kê để hiện nút tải và hướng dẫn</p>
+            </div>
           </div>
-          <h1>Bảng kê LD · Bảng kê Thẻ</h1>
-          <p class="subtitle">Chọn loại bảng kê bạn muốn sử dụng</p>
+
+          <button id="themeToggle" class="theme-toggle" type="button">
+            <div class="theme-pill"></div>
+            <div class="theme-option">
+              <span class="icon">🌞</span>
+              <span class="label">Sáng</span>
+            </div>
+            <div class="theme-option">
+              <span class="icon">🌙</span>
+              <span class="label">Tối</span>
+            </div>
+          </button>
         </header>
 
-        <div class="grid">
-          <!-- BẢNG KÊ LD -->
-          <a class="tile" href="bang-ke-ld.html">
-            <div class="tile-inner">
-              <div class="icon-ring ld">
-                <div class="icon-core">
-                  <span class="icon-text ld">LD</span>
-                </div>
-              </div>
-              <div class="label-main">Bảng kê LD</div>
-              <div class="label-sub">Mẫu Excel LD</div>
-            </div>
-          </a>
-
-          <!-- BẢNG KÊ THẺ -->
-          <a class="tile" href="bang-ke-the.html">
-            <div class="tile-inner">
-              <div class="icon-ring th">
-                <div class="icon-core">
-                  <span class="icon-text th">TH</span>
-                </div>
-              </div>
-              <div class="label-main">Bảng kê Thẻ</div>
-              <div class="label-sub">Mẫu Excel Thẻ</div>
-            </div>
-          </a>
-        </div>
+        <div class="list" id="list"></div>
       </div>
     </section>
+
+    <footer>© baotg10</footer>
   </main>
+
+  <script>
+    /* ========================
+       1. DỮ LIỆU BẢNG KÊ
+       (ĐOẠN NÀY SAU NÀY COPY TỪ admin.html SANG)
+    =========================*/
+    const BANG_KE_LIST = [
+      {
+        id: "ld",
+        code: "LD",
+        name: "Bảng kê LD",
+        short: "Mẫu Excel LD",
+        subtitle: "File Excel theo dõi và tính lãi dạng LD",
+        file: "Bang_ke_LD.xlsx",
+        updated: "10/11/2025",
+        guide: [
+          "Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.",
+          "Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.",
+          "Các cột tổng, lãi và số dư đã có công thức, không cần sửa trực tiếp.",
+          "Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.",
+          "Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu."
+        ]
+      },
+      {
+        id: "the",
+        code: "TH",
+        name: "Bảng kê Thẻ",
+        short: "Mẫu Excel Thẻ",
+        subtitle: "File Excel theo dõi giao dịch và lãi theo thẻ",
+        file: "Bang_ke_The.xlsx",
+        updated: "10/11/2025",
+        guide: [
+          "Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).",
+          "Ghi các giao dịch phát sinh đúng cột: chi tiêu, hoàn tiền, phí, v.v.",
+          "Các cột tính lãi, phí phạt và số dư cuối kỳ đã có sẵn công thức.",
+          "Có thể tách mỗi thẻ thành một sheet riêng để quản lý cho rõ ràng.",
+          "Nên lưu 1 bản gốc, thao tác trên bản sao để tránh hỏng công thức."
+        ]
+      }
+    ];
+
+    /* ========================
+       2. HÀM VẼ DANH SÁCH
+    =========================*/
+    function renderList() {
+      const listEl = document.getElementById('list');
+      listEl.innerHTML = '';
+      BANG_KE_LIST.forEach(item => {
+        const wrap = document.createElement('div');
+        wrap.className = 'item';
+        wrap.dataset.id = item.id;
+
+        const header = document.createElement('div');
+        header.className = 'item-header';
+
+        const icon = document.createElement('div');
+        icon.className = 'icon ' + (item.id === 'the' ? 'the' : 'ld');
+
+        const iconInner = document.createElement('div');
+        iconInner.className = 'icon-inner';
+        const code = document.createElement('div');
+        code.className = 'icon-code';
+        code.textContent = item.code || '';
+        const mini = document.createElement('div');
+        mini.className = 'icon-mini';
+        mini.textContent = 'xls';
+        iconInner.appendChild(code);
+        iconInner.appendChild(mini);
+        icon.appendChild(iconInner);
+
+        const textBox = document.createElement('div');
+        textBox.className = 'text-box';
+
+        const nameRow = document.createElement('div');
+        nameRow.className = 'name-row';
+        const name = document.createElement('div');
+        name.className = 'name';
+        name.textContent = item.name || '';
+        const chevron = document.createElement('div');
+        chevron.className = 'chevron';
+        chevron.textContent = '▾';
+        nameRow.appendChild(name);
+        nameRow.appendChild(chevron);
+        textBox.appendChild(nameRow);
+
+        const chips = document.createElement('div');
+        chips.className = 'chips';
+        const chip1 = document.createElement('div');
+        chip1.className = 'chip-pill';
+        chip1.innerHTML = '<span class="chip-color"></span><span>Excel</span>';
+        const chip2 = document.createElement('div');
+        chip2.className = 'chip-pill';
+        chip2.textContent = item.short || '';
+        chips.appendChild(chip1);
+        chips.appendChild(chip2);
+        textBox.appendChild(chips);
+
+        if (item.updated) {
+          const up = document.createElement('div');
+          up.className = 'chip-update';
+          up.innerHTML = '<span class="chip-update-icon">🕒</span><span>Cập nhật: ' +
+            item.updated + '</span>';
+          textBox.appendChild(up);
+        }
+
+        header.appendChild(icon);
+        header.appendChild(textBox);
+
+        const extra = document.createElement('div');
+        extra.className = 'extra';
+
+        const subtitle = document.createElement('div');
+        subtitle.className = 'detail-subtitle';
+        subtitle.textContent = item.subtitle || '';
+        extra.appendChild(subtitle);
+
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+
+        const download = document.createElement('a');
+        download.className = 'btn btn-primary';
+        download.href = item.file || '#';
+        download.setAttribute('download', '');
+        download.innerHTML = '<span class="btn-icon">⬇</span><span>Tải ' + (item.name || 'file') + '</span>';
+
+        const guideBtn = document.createElement('button');
+        guideBtn.type = 'button';
+        guideBtn.className = 'btn btn-outline';
+        guideBtn.innerHTML = '<span class="btn-icon">❓</span><span>Hướng dẫn sử dụng</span>';
+
+        actions.appendChild(download);
+        actions.appendChild(guideBtn);
+        extra.appendChild(actions);
+
+        const guideBox = document.createElement('div');
+        guideBox.className = 'guide';
+        const gh2 = document.createElement('h2');
+        gh2.textContent = 'Hướng dẫn nhanh';
+        guideBox.appendChild(gh2);
+        const ul = document.createElement('ul');
+        (item.guide || []).forEach(line => {
+          const li = document.createElement('li');
+          li.textContent = line;
+          ul.appendChild(li);
+        });
+        guideBox.appendChild(ul);
+        extra.appendChild(guideBox);
+
+        wrap.appendChild(header);
+        wrap.appendChild(extra);
+
+        header.addEventListener('click', function () {
+          const isVisible = extra.classList.contains('visible');
+          document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
+          document.querySelectorAll('.extra').forEach(el => el.classList.remove('visible'));
+          document.querySelectorAll('.guide').forEach(el => el.classList.remove('visible'));
+          if (!isVisible) {
+            wrap.classList.add('active');
+            extra.classList.add('visible');
+          }
+        });
+
+        guideBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          guideBox.classList.toggle('visible');
+        });
+
+        listEl.appendChild(wrap);
+      });
+    }
+
+    /* ========================
+       3. GIAO DIỆN SÁNG / TỐI
+    =========================*/
+    function applyTheme(theme) {
+      const t = theme === 'light' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', t);
+      try { localStorage.setItem('bangke-theme', t); } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let saved = null;
+      try {
+        saved = localStorage.getItem('bangke-theme');
+      } catch (e) {}
+      if (saved === 'light' || saved === 'dark') {
+        applyTheme(saved);
+      } else {
+        applyTheme('dark');
+      }
+
+      renderList();
+
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const current = document.body.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    });
+  </script>
 </body>
 </html>
