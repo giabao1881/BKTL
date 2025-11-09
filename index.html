@@ -422,7 +422,6 @@
       font-size: 16px;
     }
 
-    /* HƯỚNG DẪN SỬ DỤNG MỚI */
     .guide {
       border-radius: 14px;
       border: 1px solid var(--border-strong);
@@ -513,6 +512,125 @@
       display: block;
     }
 
+    /* DONATE */
+    .donate-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .donate-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
+      color: #fff7ed;
+      box-shadow: 0 10px 26px rgba(248,113,113,0.7);
+    }
+
+    .donate-btn-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(248,250,252,0.2);
+      font-size: 15px;
+      animation: wobble 1.6s ease-in-out infinite;
+    }
+
+    .donate-btn-text strong {
+      font-weight: 650;
+    }
+
+    @keyframes wobble {
+      0%   { transform: translateY(0); }
+      25%  { transform: translateY(-3px); }
+      50%  { transform: translateY(0); }
+      75%  { transform: translateY(-2px); }
+      100% { transform: translateY(0); }
+    }
+
+    .donate-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+    }
+
+    .donate-modal.visible {
+      display: flex;
+    }
+
+    .donate-card {
+      width: 100%;
+      max-width: 360px;
+      background: #fce7f3;
+      border-radius: 24px;
+      padding: 16px 14px 14px;
+      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
+      position: relative;
+    }
+
+    .donate-close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      cursor: pointer;
+      color: #be185d;
+    }
+
+    .donate-title {
+      font-size: 15px;
+      font-weight: 650;
+      color: #9d174d;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .donate-text {
+      font-size: 12px;
+      color: #9f1239;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .donate-qr {
+      background: #fdf2f8;
+      padding: 10px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .donate-qr img {
+      max-width: 100%;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .donate-note {
+      font-size: 11px;
+      color: #9f1239;
+      text-align: center;
+    }
+
     footer {
       margin-top: 10px;
       text-align: center;
@@ -545,6 +663,16 @@
   <main class="shell">
     <section class="panel">
       <div class="panel-inner">
+
+        <div class="donate-wrap">
+          <button id="donateBtn" class="donate-btn" type="button">
+            <span class="donate-btn-icon">🎁</span>
+            <span class="donate-btn-text">
+              <strong>Ủng hộ</strong> cho bộ bảng kê
+            </span>
+          </button>
+        </div>
+
         <header class="panel-header">
           <div class="title-wrap">
             <div class="badge-row">
@@ -576,43 +704,50 @@
       </div>
     </section>
 
+    <div id="donateModal" class="donate-modal">
+      <div class="donate-card">
+        <button id="donateClose" class="donate-close" type="button">✕</button>
+        <div class="donate-title">Donate ủng hộ phát triển</div>
+        <p class="donate-text">
+          Nếu bạn thấy bộ bảng kê hữu ích, có thể ủng hộ mình một ly cà phê.
+        </p>
+        <div class="donate-qr">
+          <!-- Lưu ảnh QR thành momo_qr.png cạnh file index.html -->
+          <img src="momo_qr.png" alt="QR donate MoMo" />
+        </div>
+        <div class="donate-note">
+          Quét bằng MoMo hoặc app ngân hàng hỗ trợ VietQR.
+        </div>
+      </div>
+    </div>
+
     <footer>© baotg10</footer>
   </main>
 
   <script>
-    /* ========================
-       1. DỮ LIỆU BẢNG KÊ
-       (SAU NÀY COPY TỪ admin.html SANG)
-    =========================*/
    const BANG_KE_LIST = [
-  {
-    id: "ld",
-    code: "LD",
-    name: "Bảng kê tính lãi LD",
-    short: "Tính nhanh",
-    subtitle: "Có thể tính nhanh một lúc 10 LD và hơn thế nữa",
-    file: "BKTL_LD.xlsm",
-    updated: "10/11/2025",
-    guide: [
-    ]
-  },
-  {
-    id: "the",
-    code: "TH",
-    name: "Bảng kê tính lãi Thẻ",
-    short: "Tính thẻ nhanh",
-    subtitle: "Tự động lọc thông tin tính nhanh thẻ",
-    file: "BKTL_The.xlsm",
-    updated: "10/11/2025",
-    guide: [
-    ]
-  }
-];
+    {
+      id: "ld",
+      code: "LD",
+      name: "Bảng kê tính lãi LD",
+      short: "Tính nhanh",
+      subtitle: "Có thể tính nhanh một lúc 10 LD và hơn thế nữa",
+      file: "BKTL_LD.xlsm",
+      updated: "10/11/2025",
+      guide: []
+    },
+    {
+      id: "the",
+      code: "TH",
+      name: "Bảng kê tính lãi Thẻ",
+      short: "Tính thẻ nhanh",
+      subtitle: "Tự động lọc thông tin tính nhanh thẻ",
+      file: "BKTL_The.xlsm",
+      updated: "10/11/2025",
+      guide: []
+    }
+   ];
 
-
-    /* ========================
-       2. VẼ DANH SÁCH
-    =========================*/
     function renderList() {
       const listEl = document.getElementById('list');
       listEl.innerHTML = '';
@@ -731,7 +866,6 @@
 
           const body = document.createElement('div');
           body.className = 'guide-body';
-          // cho phép HTML: link, <strong>, <img>...
           body.innerHTML = line;
 
           row.appendChild(bullet);
@@ -765,9 +899,6 @@
       });
     }
 
-    /* ========================
-       3. GIAO DIỆN SÁNG / TỐI
-    =========================*/
     function applyTheme(theme) {
       const t = theme === 'light' ? 'light' : 'dark';
       document.body.setAttribute('data-theme', t);
@@ -791,6 +922,22 @@
         const current = document.body.getAttribute('data-theme') || 'dark';
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
+
+      const donateBtn = document.getElementById('donateBtn');
+      const donateModal = document.getElementById('donateModal');
+      const donateClose = document.getElementById('donateClose');
+
+      if (donateBtn && donateModal && donateClose) {
+        donateBtn.addEventListener('click', () => {
+          donateModal.classList.add('visible');
+        });
+        donateClose.addEventListener('click', () => {
+          donateModal.classList.remove('visible');
+        });
+        donateModal.addEventListener('click', (e) => {
+          if (e.target === donateModal) donateModal.classList.remove('visible');
+        });
+      }
     });
   </script>
 </body>
