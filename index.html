@@ -516,39 +516,39 @@
        (ĐOẠN NÀY SAU NÀY COPY TỪ admin.html SANG)
     =========================*/
     const BANG_KE_LIST = [
-      {
-        id: "ld",
-        code: "LD",
-        name: "Bảng kê LD",
-        short: "Mẫu Excel LD",
-        subtitle: "File Excel theo dõi và tính lãi dạng LD",
-        file: "Bang_ke_LD.xlsx",
-        updated: "10/11/2025",
-        guide: [
-          "Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.",
-          "Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.",
-          "Các cột tổng, lãi và số dư đã có công thức, không cần sửa trực tiếp.",
-          "Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.",
-          "Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu."
-        ]
-      },
-      {
-        id: "the",
-        code: "TH",
-        name: "Bảng kê Thẻ",
-        short: "Mẫu Excel Thẻ",
-        subtitle: "File Excel theo dõi giao dịch và lãi theo thẻ",
-        file: "Bang_ke_The.xlsx",
-        updated: "10/11/2025",
-        guide: [
-          "Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).",
-          "Ghi các giao dịch phát sinh đúng cột: chi tiêu, hoàn tiền, phí, v.v.",
-          "Các cột tính lãi, phí phạt và số dư cuối kỳ đã có sẵn công thức.",
-          "Có thể tách mỗi thẻ thành một sheet riêng để quản lý cho rõ ràng.",
-          "Nên lưu 1 bản gốc, thao tác trên bản sao để tránh hỏng công thức."
-        ]
-      }
-    ];
+  {
+    id: "ld",
+    code: "LD",
+    name: "Bảng kê tính lãi LD",
+    short: "Tính nhanh có thể tính 10 LD cùng lúc và hơn thế nữa",
+    subtitle: "LD",
+    file: "BKTL_LD.xlsm",
+    updated: "10/11/2025",
+    guide: [
+      "Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.",
+      "Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.",
+      "Các cột tổng, lãi và số dư đã có công thức, không cần sửa trực tiếp.",
+      "Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.",
+      "Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu."
+    ]
+  },
+  {
+    id: "the",
+    code: "THE",
+    name: "Bảng kê tính lãi Thẻ",
+    short: "Tính nhanh thẻ",
+    subtitle: "File Excel theo dõi giao dịch và lãi theo thẻ",
+    file: "BKTL_THE.xlsm",
+    updated: "10/11/2025",
+    guide: [
+      "Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).",
+      "Ghi các giao dịch phát sinh đúng cột: chi tiêu, hoàn tiền, phí, v.v.",
+      "Các cột tính lãi, phí phạt và số dư cuối kỳ đã có sẵn công thức.",
+      "Có thể tách mỗi thẻ thành một sheet riêng để quản lý cho rõ ràng.",
+      "Nên lưu 1 bản gốc, thao tác trên bản sao để tránh hỏng công thức."
+    ]
+  }
+];
 
     /* ========================
        2. HÀM VẼ DANH SÁCH
