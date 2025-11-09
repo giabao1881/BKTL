@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin cấu hình Bảng kê</title>
+  <title>⚙️ Admin Bảng kê</title>
   <style>
     * {
       box-sizing: border-box;
@@ -15,23 +15,30 @@
     body {
       min-height: 100vh;
       padding: 16px;
-      background: #0f172a;
+      background: #020617;
       color: #e5e7eb;
       display: flex;
       justify-content: center;
     }
     .shell {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1120px;
       display: grid;
       grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
       gap: 16px;
     }
     .panel {
-      background: #020617;
+      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.20), transparent 60%),
+                  #020617;
       border-radius: 18px;
       border: 1px solid #1f2937;
       padding: 14px 14px 12px;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.85);
+    }
+    .panel h1, .panel h2 {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     h1 {
       font-size: 18px;
@@ -39,7 +46,7 @@
     }
     h2 {
       font-size: 14px;
-      margin: 8px 0 4px;
+      margin: 4px 0 4px;
     }
     .small {
       font-size: 12px;
@@ -51,15 +58,16 @@
       flex-direction: column;
       gap: 10px;
       margin-top: 4px;
-      max-height: calc(100vh - 140px);
+      max-height: calc(100vh - 160px);
       overflow-y: auto;
       padding-right: 4px;
     }
     .bk {
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid #1f2937;
       padding: 8px 10px 8px;
       background: #020617;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.7);
     }
     .bk-header {
       display: flex;
@@ -71,6 +79,21 @@
     .bk-title {
       font-size: 13px;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bk-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background: radial-gradient(circle at 0% 0%, #22c55e, #3b82f6);
+      box-shadow: 0 6px 14px rgba(59,130,246,0.7);
+      flex-shrink: 0;
     }
     .bk-sub {
       font-size: 11px;
@@ -83,20 +106,35 @@
     }
     .tag {
       font-size: 10px;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 999px;
       background: #0f172a;
       border: 1px solid #1f2937;
       color: #9ca3af;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
     }
     .btn-small {
       font-size: 11px;
-      padding: 3px 7px;
+      padding: 3px 8px;
       border-radius: 999px;
       border: 1px solid #4b5563;
       background: #020617;
       color: #e5e7eb;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-small span.icon {
+      font-size: 13px;
     }
     label {
       display: block;
@@ -114,6 +152,12 @@
       background: #020617;
       color: #e5e7eb;
       font-size: 12px;
+    }
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 1px #60a5fa;
     }
     textarea {
       min-height: 70px;
@@ -134,9 +178,14 @@
       font-size: 11px;
       color: #9ca3af;
     }
+    .file-hint {
+      font-size: 10px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
     .btn-main {
       margin-top: 8px;
-      padding: 7px 12px;
+      padding: 7px 14px;
       border-radius: 999px;
       border: none;
       background: linear-gradient(135deg, #22c55e, #4ade80);
@@ -144,10 +193,17 @@
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 26px rgba(16,185,129,0.75);
+    }
+    .btn-main span.icon {
+      font-size: 15px;
     }
     #output {
       width: 100%;
-      min-height: calc(100vh - 140px);
+      min-height: calc(100vh - 160px);
       background: #020617;
       border-radius: 10px;
       border: 1px solid #1f2937;
@@ -161,6 +217,21 @@
       font-size: 11px;
       color: #9ca3af;
       margin-top: 4px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+    .pill span.icon {
+      font-size: 13px;
     }
     footer {
       position: fixed;
@@ -187,26 +258,37 @@
 </head>
 <body>
   <main class="shell">
+    <!-- CỘT TRÁI: CẤU HÌNH -->
     <section class="panel">
-      <h1>Admin cấu hình Bảng kê</h1>
+      <h1><span>⚙️</span><span>Admin Bảng kê</span></h1>
+      <div class="pill">
+        <span class="icon">📘</span>
+        <span>Mỗi card = 1 bảng kê Excel (LD, Thẻ, ...)</span>
+      </div>
       <p class="small">
-        Thêm / sửa các bảng kê ở đây. Sau đó copy đoạn <b>BANG_KE_LIST</b> bên phải
-        sang file <code>index.html</code> (dán đè phần BANG_KE_LIST cũ).
+        Điền thông tin từng bảng kê bên dưới. Sau đó COPY đoạn <b>BANG_KE_LIST</b> ở cột phải
+        sang file <code>index.html</code> (dán đè phần cũ).
       </p>
 
-      <button class="btn-main" type="button" onclick="addBK()">+ Thêm bảng kê</button>
+      <button class="btn-main" type="button" onclick="addBK()">
+        <span class="icon">➕</span>
+        <span>Thêm bảng kê mới</span>
+      </button>
 
       <div class="bk-list" id="bkList"></div>
     </section>
 
+    <!-- CỘT PHẢI: CODE BANG_KE_LIST -->
     <section class="panel">
-      <h2>Đoạn mã JS BANG_KE_LIST</h2>
+      <h2><span>🧩</span><span>Đoạn mã JS BANG_KE_LIST</span></h2>
       <p class="small">
-        Copy toàn bộ đoạn này, dán đè vào phần <code>const BANG_KE_LIST = [...]</code> trong file <b>index.html</b>.
+        Bấm vào ô bên dưới, nhấn <b>Ctrl + A</b> → <b>Ctrl + C</b> để copy toàn bộ.<br>
+        Dán đè vào phần <code>const BANG_KE_LIST = [...]</code> trong file <b>index.html</b>.
       </p>
       <textarea id="output" readonly></textarea>
       <p class="hint">
-        Mỗi lần bạn thêm / sửa bảng kê, đoạn BANG_KE_LIST sẽ tự cập nhật.
+        💡 Gợi ý: Trong ô Hướng dẫn bạn có thể dùng HTML:
+        <code>&lt;strong&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code> để in đậm, chèn link, chèn hình.
       </p>
     </section>
   </main>
@@ -214,6 +296,7 @@
   <footer>© baotg10</footer>
 
   <script>
+    // escape để sinh JS an toàn, vẫn giữ nguyên HTML (<, >)
     function esc(str) {
       return String(str)
         .replace(/\\/g, "\\\\")
@@ -234,26 +317,40 @@
       const titleBox = document.createElement('div');
       const t1 = document.createElement('div');
       t1.className = 'bk-title';
-      t1.textContent = d.name || 'Bảng kê mới';
+
+      const tIcon = document.createElement('div');
+      tIcon.className = 'bk-icon';
+      tIcon.textContent = '📊';
+
+      const tName = document.createElement('span');
+      tName.textContent = d.name || 'Bảng kê mới';
+
+      t1.appendChild(tIcon);
+      t1.appendChild(tName);
+
       const t2 = document.createElement('div');
       t2.className = 'bk-sub';
       t2.textContent = d.id ? ('ID: ' + d.id) : 'Chưa có ID';
+
       titleBox.appendChild(t1);
       titleBox.appendChild(t2);
 
       const actions = document.createElement('div');
       actions.className = 'bk-actions';
+
       const tag = document.createElement('div');
       tag.className = 'tag';
-      tag.textContent = 'Excel';
+      tag.innerHTML = '<span class="tag-dot"></span><span>Excel / xlsm</span>';
+
       const btnDel = document.createElement('button');
       btnDel.type = 'button';
       btnDel.className = 'btn-small';
-      btnDel.textContent = 'Xóa';
+      btnDel.innerHTML = '<span class="icon">🗑️</span><span>Xóa</span>';
       btnDel.onclick = function () {
         wrap.remove();
         generate();
       };
+
       actions.appendChild(tag);
       actions.appendChild(btnDel);
 
@@ -261,6 +358,7 @@
       header.appendChild(actions);
       wrap.appendChild(header);
 
+      // Hàng ID + CODE
       const rowIds = document.createElement('div');
       rowIds.className = 'row-2';
       rowIds.innerHTML = `
@@ -275,33 +373,37 @@
       `;
       wrap.appendChild(rowIds);
 
+      // Tên + mô tả
       const rowNames = document.createElement('div');
       rowNames.innerHTML = `
-        <label>Tên hiển thị (ví dụ: Bảng kê LD)</label>
+        <label>📝 Tên hiển thị (ví dụ: Bảng kê LD)</label>
         <input type="text" class="f-name" value="${d.name || ''}" />
-        <label>Mô tả ngắn (chip bên cạnh, ví dụ: Mẫu Excel LD)</label>
+        <label>🏷️ Mô tả ngắn (chip bên cạnh, ví dụ: Mẫu Excel LD)</label>
         <input type="text" class="f-short" value="${d.short || ''}" />
-        <label>Mô tả chi tiết (hiện khi bung nội dung)</label>
+        <label>📄 Mô tả chi tiết (hiện khi bung nội dung)</label>
         <input type="text" class="f-subtitle" value="${d.subtitle || ''}" />
       `;
       wrap.appendChild(rowNames);
 
+      // File + ngày cập nhật
       const fileRow = document.createElement('div');
       fileRow.className = 'file-row';
       fileRow.innerHTML = `
         <div>
-          <label>Tên file Excel (trên hosting, ví dụ: Bang_ke_LD.xlsx)</label>
+          <label>📂 Tên file Excel trên hosting (ví dụ: Bang_ke_LD.xlsm)</label>
           <input type="text" class="f-file" value="${d.file || ''}" />
+          <div class="file-hint">Tên này phải trùng với file bạn upload lên cùng thư mục với index.html</div>
         </div>
         <div>
-          <label>Ngày cập nhật (hiển trên từng bảng kê)</label>
+          <label>📅 Ngày cập nhật (hiển trên từng bảng kê)</label>
           <input type="text" class="f-updated" placeholder="dd/mm/yyyy" value="${d.updated || ''}" />
         </div>
       `;
 
+      // input file chỉ để lấy tên, không upload
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
-      fileInput.accept = '.xlsx,.xls';
+      fileInput.accept = '.xlsx,.xlsm,.xls';
       fileInput.onchange = function () {
         if (fileInput.files[0]) {
           fileRow.querySelector('.f-file').value = fileInput.files[0].name;
@@ -315,19 +417,23 @@
 
       wrap.appendChild(fileRow);
 
+      // Hướng dẫn
       const guideBox = document.createElement('div');
       guideBox.innerHTML = `
-        <label>Hướng dẫn (mỗi dòng là một gạch đầu dòng)</label>
+        <label>📘 Hướng dẫn  
+          <span style="font-weight:400;color:#6b7280;">(mỗi dòng = 1 bước, có thể dùng HTML: &lt;strong&gt;, &lt;a&gt;, &lt;img&gt;)</span>
+        </label>
         <textarea class="f-guide">${d.guide ? d.guide.join('\n') : ''}</textarea>
       `;
       wrap.appendChild(guideBox);
 
       list.appendChild(wrap);
 
+      // cập nhật tiêu đề + sinh code khi nhập
       wrap.querySelectorAll('input,textarea').forEach(el => {
         el.addEventListener('input', () => {
           const nameVal = wrap.querySelector('.f-name').value.trim();
-          t1.textContent = nameVal || 'Bảng kê mới';
+          tName.textContent = nameVal || 'Bảng kê mới';
           const idVal = wrap.querySelector('.f-id').value.trim();
           t2.textContent = idVal ? ('ID: ' + idVal) : 'Chưa có ID';
           generate();
@@ -383,18 +489,19 @@
     }
 
     function seedDefault() {
+      // Mặc định sẵn 2 bảng kê: LD và Thẻ
       addBK({
         id: 'ld',
         code: 'LD',
         name: 'Bảng kê LD',
         short: 'Mẫu Excel LD',
         subtitle: 'File Excel theo dõi và tính lãi dạng LD',
-        file: 'Bang_ke_LD.xlsx',
+        file: 'Bang_ke_LD.xlsm',
         updated: '10/11/2025',
         guide: [
           'Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.',
           'Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.',
-          'Các cột tổng, lãi và số dư đã có công thức, không cần sửa trực tiếp.',
+          '<strong>Không sửa trực tiếp</strong> các ô tổng, lãi, số dư đã có công thức.',
           'Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.',
           'Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu.'
         ]
@@ -405,7 +512,7 @@
         name: 'Bảng kê Thẻ',
         short: 'Mẫu Excel Thẻ',
         subtitle: 'File Excel theo dõi giao dịch và lãi theo thẻ',
-        file: 'Bang_ke_The.xlsx',
+        file: 'Bang_ke_The.xlsm',
         updated: '10/11/2025',
         guide: [
           'Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).',
