@@ -411,37 +411,106 @@
       border: 1px solid var(--border);
     }
 
+    .btn-guide {
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 8px 22px rgba(129,140,248,0.65);
+    }
+
     .btn-icon {
       font-size: 16px;
     }
 
+    /* HƯỚNG DẪN SỬ DỤNG MỚI */
     .guide {
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--chip-bg);
-      padding: 7px 9px;
+      border-radius: 14px;
+      border: 1px solid var(--border-strong);
+      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.16), transparent 65%);
+      padding: 12px 12px 10px;
       font-size: 12px;
       color: var(--muted);
       display: none;
-      margin-top: 4px;
+      margin-top: 8px;
     }
 
     .guide.visible {
       display: block;
     }
 
-    .guide h2 {
+    .guide-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .guide-header-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
+      font-size: 13px;
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
+      flex-shrink: 0;
+    }
+
+    .guide-header-title {
       font-size: 12px;
-      margin-bottom: 4px;
+      font-weight: 600;
       color: var(--text);
     }
 
-    .guide ul {
-      padding-left: 18px;
+    .guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .guide li {
-      margin-bottom: 3px;
+    .guide-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(15,23,42,0.75);
+      border: 1px dashed var(--border-soft);
+    }
+
+    body[data-theme="light"] .guide-row {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+    }
+
+    .guide-bullet {
+      font-size: 14px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .guide-body {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .guide-body a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .guide-body strong {
+      color: var(--text);
+    }
+
+    .guide-body img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 4px;
+      display: block;
     }
 
     footer {
@@ -513,45 +582,45 @@
   <script>
     /* ========================
        1. DỮ LIỆU BẢNG KÊ
-       (ĐOẠN NÀY SAU NÀY COPY TỪ admin.html SANG)
+       (SAU NÀY COPY TỪ admin.html SANG)
     =========================*/
     const BANG_KE_LIST = [
-  {
-    id: "ld",
-    code: "LD",
-    name: "Bảng kê tính lãi LD",
-    short: "Tính nhanh có thể tính 10 LD cùng lúc và hơn thế nữa",
-    subtitle: "LD",
-    file: "BKTL_LD.xlsm",
-    updated: "10/11/2025",
-    guide: [
-      "Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.",
-      "Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.",
-      "Các cột tổng, lãi và số dư đã có công thức, không cần sửa trực tiếp.",
-      "Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.",
-      "Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu."
-    ]
-  },
-  {
-    id: "the",
-    code: "THE",
-    name: "Bảng kê tính lãi Thẻ",
-    short: "Tính nhanh thẻ",
-    subtitle: "File Excel theo dõi giao dịch và lãi theo thẻ",
-    file: "BKTL_THE.xlsm",
-    updated: "10/11/2025",
-    guide: [
-      "Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).",
-      "Ghi các giao dịch phát sinh đúng cột: chi tiêu, hoàn tiền, phí, v.v.",
-      "Các cột tính lãi, phí phạt và số dư cuối kỳ đã có sẵn công thức.",
-      "Có thể tách mỗi thẻ thành một sheet riêng để quản lý cho rõ ràng.",
-      "Nên lưu 1 bản gốc, thao tác trên bản sao để tránh hỏng công thức."
-    ]
-  }
-];
+      {
+        id: "ld",
+        code: "LD",
+        name: "Bảng kê LD",
+        short: "Mẫu Excel LD",
+        subtitle: "File Excel theo dõi và tính lãi dạng LD",
+        file: "Bang_ke_LD.xlsm",
+        updated: "10/11/2025",
+        guide: [
+          "Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.",
+          "Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.",
+          "Các cột tổng, lãi và số dư đã có công thức, không cần sửa trực tiếp.",
+          "Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.",
+          "Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu."
+        ]
+      },
+      {
+        id: "the",
+        code: "TH",
+        name: "Bảng kê Thẻ",
+        short: "Mẫu Excel Thẻ",
+        subtitle: "File Excel theo dõi giao dịch và lãi theo thẻ",
+        file: "Bang_ke_The.xlsm",
+        updated: "10/11/2025",
+        guide: [
+          "Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).",
+          "Ghi các giao dịch phát sinh đúng cột: chi tiêu, hoàn tiền, phí, v.v.",
+          "Các cột tính lãi, phí phạt và số dư cuối kỳ đã có sẵn công thức.",
+          "Có thể tách mỗi thẻ thành một sheet riêng để quản lý cho rõ ràng.",
+          "Nên lưu 1 bản gốc, thao tác trên bản sao để tránh hỏng công thức."
+        ]
+      }
+    ];
 
     /* ========================
-       2. HÀM VẼ DANH SÁCH
+       2. VẼ DANH SÁCH
     =========================*/
     function renderList() {
       const listEl = document.getElementById('list');
@@ -574,7 +643,7 @@
         code.textContent = item.code || '';
         const mini = document.createElement('div');
         mini.className = 'icon-mini';
-        mini.textContent = 'xls';
+        mini.textContent = 'xlsm';
         iconInner.appendChild(code);
         iconInner.appendChild(mini);
         icon.appendChild(iconInner);
@@ -636,8 +705,8 @@
 
         const guideBtn = document.createElement('button');
         guideBtn.type = 'button';
-        guideBtn.className = 'btn btn-outline';
-        guideBtn.innerHTML = '<span class="btn-icon">❓</span><span>Hướng dẫn sử dụng</span>';
+        guideBtn.className = 'btn btn-outline btn-guide';
+        guideBtn.innerHTML = '<span class="btn-icon">📘</span><span>Hướng dẫn sử dụng</span>';
 
         actions.appendChild(download);
         actions.appendChild(guideBtn);
@@ -645,16 +714,41 @@
 
         const guideBox = document.createElement('div');
         guideBox.className = 'guide';
-        const gh2 = document.createElement('h2');
-        gh2.textContent = 'Hướng dẫn nhanh';
-        guideBox.appendChild(gh2);
-        const ul = document.createElement('ul');
-        (item.guide || []).forEach(line => {
-          const li = document.createElement('li');
-          li.textContent = line;
-          ul.appendChild(li);
+
+        const gHeader = document.createElement('div');
+        gHeader.className = 'guide-header';
+        const gIcon = document.createElement('div');
+        gIcon.className = 'guide-header-icon';
+        gIcon.textContent = '💡';
+        const gTitle = document.createElement('div');
+        gTitle.className = 'guide-header-title';
+        gTitle.textContent = 'Hướng dẫn chi tiết';
+        gHeader.appendChild(gIcon);
+        gHeader.appendChild(gTitle);
+        guideBox.appendChild(gHeader);
+
+        const gList = document.createElement('div');
+        gList.className = 'guide-list';
+
+        (item.guide || []).forEach((line, i) => {
+          const row = document.createElement('div');
+          row.className = 'guide-row';
+
+          const bullet = document.createElement('div');
+          bullet.className = 'guide-bullet';
+          bullet.textContent = i === 0 ? '⭐' : '•';
+
+          const body = document.createElement('div');
+          body.className = 'guide-body';
+          // cho phép HTML: link, <strong>, <img>...
+          body.innerHTML = line;
+
+          row.appendChild(bullet);
+          row.appendChild(body);
+          gList.appendChild(row);
         });
-        guideBox.appendChild(ul);
+
+        guideBox.appendChild(gList);
         extra.appendChild(guideBox);
 
         wrap.appendChild(header);
