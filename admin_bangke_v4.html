@@ -199,11 +199,15 @@
     </section>
   </main>
 
+  <footer style="margin-top:12px;text-align:center;font-size:11px;color:#6b7280;">
+    © baotg10
+  </footer>
+
   <script>
     function esc(str) {
       return String(str)
         .replace(/\\/g, "\\\\")
-        .replace(/"/g, "\\"")
+        .replace(/"/g, "\\\"")
         .replace(/\r?\n/g, "\\n");
     }
 
@@ -345,25 +349,25 @@
 
     function generate() {
       const items = collect();
-      let out = 'const BANG_KE_LIST = [\n';
+      let out = 'const BANG_KE_LIST = [\\n';
       items.forEach((it, idx) => {
-        out += '  {\n';
-        out += '    id: "' + esc(it.id) + '",\n';
-        out += '    code: "' + esc(it.code) + '",\n';
-        out += '    name: "' + esc(it.name) + '",\n';
-        out += '    short: "' + esc(it.short) + '",\n';
-        out += '    subtitle: "' + esc(it.subtitle) + '",\n';
-        out += '    file: "' + esc(it.file) + '",\n';
-        out += '    updated: "' + esc(it.updated) + '",\n';
-        out += '    guide: [\n';
+        out += '  {\\n';
+        out += '    id: "' + esc(it.id) + '",\\n';
+        out += '    code: "' + esc(it.code) + '",\\n';
+        out += '    name: "' + esc(it.name) + '",\\n';
+        out += '    short: "' + esc(it.short) + '",\\n';
+        out += '    subtitle: "' + esc(it.subtitle) + '",\\n';
+        out += '    file: "' + esc(it.file) + '",\\n';
+        out += '    updated: "' + esc(it.updated) + '",\\n';
+        out += '    guide: [\\n';
         it.guide.forEach((g, i2) => {
           out += '      "' + esc(g) + '"';
-          out += i2 < it.guide.length - 1 ? ',\n' : '\n';
+          out += i2 < it.guide.length - 1 ? ',\\n' : '\\n';
         });
-        out += '    ]\n';
-        out += idx < items.length - 1 ? '  },\n' : '  }\n';
+        out += '    ]\\n';
+        out += idx < items.length - 1 ? '  },\\n' : '  }\\n';
       });
-      out += '];\n';
+      out += '];\\n';
       document.getElementById('output').value = out;
     }
 
