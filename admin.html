@@ -106,7 +106,6 @@
       margin-top: 4px;
     }
     input[type="text"],
-    input[type="date"],
     textarea {
       width: 100%;
       padding: 5px 7px;
@@ -163,12 +162,25 @@
       color: #9ca3af;
       margin-top: 4px;
     }
+    footer {
+      position: fixed;
+      bottom: 6px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+    }
     @media (max-width: 960px) {
       .shell {
         grid-template-columns: minmax(0, 1fr);
       }
       #output {
         min-height: 220px;
+      }
+      footer {
+        position: static;
+        margin-top: 8px;
       }
     }
   </style>
@@ -178,8 +190,8 @@
     <section class="panel">
       <h1>Admin cấu hình Bảng kê</h1>
       <p class="small">
-        Thêm / sửa các bảng kê ở đây. Sau đó bấm “Tạo BANG_KE_LIST” và copy đoạn mã sang file
-        <code>index_onepage_bangke_theme_v4.html</code> (thay phần <b>BANG_KE_LIST</b> cũ).
+        Thêm / sửa các bảng kê ở đây. Sau đó copy đoạn <b>BANG_KE_LIST</b> bên phải
+        sang file <code>index.html</code> (dán đè phần BANG_KE_LIST cũ).
       </p>
 
       <button class="btn-main" type="button" onclick="addBK()">+ Thêm bảng kê</button>
@@ -190,18 +202,16 @@
     <section class="panel">
       <h2>Đoạn mã JS BANG_KE_LIST</h2>
       <p class="small">
-        Copy toàn bộ đoạn này, dán đè vào phần <code>const BANG_KE_LIST = [...]</code> trong file giao diện.
+        Copy toàn bộ đoạn này, dán đè vào phần <code>const BANG_KE_LIST = [...]</code> trong file <b>index.html</b>.
       </p>
       <textarea id="output" readonly></textarea>
       <p class="hint">
-        Gợi ý: bạn có thể lưu riêng đoạn này vào file <code>config-bangke.js</code> nếu muốn tách cấu hình.
+        Mỗi lần bạn thêm / sửa bảng kê, đoạn BANG_KE_LIST sẽ tự cập nhật.
       </p>
     </section>
   </main>
 
-  <footer style="margin-top:12px;text-align:center;font-size:11px;color:#6b7280;">
-    © baotg10
-  </footer>
+  <footer>© baotg10</footer>
 
   <script>
     function esc(str) {
@@ -213,6 +223,7 @@
 
     function addBK(data) {
       const list = document.getElementById('bkList');
+      const d = data || {};
 
       const wrap = document.createElement('div');
       wrap.className = 'bk';
@@ -223,10 +234,10 @@
       const titleBox = document.createElement('div');
       const t1 = document.createElement('div');
       t1.className = 'bk-title';
-      t1.textContent = data?.name || 'Bảng kê mới';
+      t1.textContent = d.name || 'Bảng kê mới';
       const t2 = document.createElement('div');
       t2.className = 'bk-sub';
-      t2.textContent = data?.id ? ('ID: ' + data.id) : 'Chưa có ID';
+      t2.textContent = d.id ? ('ID: ' + d.id) : 'Chưa có ID';
       titleBox.appendChild(t1);
       titleBox.appendChild(t2);
 
@@ -255,11 +266,11 @@
       rowIds.innerHTML = `
         <div>
           <label>ID (không dấu, không khoảng trắng)</label>
-          <input type="text" class="f-id" value="${data?.id || ''}" />
+          <input type="text" class="f-id" value="${d.id || ''}" />
         </div>
         <div>
           <label>Code hiển thị (ví dụ: LD, TH)</label>
-          <input type="text" class="f-code" value="${data?.code || ''}" />
+          <input type="text" class="f-code" value="${d.code || ''}" />
         </div>
       `;
       wrap.appendChild(rowIds);
@@ -267,11 +278,11 @@
       const rowNames = document.createElement('div');
       rowNames.innerHTML = `
         <label>Tên hiển thị (ví dụ: Bảng kê LD)</label>
-        <input type="text" class="f-name" value="${data?.name || ''}" />
+        <input type="text" class="f-name" value="${d.name || ''}" />
         <label>Mô tả ngắn (chip bên cạnh, ví dụ: Mẫu Excel LD)</label>
-        <input type="text" class="f-short" value="${data?.short || ''}" />
+        <input type="text" class="f-short" value="${d.short || ''}" />
         <label>Mô tả chi tiết (hiện khi bung nội dung)</label>
-        <input type="text" class="f-subtitle" value="${data?.subtitle || ''}" />
+        <input type="text" class="f-subtitle" value="${d.subtitle || ''}" />
       `;
       wrap.appendChild(rowNames);
 
@@ -280,11 +291,11 @@
       fileRow.innerHTML = `
         <div>
           <label>Tên file Excel (trên hosting, ví dụ: Bang_ke_LD.xlsx)</label>
-          <input type="text" class="f-file" value="${data?.file || ''}" />
+          <input type="text" class="f-file" value="${d.file || ''}" />
         </div>
         <div>
           <label>Ngày cập nhật (hiển trên từng bảng kê)</label>
-          <input type="text" class="f-updated" placeholder="dd/mm/yyyy" value="${data?.updated || ''}" />
+          <input type="text" class="f-updated" placeholder="dd/mm/yyyy" value="${d.updated || ''}" />
         </div>
       `;
 
@@ -307,7 +318,7 @@
       const guideBox = document.createElement('div');
       guideBox.innerHTML = `
         <label>Hướng dẫn (mỗi dòng là một gạch đầu dòng)</label>
-        <textarea class="f-guide">${data?.guide ? data.guide.join('\n') : ''}</textarea>
+        <textarea class="f-guide">${d.guide ? d.guide.join('\n') : ''}</textarea>
       `;
       wrap.appendChild(guideBox);
 
@@ -349,25 +360,25 @@
 
     function generate() {
       const items = collect();
-      let out = 'const BANG_KE_LIST = [\\n';
+      let out = 'const BANG_KE_LIST = [\n';
       items.forEach((it, idx) => {
-        out += '  {\\n';
-        out += '    id: "' + esc(it.id) + '",\\n';
-        out += '    code: "' + esc(it.code) + '",\\n';
-        out += '    name: "' + esc(it.name) + '",\\n';
-        out += '    short: "' + esc(it.short) + '",\\n';
-        out += '    subtitle: "' + esc(it.subtitle) + '",\\n';
-        out += '    file: "' + esc(it.file) + '",\\n';
-        out += '    updated: "' + esc(it.updated) + '",\\n';
-        out += '    guide: [\\n';
+        out += '  {\n';
+        out += '    id: "' + esc(it.id) + '",\n';
+        out += '    code: "' + esc(it.code) + '",\n';
+        out += '    name: "' + esc(it.name) + '",\n';
+        out += '    short: "' + esc(it.short) + '",\n';
+        out += '    subtitle: "' + esc(it.subtitle) + '",\n';
+        out += '    file: "' + esc(it.file) + '",\n';
+        out += '    updated: "' + esc(it.updated) + '",\n';
+        out += '    guide: [\n';
         it.guide.forEach((g, i2) => {
           out += '      "' + esc(g) + '"';
-          out += i2 < it.guide.length - 1 ? ',\\n' : '\\n';
+          out += i2 < it.guide.length - 1 ? ',\n' : '\n';
         });
-        out += '    ]\\n';
-        out += idx < items.length - 1 ? '  },\\n' : '  }\\n';
+        out += '    ]\n';
+        out += idx < items.length - 1 ? '  },\n' : '  }\n';
       });
-      out += '];\\n';
+      out += '];\n';
       document.getElementById('output').value = out;
     }
 
@@ -412,4 +423,3 @@
   </script>
 </body>
 </html>
-
