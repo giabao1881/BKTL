@@ -3,1228 +3,455 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bảng kê tính lãi</title>
+  <title>📊 Bảng Kê Tính Lãi</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                   "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
+      --card-bg: rgba(30, 41, 59, 0.8);
+      --card-border: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --success: #22c55e;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: #cbd5e1;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --accent: #2563eb;
+      --success: #16a34a;
     }
 
     body {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.25s ease, color 0.25s ease;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
     }
 
-    body[data-theme="dark"] {
-      --bg: radial-gradient(circle at 0% 0%, #020617, #020617 40%, #020617 100%);
-      --card: #020617;
-      --border: #1f2937;
-      --border-soft: #0f172a;
-      --border-strong: #374151;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --primary: #60a5fa;
-      --primary-soft: rgba(37,99,235,0.23);
-      --accent-green: #22c55e;
-      --accent-blue: #38bdf8;
-      --chip-bg: #020617;
-      --pill-bg: #020617;
-      --shadow-main: 0 28px 80px rgba(15,23,42,0.95);
-      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.15);
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
     }
 
-    body[data-theme="light"] {
-      --bg: #e5e7eb;
-      --card: #ffffff;
-      --border: #d4d4d8;
-      --border-soft: #e5e7eb;
-      --border-strong: #9ca3af;
-      --text: #020617;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-soft: rgba(37,99,235,0.10);
-      --accent-green: #16a34a;
-      --accent-blue: #2563eb;
-      --chip-bg: #f9fafb;
-      --pill-bg: #eef2ff;
-      --shadow-main: 0 22px 60px rgba(15,23,42,0.18);
-      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.08);
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
     }
 
-    .shell {
-      width: 100%;
-      max-width: 1040px;
+    .header h1 {
+      font-size: 3rem;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
     }
 
-    .panel {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(148, 163, 184, 0.22), transparent 60%),
-        radial-gradient(circle at 100% 0%, rgba(59,130,246,0.25), transparent 55%),
-        var(--card);
-      border-radius: 30px;
-      border: 1px solid var(--border-soft);
-      padding: 22px 22px 18px;
-      box-shadow: var(--shadow-main);
-    }
-
-    .panel-inner {
-      border-radius: 26px;
-      border: 1px solid var(--border);
-      padding: 18px 18px 14px;
-      background: radial-gradient(circle at top left, rgba(15,23,42,0.35), transparent 55%);
-      box-shadow: var(--shadow-inner);
-    }
-
-    body[data-theme="light"] .panel-inner {
-      background: linear-gradient(135deg, #ffffff, #f9fafb);
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .title-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .badge-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--muted);
-      background: var(--chip-bg);
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.28);
-    }
-
-    h1 {
-      font-size: 26px;
-      font-weight: 650;
-      letter-spacing: 0.01em;
-    }
-
-    .subtitle {
-      font-size: 14px;
-      color: var(--muted);
+    .header p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.18), transparent 55%);
-      cursor: pointer;
-      position: relative;
-      min-width: 190px;
-    }
-
-    .theme-pill {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      left: 4px;
-      width: calc(50% - 6px);
-      border-radius: 999px;
-      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.7), transparent 55%);
-      box-shadow: 0 12px 26px rgba(15,23,42,0.6);
-      transform: translateX(100%);
-      transition: transform 0.22s ease;
-    }
-
-    body[data-theme="light"] .theme-pill {
-      transform: translateX(0);
-    }
-
-    body[data-theme="dark"] .theme-pill {
-      transform: translateX(100%);
-    }
-
-    .theme-option {
-      position: relative;
-      z-index: 1;
-      flex: 1;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
 
-    .theme-option span.icon {
-      font-size: 17px;
+    .theme-toggle:hover {
+      transform: scale(1.1);
     }
 
-    .theme-option span.label {
-      white-space: nowrap;
+    .bangke-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
     }
 
-    /* Hướng dẫn cài đặt */
-    .setup-guide {
-      margin: 16px 0 20px;
+    .bangke-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 20px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.85);
-      padding: 16px 18px 14px;
-      transition: all 0.18s ease;
-    }
-
-    body[data-theme="light"] .setup-guide {
-      background: #ffffff;
-    }
-
-    .setup-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      margin-bottom: 8px;
-    }
-
-    .setup-title {
-      font-size: 16px;
-      font-weight: 620;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .setup-title-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #f97316, #ec4899);
-      font-size: 14px;
-      color: #fff;
-      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
-    }
-
-    .setup-chevron {
-      font-size: 18px;
-      color: var(--muted);
-      transition: transform 0.18s ease;
-    }
-
-    .setup-guide.active .setup-chevron {
-      transform: rotate(180deg);
-    }
-
-    .setup-content {
-      display: none;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border-strong);
-    }
-
-    .setup-guide.active .setup-content {
-      display: block;
-    }
-
-    .setup-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .setup-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .setup-section {
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.75);
-      padding: 14px 16px 12px;
-    }
-
-    body[data-theme="light"] .setup-section {
-      background: #f9fafb;
-    }
-
-    .setup-section-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .setup-section-title-icon {
-      font-size: 16px;
-    }
-
-    .setup-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .setup-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .setup-number {
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--primary-soft);
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 600;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .setup-text {
-      font-size: 13px;
-      color: var(--text);
-      flex: 1;
-    }
-
-    .setup-text strong {
-      color: var(--primary);
-    }
-
-    .setup-image {
-      margin-top: 8px;
-      border-radius: 10px;
-      border: 1px solid var(--border-soft);
-      overflow: hidden;
-      max-width: 300px;
-    }
-
-    .setup-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .setup-image-caption {
-      font-size: 11px;
-      color: var(--muted);
-      text-align: center;
-      padding: 6px 8px;
-      background: rgba(15,23,42,0.5);
-      border-top: 1px solid var(--border-soft);
-    }
-
-    .setup-note {
-      margin-top: 12px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: rgba(34,197,94,0.12);
-      border: 1px solid rgba(34,197,94,0.3);
-      font-size: 12px;
-      color: var(--accent-green);
-    }
-
-    .list {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .item {
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.85);
-      padding: 12px 14px 10px;
-      transition:
-        background 0.18s ease,
-        border-color 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.12s ease;
-    }
-
-    body[data-theme="light"] .item {
-      background: #ffffff;
-    }
-
-    .item-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
       cursor: pointer;
     }
 
-    .icon {
+    .bangke-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .bangke-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(96, 165, 250, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .card-icon {
       width: 60px;
       height: 60px;
-      border-radius: 18px;
+      border-radius: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.5rem;
       flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
     }
 
-    .icon::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: 0.18;
-      background: radial-gradient(circle at 0% 0%, #ffffff, transparent 60%);
+    .card-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
     }
 
-    .icon.ld {
-      background: linear-gradient(135deg, #22c55e, #a3e635);
+    .card-info .code {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
     }
 
-    .icon.the {
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
+    .card-description {
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 15px;
     }
 
-    .icon-inner {
-      position: relative;
+    .card-tags {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      color: #f9fafb;
-    }
-
-    .icon-code {
-      font-size: 18px;
-      font-weight: 750;
-      letter-spacing: 0.14em;
-    }
-
-    .icon-mini {
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    .text-box {
-      flex: 1;
-    }
-
-    .name-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       gap: 8px;
-    }
-
-    .name {
-      font-size: 16px;
-      font-weight: 620;
-    }
-
-    .chips {
-      margin-top: 6px;
-      display: flex;
+      margin-bottom: 15px;
       flex-wrap: wrap;
-      gap: 6px;
     }
 
-    .chip-pill {
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      background: var(--pill-bg);
-      color: var(--muted);
-      border: 1px solid var(--border);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
+    .tag {
+      background: rgba(96, 165, 250, 0.1);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(96, 165, 250, 0.3);
     }
 
-    .chip-color {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--accent-blue);
-    }
-
-    .chip-update {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.45);
-      border: 1px solid rgba(148,163,184,0.5);
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-      width: fit-content;
-    }
-
-    body[data-theme="light"] .chip-update {
-      background: #f3f4f6;
-      border-color: #e5e7eb;
-      color: #4b5563;
-    }
-
-    .chip-update-icon {
-      font-size: 13px;
-    }
-
-    .chevron {
-      font-size: 18px;
-      color: var(--muted);
-      transition: transform 0.18s ease;
-    }
-
-    .item.active {
-      border-color: var(--primary);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.75);
-      background: var(--primary-soft);
-      transform: translateY(-2px);
-    }
-
-    body[data-theme="light"] .item.active {
-      background: #eef2ff;
-    }
-
-    .item.active .chevron {
-      transform: rotate(180deg);
-    }
-
-    .extra {
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px dashed var(--border-strong);
-      display: none;
-    }
-
-    .extra.visible {
-      display: block;
-    }
-
-    .detail-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .actions {
+    .card-actions {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 6px;
     }
 
     .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 9px 15px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
+      gap: 8px;
       text-decoration: none;
-      white-space: nowrap;
     }
 
     .btn-primary {
-      background: var(--primary);
-      color: #ffffff;
-      box-shadow: 0 10px 28px rgba(37,99,235,0.5);
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     }
 
-    .btn-outline {
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+    }
+
+    .btn-secondary {
       background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border: 1px solid var(--card-border);
     }
 
-    .btn-guide {
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 8px 22px rgba(129,140,248,0.65);
+    .btn-secondary:hover {
+      background: rgba(148, 163, 184, 0.1);
     }
 
-    .btn-icon {
-      font-size: 16px;
-    }
-
-    .guide {
-      border-radius: 14px;
-      border: 1px solid var(--border-strong);
-      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.16), transparent 65%);
-      padding: 12px 12px 10px;
-      font-size: 12px;
-      color: var(--muted);
+    .card-details {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
       display: none;
-      margin-top: 8px;
     }
 
-    .guide.visible {
+    .card-details.active {
       display: block;
     }
 
-    .guide-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+    .guide-section {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 15px;
     }
 
-    .guide-header-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
+    .guide-section h4 {
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
-      font-size: 13px;
-      color: #fff;
-      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
-      flex-shrink: 0;
-    }
-
-    .guide-header-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
+      gap: 10px;
+      margin-bottom: 15px;
+      color: var(--accent);
     }
 
     .guide-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      list-style: none;
+      padding: 0;
     }
 
-    .guide-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: rgba(15,23,42,0.75);
-      border: 1px dashed var(--border-soft);
+    .guide-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      color: var(--text-secondary);
     }
 
-    body[data-theme="light"] .guide-row {
-      background: #f9fafb;
-      border-color: #e5e7eb;
+    .guide-list li:last-child {
+      border-bottom: none;
     }
 
-    .guide-bullet {
-      font-size: 14px;
-      margin-top: 2px;
-      flex-shrink: 0;
+    .guide-list li strong {
+      color: var(--text-primary);
     }
 
-    .guide-body {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .guide-body a {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-
-    .guide-body strong {
-      color: var(--text);
-    }
-
-    .guide-body img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-top: 4px;
-      display: block;
-    }
-
-    /* DONATE */
-    .donate-wrap {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    .donate-btn {
-      border: none;
-      border-radius: 999px;
-      padding: 6px 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
-      color: #fff7ed;
-      box-shadow: 0 10px 26px rgba(248,113,113,0.7);
-    }
-
-    .donate-btn-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(248,250,252,0.2);
-      font-size: 15px;
-      animation: wobble 1.6s ease-in-out infinite;
-    }
-
-    .donate-btn-text strong {
-      font-weight: 650;
-    }
-
-    @keyframes wobble {
-      0%   { transform: translateY(0); }
-      25%  { transform: translateY(-3px); }
-      50%  { transform: translateY(0); }
-      75%  { transform: translateY(-2px); }
-      100% { transform: translateY(0); }
-    }
-
-    .donate-modal {
+    .admin-link {
       position: fixed;
-      inset: 0;
-      background: rgba(15,23,42,0.78);
-      display: none;
+      bottom: 20px;
+      left: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 40;
-    }
-
-    .donate-modal.visible {
-      display: flex;
-    }
-
-    .donate-card {
-      width: 100%;
-      max-width: 360px;
-      background: #fce7f3;
-      border-radius: 24px;
-      padding: 16px 14px 14px;
-      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
-      position: relative;
-    }
-
-    .donate-close {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      border: none;
-      background: transparent;
-      font-size: 16px;
       cursor: pointer;
-      color: #be185d;
+      font-size: 1.2rem;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text-primary);
     }
 
-    .donate-title {
-      font-size: 15px;
-      font-weight: 650;
-      color: #9d174d;
-      text-align: center;
-      margin-bottom: 4px;
+    .admin-link:hover {
+      transform: scale(1.1);
     }
 
-    .donate-text {
-      font-size: 12px;
-      color: #9f1239;
-      text-align: center;
-      margin-bottom: 6px;
+    .update-badge {
+      background: var(--success);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      margin-left: 8px;
     }
 
-    .donate-qr {
-      background: #fdf2f8;
-      padding: 10px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 4px;
-    }
-
-    .donate-qr img {
-      max-width: 100%;
-      border-radius: 16px;
-      display: block;
-    }
-
-    .donate-note {
-      font-size: 11px;
-      color: #9f1239;
-      text-align: center;
-    }
-
-    footer {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    @media (max-width: 720px) {
-      body {
-        padding: 12px;
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
       }
-      .panel {
-        padding: 16px 12px 12px;
-        border-radius: 24px;
+      
+      .bangke-grid {
+        grid-template-columns: 1fr;
       }
-      .panel-inner {
-        padding: 14px 12px 10px;
-      }
-      h1 {
-        font-size: 22px;
-      }
-      .icon {
-        width: 54px;
-        height: 54px;
-      }
-      .setup-title {
-        font-size: 15px;
-      }
-      .setup-section {
-        padding: 12px 14px 10px;
+      
+      .card-actions {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body data-theme="dark">
-  <main class="shell">
-    <section class="panel">
-      <div class="panel-inner">
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  
+  <a href="admin.html" class="admin-link" title="Admin Panel">⚙️</a>
 
-        <div class="donate-wrap">
-          <button id="donateBtn" class="donate-btn" type="button">
-            <span class="donate-btn-icon">🎁</span>
-            <span class="donate-btn-text">
-              <strong>Ủng hộ</strong> cho bộ bảng kê
-            </span>
-          </button>
-        </div>
-
-        <header class="panel-header">
-          <div class="title-wrap">
-            <div class="badge-row">
-              <div class="badge">
-                <span class="dot"></span>
-                <span>Bộ bảng kê tính lãi</span>
-              </div>
-            </div>
-            <div>
-              <h1>Bảng kê</h1>
-              <p class="subtitle">Bấm vào từng bảng kê để hiện nút tải và hướng dẫn</p>
-            </div>
-          </div>
-
-          <button id="themeToggle" class="theme-toggle" type="button">
-            <div class="theme-pill"></div>
-            <div class="theme-option">
-              <span class="icon">🌞</span>
-              <span class="label">Sáng</span>
-            </div>
-            <div class="theme-option">
-              <span class="icon">🌙</span>
-              <span class="label">Tối</span>
-            </div>
-          </button>
-        </header>
-
-        <!-- Hướng dẫn cài đặt máy -->
-        <div class="setup-guide" id="setupGuide">
-          <div class="setup-header">
-            <div class="setup-title">
-              <div class="setup-title-icon">⚙️</div>
-              <span>Cài đặt máy trước khi sử dụng</span>
-            </div>
-            <div class="setup-chevron">▾</div>
-          </div>
-          <div class="setup-content">
-            <p class="setup-subtitle">Để đảm bảo các bảng kê Excel hoạt động chính xác, vui lòng thực hiện các bước cài đặt sau:</p>
-            
-            <div class="setup-list">
-              <!-- Phần 1: Điều chỉnh Control Panel -->
-              <div class="setup-section">
-                <div class="setup-section-title">
-                  <span class="setup-section-title-icon">🔧</span>
-                  <span>1. Điều chỉnh trong Control Panel</span>
-                </div>
-                <div class="setup-steps">
-                  <div class="setup-step">
-                    <div class="setup-number">1</div>
-                    <div class="setup-text">
-                      <strong>Bước 1:</strong> Dưới thanh Taskbar, bạn hãy bấm vào ký hiệu Windows (hình ô cửa sổ) và bấm chọn vào <strong>Control Panel</strong> hoặc tại ô tìm kiếm thì tìm kiếm "Control Panel".
-                      <div class="setup-image">
-                        <img src="media/image1.jpeg" alt="Vào Control Panel" />
-                        <div class="setup-image-caption">Vào ký hiệu Windows và bấm chọn vào Control Panel</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">2</div>
-                    <div class="setup-text">
-                      <strong>Bước 2:</strong> Chọn vào <strong>Clock and Region</strong>, sau đó chọn tiếp vào <strong>Region</strong>.
-                      <div class="setup-image">
-                        <img src="media/image2.jpeg" alt="Chọn Clock and Region" />
-                        <div class="setup-image-caption">Chọn vào Clock and Region, sau đó chọn tiếp vào Region</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">3</div>
-                    <div class="setup-text">
-                      <strong>Bước 3:</strong> Tại phần <strong>Format</strong> hãy chọn sang <strong>Vietnamese (Vietnam)</strong> là các định dạng thời gian sẽ chuyển sang dd/mm/yyyy.
-                      <div class="setup-image">
-                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format" />
-                        <div class="setup-image-caption">Tại phần Format hãy chọn sang Vietnamese (Vietnam)</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Phần 2: Điều chỉnh Excel -->
-              <div class="setup-section">
-                <div class="setup-section-title">
-                  <span class="setup-section-title-icon">📊</span>
-                  <span>2. Điều chỉnh trong Excel</span>
-                </div>
-                <div class="setup-steps">
-                  <div class="setup-step">
-                    <div class="setup-number">1</div>
-                    <div class="setup-text">
-                      <strong>Mở file Excel lên</strong>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">2</div>
-                    <div class="setup-text">
-                      <strong>Chọn FILE → OPTION → ADVANCED</strong> sau đó làm như hình dưới đây:
-                      <div class="setup-image">
-                        <img src="media/image4.png" alt="Cài đặt Excel" />
-                        <div class="setup-image-caption">Cài đặt định dạng số trong Excel</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">3</div>
-                    <div class="setup-text">
-                      <strong>"Chấm" dưới "phẩy" đó là dạng số của bạn chuyển sang "phẩy" phần ngàn.</strong> Nếu bạn muốn để "chấm" phần ngàn thì đổi ngược lại.
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">4</div>
-                    <div class="setup-text">
-                      <strong>Đổi xong thì bấm OK</strong>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="setup-note">
-              💡 <strong>Lưu ý quan trọng:</strong> Các bước cài đặt này cần thiết để đảm bảo bảng kê tính lãi hoạt động chính xác. Nếu gặp lỗi khi mở file, hãy kiểm tra lại các bước trên.
-            </div>
-          </div>
-        </div>
-
-        <div class="list" id="list"></div>
-      </div>
-    </section>
-
-    <div id="donateModal" class="donate-modal">
-      <div class="donate-card">
-        <button id="donateClose" class="donate-close" type="button">✕</button>
-        <div class="donate-title">Donate ủng hộ phát triển</div>
-        <p class="donate-text">
-          Nếu bạn thấy bộ bảng kê hữu ích, có thể ủng hộ mình một ly cà phê.
-        </p>
-        <div class="donate-qr">
-          <!-- Lưu ảnh QR thành momo_qr.png cạnh file index.html -->
-          <img src="momo_qr.png" alt="QR donate MoMo" />
-        </div>
-        <div class="donate-note">
-          Quét bằng MoMo hoặc app ngân hàng hỗ trợ VietQR.
-        </div>
-      </div>
+  <div class="container">
+    <div class="header">
+      <h1>📊 Bảng Kê Tính Lãi</h1>
+      <p>Công cụ quản lý và tính toán lãi suất chuyên nghiệp</p>
     </div>
 
-    <footer>© baotg10</footer>
-  </main>
+    <div class="bangke-grid" id="bangkeGrid">
+      <!-- Nội dung sẽ được thêm bằng JavaScript -->
+    </div>
+  </div>
 
   <script>
-   const BANG_KE_LIST = [
-    {
-      id: "ld",
-      code: "LD",
-      name: "Bảng kê tính lãi LD",
-      short: "Tính nhanh",
-      subtitle: "Có thể tính nhanh một lúc 10 LD và hơn thế nữa",
-      file: "BKTL_LD.xlsm",
-      updated: "10/11/2025",
-      guide: []
-    },
-    {
-      id: "the",
-      code: "TH",
-      name: "Bảng kê tính lãi Thẻ",
-      short: "Tính thẻ nhanh",
-      subtitle: "Tự động lọc thông tin tính nhanh thẻ",
-      file: "BKTL_THE.xlsm",
-      updated: "10/11/2025",
-      guide: []
-    }
-   ];
+    // Dữ liệu mẫu - sẽ được thay thế bằng BANG_KE_LIST từ admin
+    const BANG_KE_LIST = [
+      {
+        id: 'ld',
+        code: 'LD',
+        name: 'Bảng Kê LD',
+        short: 'Tính lãi LD',
+        subtitle: 'Bảng kê tính lãi tiền gửi có kỳ hạn chuyên nghiệp',
+        file: 'Bang_ke_LD.xlsm',
+        updated: '10/11/2025',
+        icon: '💰',
+        color: 'green',
+        guide: [
+          'Nhập thông tin kỳ hạn và số tiền gốc vào các ô màu xanh',
+          'Hệ thống tự động tính lãi suất theo ngày thực tế',
+          'Xem báo cáo chi tiết và tổng hợp cuối kỳ',
+          '<strong>Lưu ý:</strong> Không sửa các ô công thức màu vàng'
+        ]
+      },
+      {
+        id: 'the',
+        code: 'TH',
+        name: 'Bảng Kê Thẻ',
+        short: 'Quản lý thẻ',
+        subtitle: 'Theo dõi chi tiêu và tính lãi thẻ tín dụng',
+        file: 'Bang_ke_The.xlsm',
+        updated: '10/11/2025',
+        icon: '💳',
+        color: 'blue',
+        guide: [
+          'Nhập các giao dịch thẻ hàng ngày vào bảng chi tiết',
+          'Theo dõi hạn mức và dư nợ thực tế',
+          'Tự động tính lãi và phí phát sinh',
+          'Cảnh báo khi gần vượt hạn mức'
+        ]
+      }
+    ];
 
-    function renderList() {
-      const listEl = document.getElementById('list');
-      listEl.innerHTML = '';
+    // Màu sắc cho icon
+    const colorSchemes = {
+      green: 'linear-gradient(135deg, #22c55e, #16a34a)',
+      blue: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+      purple: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+      orange: 'linear-gradient(135deg, #f59e0b, #d97706)'
+    };
+
+    function renderBangKe() {
+      const grid = document.getElementById('bangkeGrid');
+      grid.innerHTML = '';
+
       BANG_KE_LIST.forEach(item => {
-        const wrap = document.createElement('div');
-        wrap.className = 'item';
-        wrap.dataset.id = item.id;
-
-        const header = document.createElement('div');
-        header.className = 'item-header';
-
-        const icon = document.createElement('div');
-        icon.className = 'icon ' + (item.id === 'the' ? 'the' : 'ld');
-
-        const iconInner = document.createElement('div');
-        iconInner.className = 'icon-inner';
-        const code = document.createElement('div');
-        code.className = 'icon-code';
-        code.textContent = item.code || '';
-        const mini = document.createElement('div');
-        mini.className = 'icon-mini';
-        mini.textContent = 'xlsm';
-        iconInner.appendChild(code);
-        iconInner.appendChild(mini);
-        icon.appendChild(iconInner);
-
-        const textBox = document.createElement('div');
-        textBox.className = 'text-box';
-
-        const nameRow = document.createElement('div');
-        nameRow.className = 'name-row';
-        const name = document.createElement('div');
-        name.className = 'name';
-        name.textContent = item.name || '';
-        const chevron = document.createElement('div');
-        chevron.className = 'chevron';
-        chevron.textContent = '▾';
-        nameRow.appendChild(name);
-        nameRow.appendChild(chevron);
-        textBox.appendChild(nameRow);
-
-        const chips = document.createElement('div');
-        chips.className = 'chips';
-        const chip1 = document.createElement('div');
-        chip1.className = 'chip-pill';
-        chip1.innerHTML = '<span class="chip-color"></span><span>Excel</span>';
-        const chip2 = document.createElement('div');
-        chip2.className = 'chip-pill';
-        chip2.textContent = item.short || '';
-        chips.appendChild(chip1);
-        chips.appendChild(chip2);
-        textBox.appendChild(chips);
-
-        if (item.updated) {
-          const up = document.createElement('div');
-          up.className = 'chip-update';
-          up.innerHTML = '<span class="chip-update-icon">🕒</span><span>Cập nhật: ' +
-            item.updated + '</span>';
-          textBox.appendChild(up);
-        }
-
-        header.appendChild(icon);
-        header.appendChild(textBox);
-
-        const extra = document.createElement('div');
-        extra.className = 'extra';
-
-        const subtitle = document.createElement('div');
-        subtitle.className = 'detail-subtitle';
-        subtitle.textContent = item.subtitle || '';
-        extra.appendChild(subtitle);
-
-        const actions = document.createElement('div');
-        actions.className = 'actions';
-
-        const download = document.createElement('a');
-        download.className = 'btn btn-primary';
-        download.href = item.file || '#';
-        download.setAttribute('download', '');
-        download.innerHTML = '<span class="btn-icon">⬇</span><span>Tải ' + (item.name || 'file') + '</span>';
-
-        const guideBtn = document.createElement('button');
-        guideBtn.type = 'button';
-        guideBtn.className = 'btn btn-outline btn-guide';
-        guideBtn.innerHTML = '<span class="btn-icon">📘</span><span>Hướng dẫn sử dụng</span>';
-
-        actions.appendChild(download);
-        actions.appendChild(guideBtn);
-        extra.appendChild(actions);
-
-        const guideBox = document.createElement('div');
-        guideBox.className = 'guide';
-
-        const gHeader = document.createElement('div');
-        gHeader.className = 'guide-header';
-        const gIcon = document.createElement('div');
-        gIcon.className = 'guide-header-icon';
-        gIcon.textContent = '💡';
-        const gTitle = document.createElement('div');
-        gTitle.className = 'guide-header-title';
-        gTitle.textContent = 'Hướng dẫn chi tiết';
-        gHeader.appendChild(gIcon);
-        gHeader.appendChild(gTitle);
-        guideBox.appendChild(gHeader);
-
-        const gList = document.createElement('div');
-        gList.className = 'guide-list';
-
-        (item.guide || []).forEach((line, i) => {
-          const row = document.createElement('div');
-          row.className = 'guide-row';
-
-          const bullet = document.createElement('div');
-          bullet.className = 'guide-bullet';
-          bullet.textContent = i === 0 ? '⭐' : '•';
-
-          const body = document.createElement('div');
-          body.className = 'guide-body';
-          body.innerHTML = line;
-
-          row.appendChild(bullet);
-          row.appendChild(body);
-          gList.appendChild(row);
-        });
-
-        guideBox.appendChild(gList);
-        extra.appendChild(guideBox);
-
-        wrap.appendChild(header);
-        wrap.appendChild(extra);
-
-        header.addEventListener('click', function () {
-          const isVisible = extra.classList.contains('visible');
-          document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
-          document.querySelectorAll('.extra').forEach(el => el.classList.remove('visible'));
-          document.querySelectorAll('.guide').forEach(el => el.classList.remove('visible'));
-          if (!isVisible) {
-            wrap.classList.add('active');
-            extra.classList.add('visible');
-          }
-        });
-
-        guideBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          guideBox.classList.toggle('visible');
-        });
-
-        listEl.appendChild(wrap);
+        const card = document.createElement('div');
+        card.className = 'bangke-card';
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon" style="background: ${colorSchemes[item.color]}">
+              ${item.icon}
+            </div>
+            <div class="card-info">
+              <h3>${item.name}</h3>
+              <div class="code">${item.code} • Excel</div>
+            </div>
+          </div>
+          
+          <div class="card-description">
+            ${item.subtitle}
+          </div>
+          
+          <div class="card-tags">
+            <div class="tag">${item.short}</div>
+            ${item.updated ? `<div class="tag">Cập nhật: ${item.updated}</div>` : ''}
+          </div>
+          
+          <div class="card-actions">
+            <a href="${item.file}" class="btn btn-primary" download>
+              <span>📥</span>
+              <span>Tải Xuống</span>
+            </a>
+            <button class="btn btn-secondary" onclick="toggleDetails(this)">
+              <span>📖</span>
+              <span>Hướng Dẫn</span>
+            </button>
+          </div>
+          
+          <div class="card-details">
+            <div class="guide-section">
+              <h4>
+                <span>💡</span>
+                <span>Hướng Dẫn Sử Dụng</span>
+              </h4>
+              <ul class="guide-list">
+                ${item.guide.map(step => `<li>${step}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
       });
     }
 
-    function applyTheme(theme) {
-      const t = theme === 'light' ? 'light' : 'dark';
-      document.body.setAttribute('data-theme', t);
-      try { localStorage.setItem('bangke-theme', t); } catch (e) {}
+    function toggleDetails(button) {
+      const card = button.closest('.bangke-card');
+      const details = card.querySelector('.card-details');
+      const isActive = details.classList.contains('active');
+      
+      // Đóng tất cả các card khác
+      document.querySelectorAll('.card-details').forEach(d => d.classList.remove('active'));
+      document.querySelectorAll('.bangke-card').forEach(c => c.classList.remove('active'));
+      
+      if (!isActive) {
+        details.classList.add('active');
+        card.classList.add('active');
+      }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      let saved = null;
-      try {
-        saved = localStorage.getItem('bangke-theme');
-      } catch (e) {}
-      if (saved === 'light' || saved === 'dark') {
-        applyTheme(saved);
-      } else {
-        applyTheme('dark');
-      }
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
+      
+      const themeToggle = document.querySelector('.theme-toggle');
+      themeToggle.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+      
+      localStorage.setItem('theme', newTheme);
+    }
 
-      renderList();
-
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const current = document.body.getAttribute('data-theme') || 'dark';
-        applyTheme(current === 'dark' ? 'light' : 'dark');
-      });
-
-      // Xử lý mở/đóng hướng dẫn cài đặt
-      const setupGuide = document.getElementById('setupGuide');
-      if (setupGuide) {
-        setupGuide.querySelector('.setup-header').addEventListener('click', function() {
-          setupGuide.classList.toggle('active');
-        });
-      }
-
-      const donateBtn = document.getElementById('donateBtn');
-      const donateModal = document.getElementById('donateModal');
-      const donateClose = document.getElementById('donateClose');
-
-      if (donateBtn && donateModal && donateClose) {
-        donateBtn.addEventListener('click', () => {
-          donateModal.classList.add('visible');
-        });
-        donateClose.addEventListener('click', () => {
-          donateModal.classList.remove('visible');
-        });
-        donateModal.addEventListener('click', (e) => {
-          if (e.target === donateModal) donateModal.classList.remove('visible');
-        });
-      }
+    // Khởi tạo theme từ localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const themeToggle = document.querySelector('.theme-toggle');
+      themeToggle.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+      
+      renderBangKe();
     });
   </script>
 </body>
