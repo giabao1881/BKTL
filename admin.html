@@ -3,530 +3,632 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>⚙️ Admin Bảng kê</title>
+  <title>⚙️ Admin Bảng Kê</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                   "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+    
     body {
       min-height: 100vh;
-      padding: 16px;
-      background: #020617;
-      color: #e5e7eb;
-      display: flex;
-      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #f1f5f9;
     }
-    .shell {
-      width: 100%;
-      max-width: 1120px;
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+    
+    .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
     }
-    .panel {
-      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.20), transparent 60%),
-                  #020617;
-      border-radius: 18px;
-      border: 1px solid #1f2937;
-      padding: 14px 14px 12px;
-      box-shadow: 0 18px 40px rgba(15,23,42,0.85);
+    
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
-    .panel h1, .panel h2 {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    
+    .card {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
-    h1 {
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-    h2 {
-      font-size: 14px;
-      margin: 4px 0 4px;
-    }
-    .small {
-      font-size: 12px;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-    .bk-list {
+    
+    .card h2 {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 10px;
-      margin-top: 4px;
-      max-height: calc(100vh - 160px);
-      overflow-y: auto;
-      padding-right: 4px;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #e2e8f0;
     }
-    .bk {
-      border-radius: 14px;
-      border: 1px solid #1f2937;
-      padding: 8px 10px 8px;
-      background: #020617;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.7);
+    
+    .form-group {
+      margin-bottom: 20px;
     }
-    .bk-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-    .bk-title {
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .bk-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      background: radial-gradient(circle at 0% 0%, #22c55e, #3b82f6);
-      box-shadow: 0 6px 14px rgba(59,130,246,0.7);
-      flex-shrink: 0;
-    }
-    .bk-sub {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-    .bk-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .tag {
-      font-size: 10px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: #0f172a;
-      border: 1px solid #1f2937;
-      color: #9ca3af;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .tag-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-    }
-    .btn-small {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid #4b5563;
-      background: #020617;
-      color: #e5e7eb;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .btn-small span.icon {
-      font-size: 13px;
-    }
-    label {
+    
+    .form-group label {
       display: block;
-      font-size: 11px;
-      color: #9ca3af;
-      margin-bottom: 2px;
-      margin-top: 4px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #cbd5e1;
+      font-size: 0.95rem;
     }
-    input[type="text"],
-    textarea {
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
-      padding: 5px 7px;
-      border-radius: 8px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 12px;
+      padding: 12px 16px;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      background: #1e293b;
+      color: #f1f5f9;
+      font-size: 1rem;
+      transition: all 0.3s ease;
     }
-    input[type="text"]:focus,
-    textarea:focus {
+    
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
       outline: none;
       border-color: #60a5fa;
-      box-shadow: 0 0 0 1px #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
     }
-    textarea {
-      min-height: 70px;
+    
+    .form-group textarea {
+      min-height: 100px;
       resize: vertical;
     }
-    .row-2 {
+    
+    .form-row {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 6px;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
     }
-    .file-row {
+    
+    .icon-preview {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      border: 2px solid;
+    }
+    
+    .color-options {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 6px;
-      align-items: center;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
     }
-    input[type="file"] {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-    .file-hint {
-      font-size: 10px;
-      color: #6b7280;
-      margin-top: 2px;
-    }
-    .btn-main {
-      margin-top: 8px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, #22c55e, #4ade80);
-      color: #052e16;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 10px 26px rgba(16,185,129,0.75);
-    }
-    .btn-main span.icon {
-      font-size: 15px;
-    }
-    #output {
+    
+    .color-option {
       width: 100%;
-      min-height: calc(100vh - 160px);
-      background: #020617;
+      height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .color-option.selected {
+      border-color: #fff;
+      transform: scale(1.05);
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
       border-radius: 10px;
-      border: 1px solid #1f2937;
-      padding: 8px 10px;
-      color: #e5e7eb;
-      font-size: 11px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      resize: none;
-    }
-    .hint {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-top: 4px;
-    }
-    .pill {
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      color: #9ca3af;
-      margin-bottom: 6px;
+      gap: 8px;
     }
-    .pill span.icon {
-      font-size: 13px;
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     }
-    footer {
-      position: fixed;
-      bottom: 6px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 11px;
-      color: #6b7280;
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
     }
-    @media (max-width: 960px) {
-      .shell {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      #output {
-        min-height: 220px;
-      }
-      footer {
-        position: static;
-        margin-top: 8px;
-      }
+    
+    .btn-secondary {
+      background: #475569;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #64748b;
+    }
+    
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    
+    .bangke-list {
+      display: grid;
+      gap: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
+    .bangke-item {
+      background: #334155;
+      border: 1px solid #475569;
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: between;
+      gap: 15px;
+    }
+    
+    .bangke-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    
+    .bangke-info {
+      flex: 1;
+    }
+    
+    .bangke-info h3 {
+      margin: 0 0 5px 0;
+      font-size: 1.1rem;
+    }
+    
+    .bangke-info p {
+      margin: 0;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+    
+    .bangke-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .code-output {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .instructions {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+    
+    .instructions h3 {
+      color: #60a5fa;
+      margin-bottom: 15px;
+    }
+    
+    .instructions ol {
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+    
+    .instructions li {
+      margin-bottom: 10px;
+    }
+    
+    .instructions code {
+      background: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #fbbf24;
     }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <!-- CỘT TRÁI: CẤU HÌNH -->
-    <section class="panel">
-      <h1><span>⚙️</span><span>Admin Bảng kê</span></h1>
-      <div class="pill">
-        <span class="icon">📘</span>
-        <span>Mỗi card = 1 bảng kê Excel (LD, Thẻ, ...)</span>
+  <div class="container">
+    <div class="header">
+      <h1>⚙️ Admin Bảng Kê</h1>
+      <p>Quản lý và tạo bảng kê Excel tự động</p>
+    </div>
+
+    <div class="grid">
+      <!-- Cột trái: Form thêm/sửa -->
+      <div class="card">
+        <h2>📝 Thêm Bảng Kê Mới</h2>
+        
+        <div class="form-group">
+          <label>ID (duy nhất, không dấu)</label>
+          <input type="text" id="bangkeId" placeholder="vd: ld, the, vay">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Mã hiển thị</label>
+            <input type="text" id="bangkeCode" placeholder="vd: LD, TH, VAY">
+          </div>
+          <div class="form-group">
+            <label>Tên bảng kê</label>
+            <input type="text" id="bangkeName" placeholder="vd: Bảng kê LD">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Mô tả ngắn</label>
+          <input type="text" id="bangkeShort" placeholder="vd: Tính lãi LD nhanh">
+        </div>
+
+        <div class="form-group">
+          <label>Mô tả chi tiết</label>
+          <textarea id="bangkeSubtitle" placeholder="Mô tả đầy đủ về bảng kê..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tên file Excel</label>
+            <input type="text" id="bangkeFile" placeholder="vd: Bang_ke_LD.xlsm">
+          </div>
+          <div class="form-group">
+            <label>Ngày cập nhật</label>
+            <input type="text" id="bangkeUpdated" placeholder="dd/mm/yyyy">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Icon & Màu sắc</label>
+          <div class="icon-preview" id="iconPreview">📊</div>
+          <input type="text" id="bangkeIcon" value="📊" placeholder="Chọn icon">
+          
+          <div class="color-options">
+            <div class="color-option selected" style="background: linear-gradient(135deg, #22c55e, #16a34a);" data-color="green"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #3b82f6, #2563eb);" data-color="blue"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);" data-color="purple"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #f59e0b, #d97706);" data-color="orange"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Hướng dẫn sử dụng (mỗi dòng = 1 bước)</label>
+          <textarea id="bangkeGuide" placeholder="Bước 1: Mở file Excel...
+Bước 2: Nhập dữ liệu...
+Bước 3: ..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-primary" onclick="addBangKe()">
+            <span>➕</span>
+            <span>Thêm Bảng Kê</span>
+          </button>
+          <button class="btn btn-secondary" onclick="clearForm()">
+            <span>🔄</span>
+            <span>Làm Mới</span>
+          </button>
+        </div>
       </div>
-      <p class="small">
-        Điền thông tin từng bảng kê bên dưới. Sau đó COPY đoạn <b>BANG_KE_LIST</b> ở cột phải
-        sang file <code>index.html</code> (dán đè phần cũ).
-      </p>
 
-      <button class="btn-main" type="button" onclick="addBK()">
-        <span class="icon">➕</span>
-        <span>Thêm bảng kê mới</span>
-      </button>
+      <!-- Cột phải: Danh sách và code -->
+      <div class="card">
+        <h2>📋 Danh Sách Bảng Kê</h2>
+        <div class="bangke-list" id="bangkeList">
+          <!-- Danh sách sẽ được thêm ở đây bằng JavaScript -->
+        </div>
 
-      <div class="bk-list" id="bkList"></div>
-    </section>
+        <h2 style="margin-top: 30px;">📦 Đoạn Mã BANG_KE_LIST</h2>
+        <div class="code-output" id="codeOutput">
+          // Code sẽ hiển thị ở đây
+        </div>
+        
+        <button class="btn btn-primary" onclick="copyCode()" style="margin-top: 15px; width: 100%;">
+          <span>📋</span>
+          <span>Sao Chép Code</span>
+        </button>
+      </div>
+    </div>
 
-    <!-- CỘT PHẢI: CODE BANG_KE_LIST -->
-    <section class="panel">
-      <h2><span>🧩</span><span>Đoạn mã JS BANG_KE_LIST</span></h2>
-      <p class="small">
-        Bấm vào ô bên dưới, nhấn <b>Ctrl + A</b> → <b>Ctrl + C</b> để copy toàn bộ.<br>
-        Dán đè vào phần <code>const BANG_KE_LIST = [...]</code> trong file <b>index.html</b>.
-      </p>
-      <textarea id="output" readonly></textarea>
-      <p class="hint">
-        💡 Gợi ý: Trong ô Hướng dẫn bạn có thể dùng HTML:
-        <code>&lt;strong&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code> để in đậm, chèn link, chèn hình.
-      </p>
-    </section>
-  </main>
-
-  <footer>© baotg10</footer>
+    <div class="instructions">
+      <h3>📖 Hướng Dẫn Sử Dụng</h3>
+      <ol>
+        <li>Điền đầy đủ thông tin bảng kê ở cột trái</li>
+        <li>Nhấn <strong>"Thêm Bảng Kê"</strong> để thêm vào danh sách</li>
+        <li>Nhấn <strong>"Sao Chép Code"</strong> để copy đoạn mã BANG_KE_LIST</li>
+        <li>Mở file <code>index.html</code> và thay thế phần <code>const BANG_KE_LIST</code> cũ bằng code mới</li>
+        <li>Upload file Excel lên cùng thư mục với file HTML</li>
+      </ol>
+    </div>
+  </div>
 
   <script>
-    // escape để sinh JS an toàn, vẫn giữ nguyên HTML (<, >)
-    function esc(str) {
-      return String(str)
-        .replace(/\\/g, "\\\\")
-        .replace(/"/g, "\\\"")
-        .replace(/\r?\n/g, "\\n");
-    }
+    let bangKeList = [];
+    let selectedColor = 'green';
 
-    function addBK(data) {
-      const list = document.getElementById('bkList');
-      const d = data || {};
+    // Màu sắc cho icon
+    const colorSchemes = {
+      green: 'linear-gradient(135deg, #22c55e, #16a34a)',
+      blue: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+      purple: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+      orange: 'linear-gradient(135deg, #f59e0b, #d97706)'
+    };
 
-      const wrap = document.createElement('div');
-      wrap.className = 'bk';
-
-      const header = document.createElement('div');
-      header.className = 'bk-header';
-
-      const titleBox = document.createElement('div');
-      const t1 = document.createElement('div');
-      t1.className = 'bk-title';
-
-      const tIcon = document.createElement('div');
-      tIcon.className = 'bk-icon';
-      tIcon.textContent = '📊';
-
-      const tName = document.createElement('span');
-      tName.textContent = d.name || 'Bảng kê mới';
-
-      t1.appendChild(tIcon);
-      t1.appendChild(tName);
-
-      const t2 = document.createElement('div');
-      t2.className = 'bk-sub';
-      t2.textContent = d.id ? ('ID: ' + d.id) : 'Chưa có ID';
-
-      titleBox.appendChild(t1);
-      titleBox.appendChild(t2);
-
-      const actions = document.createElement('div');
-      actions.className = 'bk-actions';
-
-      const tag = document.createElement('div');
-      tag.className = 'tag';
-      tag.innerHTML = '<span class="tag-dot"></span><span>Excel / xlsm</span>';
-
-      const btnDel = document.createElement('button');
-      btnDel.type = 'button';
-      btnDel.className = 'btn-small';
-      btnDel.innerHTML = '<span class="icon">🗑️</span><span>Xóa</span>';
-      btnDel.onclick = function () {
-        wrap.remove();
-        generate();
-      };
-
-      actions.appendChild(tag);
-      actions.appendChild(btnDel);
-
-      header.appendChild(titleBox);
-      header.appendChild(actions);
-      wrap.appendChild(header);
-
-      // Hàng ID + CODE
-      const rowIds = document.createElement('div');
-      rowIds.className = 'row-2';
-      rowIds.innerHTML = `
-        <div>
-          <label>ID (không dấu, không khoảng trắng)</label>
-          <input type="text" class="f-id" value="${d.id || ''}" />
-        </div>
-        <div>
-          <label>Code hiển thị (ví dụ: LD, TH)</label>
-          <input type="text" class="f-code" value="${d.code || ''}" />
-        </div>
-      `;
-      wrap.appendChild(rowIds);
-
-      // Tên + mô tả
-      const rowNames = document.createElement('div');
-      rowNames.innerHTML = `
-        <label>📝 Tên hiển thị (ví dụ: Bảng kê LD)</label>
-        <input type="text" class="f-name" value="${d.name || ''}" />
-        <label>🏷️ Mô tả ngắn (chip bên cạnh, ví dụ: Mẫu Excel LD)</label>
-        <input type="text" class="f-short" value="${d.short || ''}" />
-        <label>📄 Mô tả chi tiết (hiện khi bung nội dung)</label>
-        <input type="text" class="f-subtitle" value="${d.subtitle || ''}" />
-      `;
-      wrap.appendChild(rowNames);
-
-      // File + ngày cập nhật
-      const fileRow = document.createElement('div');
-      fileRow.className = 'file-row';
-      fileRow.innerHTML = `
-        <div>
-          <label>📂 Tên file Excel trên hosting (ví dụ: Bang_ke_LD.xlsm)</label>
-          <input type="text" class="f-file" value="${d.file || ''}" />
-          <div class="file-hint">Tên này phải trùng với file bạn upload lên cùng thư mục với index.html</div>
-        </div>
-        <div>
-          <label>📅 Ngày cập nhật (hiển trên từng bảng kê)</label>
-          <input type="text" class="f-updated" placeholder="dd/mm/yyyy" value="${d.updated || ''}" />
-        </div>
-      `;
-
-      // input file chỉ để lấy tên, không upload
-      const fileInput = document.createElement('input');
-      fileInput.type = 'file';
-      fileInput.accept = '.xlsx,.xlsm,.xls';
-      fileInput.onchange = function () {
-        if (fileInput.files[0]) {
-          fileRow.querySelector('.f-file').value = fileInput.files[0].name;
-          generate();
-        }
-      };
-      const fileInputWrap = document.createElement('div');
-      fileInputWrap.style.marginTop = '4px';
-      fileInputWrap.appendChild(fileInput);
-      fileRow.appendChild(fileInputWrap);
-
-      wrap.appendChild(fileRow);
-
-      // Hướng dẫn
-      const guideBox = document.createElement('div');
-      guideBox.innerHTML = `
-        <label>📘 Hướng dẫn  
-          <span style="font-weight:400;color:#6b7280;">(mỗi dòng = 1 bước, có thể dùng HTML: &lt;strong&gt;, &lt;a&gt;, &lt;img&gt;)</span>
-        </label>
-        <textarea class="f-guide">${d.guide ? d.guide.join('\n') : ''}</textarea>
-      `;
-      wrap.appendChild(guideBox);
-
-      list.appendChild(wrap);
-
-      // cập nhật tiêu đề + sinh code khi nhập
-      wrap.querySelectorAll('input,textarea').forEach(el => {
-        el.addEventListener('input', () => {
-          const nameVal = wrap.querySelector('.f-name').value.trim();
-          tName.textContent = nameVal || 'Bảng kê mới';
-          const idVal = wrap.querySelector('.f-id').value.trim();
-          t2.textContent = idVal ? ('ID: ' + idVal) : 'Chưa có ID';
-          generate();
+    // Khởi tạo
+    document.addEventListener('DOMContentLoaded', function() {
+      // Xử lý chọn màu
+      document.querySelectorAll('.color-option').forEach(option => {
+        option.addEventListener('click', function() {
+          document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedColor = this.getAttribute('data-color');
+          updateIconPreview();
         });
       });
 
-      generate();
-    }
+      // Xử lý thay đổi icon
+      document.getElementById('bangkeIcon').addEventListener('input', updateIconPreview);
 
-    function collect() {
-      const items = [];
-      document.querySelectorAll('.bk').forEach(wrap => {
-        const id = wrap.querySelector('.f-id').value.trim();
-        if (!id) return;
-        const code = wrap.querySelector('.f-code').value.trim();
-        const name = wrap.querySelector('.f-name').value.trim();
-        const short = wrap.querySelector('.f-short').value.trim();
-        const subtitle = wrap.querySelector('.f-subtitle').value.trim();
-        const file = wrap.querySelector('.f-file').value.trim();
-        const updated = wrap.querySelector('.f-updated').value.trim();
-        const guideRaw = wrap.querySelector('.f-guide').value;
-        const guide = guideRaw
-          .split(/\r?\n/)
-          .map(s => s.trim())
-          .filter(Boolean);
-        items.push({ id, code, name, short, subtitle, file, updated, guide });
-      });
-      return items;
-    }
-
-    function generate() {
-      const items = collect();
-      let out = 'const BANG_KE_LIST = [\n';
-      items.forEach((it, idx) => {
-        out += '  {\n';
-        out += '    id: "' + esc(it.id) + '",\n';
-        out += '    code: "' + esc(it.code) + '",\n';
-        out += '    name: "' + esc(it.name) + '",\n';
-        out += '    short: "' + esc(it.short) + '",\n';
-        out += '    subtitle: "' + esc(it.subtitle) + '",\n';
-        out += '    file: "' + esc(it.file) + '",\n';
-        out += '    updated: "' + esc(it.updated) + '",\n';
-        out += '    guide: [\n';
-        it.guide.forEach((g, i2) => {
-          out += '      "' + esc(g) + '"';
-          out += i2 < it.guide.length - 1 ? ',\n' : '\n';
-        });
-        out += '    ]\n';
-        out += idx < items.length - 1 ? '  },\n' : '  }\n';
-      });
-      out += '];\n';
-      document.getElementById('output').value = out;
-    }
-
-    function seedDefault() {
-      // Mặc định sẵn 2 bảng kê: LD và Thẻ
-      addBK({
-        id: 'ld',
-        code: 'LD',
-        name: 'Bảng kê LD',
-        short: 'Mẫu Excel LD',
-        subtitle: 'File Excel theo dõi và tính lãi dạng LD',
-        file: 'Bang_ke_LD.xlsm',
-        updated: '10/11/2025',
-        guide: [
-          'Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.',
-          'Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.',
-          '<strong>Không sửa trực tiếp</strong> các ô tổng, lãi, số dư đã có công thức.',
-          'Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.',
-          'Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu.'
-        ]
-      });
-      addBK({
-        id: 'the',
-        code: 'TH',
-        name: 'Bảng kê Thẻ',
-        short: 'Mẫu Excel Thẻ',
-        subtitle: 'File Excel theo dõi giao dịch và lãi theo thẻ',
-        file: 'Bang_ke_The.xlsm',
-        updated: '10/11/2025',
-        guide: [
-          'Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).',
-          'Ghi các giao dịch phát sinh đúng cột: chi tiêu, hoàn tiền, phí, v.v.',
-          'Các cột tính lãi, phí phạt và số dư cuối kỳ đã có sẵn công thức.',
-          'Có thể tách mỗi thẻ thành một sheet riêng để quản lý cho rõ ràng.',
-          'Nên lưu 1 bản gốc, thao tác trên bản sao để tránh hỏng công thức.'
-        ]
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      seedDefault();
+      // Thêm dữ liệu mẫu
+      addSampleData();
     });
+
+    function updateIconPreview() {
+      const icon = document.getElementById('bangkeIcon').value || '📊';
+      const preview = document.getElementById('iconPreview');
+      preview.textContent = icon;
+      preview.style.background = colorSchemes[selectedColor];
+    }
+
+    function addBangKe() {
+      const id = document.getElementById('bangkeId').value.trim();
+      const code = document.getElementById('bangkeCode').value.trim();
+      const name = document.getElementById('bangkeName').value.trim();
+      const short = document.getElementById('bangkeShort').value.trim();
+      const subtitle = document.getElementById('bangkeSubtitle').value.trim();
+      const file = document.getElementById('bangkeFile').value.trim();
+      const updated = document.getElementById('bangkeUpdated').value.trim();
+      const icon = document.getElementById('bangkeIcon').value.trim() || '📊';
+      const guideText = document.getElementById('bangkeGuide').value;
+
+      if (!id || !name || !file) {
+        alert('Vui lòng điền đầy đủ ID, Tên và File!');
+        return;
+      }
+
+      const guide = guideText.split('\n').filter(line => line.trim());
+
+      const bangKe = {
+        id,
+        code,
+        name,
+        short,
+        subtitle,
+        file,
+        updated,
+        icon,
+        color: selectedColor,
+        guide
+      };
+
+      bangKeList.push(bangKe);
+      renderBangKeList();
+      generateCode();
+      clearForm();
+    }
+
+    function renderBangKeList() {
+      const list = document.getElementById('bangkeList');
+      list.innerHTML = '';
+
+      bangKeList.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'bangke-item';
+        itemElement.innerHTML = `
+          <div class="bangke-icon" style="background: ${colorSchemes[item.color]}">
+            ${item.icon}
+          </div>
+          <div class="bangke-info">
+            <h3>${item.name}</h3>
+            <p>${item.file} • ${item.updated || 'Chưa cập nhật'}</p>
+          </div>
+          <div class="bangke-actions">
+            <button class="btn btn-secondary" onclick="editBangKe(${index})">✏️</button>
+            <button class="btn btn-danger" onclick="deleteBangKe(${index})">🗑️</button>
+          </div>
+        `;
+        list.appendChild(itemElement);
+      });
+    }
+
+    function deleteBangKe(index) {
+      if (confirm('Bạn có chắc muốn xóa bảng kê này?')) {
+        bangKeList.splice(index, 1);
+        renderBangKeList();
+        generateCode();
+      }
+    }
+
+    function editBangKe(index) {
+      const item = bangKeList[index];
+      
+      document.getElementById('bangkeId').value = item.id;
+      document.getElementById('bangkeCode').value = item.code;
+      document.getElementById('bangkeName').value = item.name;
+      document.getElementById('bangkeShort').value = item.short;
+      document.getElementById('bangkeSubtitle').value = item.subtitle;
+      document.getElementById('bangkeFile').value = item.file;
+      document.getElementById('bangkeUpdated').value = item.updated;
+      document.getElementById('bangkeIcon').value = item.icon;
+      document.getElementById('bangkeGuide').value = item.gide.join('\n');
+
+      // Chọn màu
+      selectedColor = item.color;
+      document.querySelectorAll('.color-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.getAttribute('data-color') === item.color);
+      });
+      updateIconPreview();
+
+      // Xóa item cũ và focus vào form
+      bangKeList.splice(index, 1);
+      renderBangKeList();
+      generateCode();
+      document.getElementById('bangkeId').focus();
+    }
+
+    function generateCode() {
+      const output = document.getElementById('codeOutput');
+      let code = 'const BANG_KE_LIST = [\n';
+      
+      bangKeList.forEach((item, index) => {
+        code += `  {\n`;
+        code += `    id: "${escapeString(item.id)}",\n`;
+        code += `    code: "${escapeString(item.code)}",\n`;
+        code += `    name: "${escapeString(item.name)}",\n`;
+        code += `    short: "${escapeString(item.short)}",\n`;
+        code += `    subtitle: "${escapeString(item.subtitle)}",\n`;
+        code += `    file: "${escapeString(item.file)}",\n`;
+        code += `    updated: "${escapeString(item.updated)}",\n`;
+        code += `    icon: "${escapeString(item.icon)}",\n`;
+        code += `    color: "${escapeString(item.color)}",\n`;
+        code += `    guide: [\n`;
+        
+        item.guide.forEach((line, lineIndex) => {
+          code += `      "${escapeString(line)}"`;
+          code += lineIndex < item.guide.length - 1 ? ',\n' : '\n';
+        });
+        
+        code += `    ]\n`;
+        code += index < bangKeList.length - 1 ? '  },\n' : '  }\n';
+      });
+      
+      code += '];';
+      output.textContent = code;
+    }
+
+    function escapeString(str) {
+      return str.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    }
+
+    function copyCode() {
+      const code = document.getElementById('codeOutput').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('✅ Đã sao chép code thành công!');
+      }).catch(() => {
+        alert('❌ Lỗi khi sao chép code');
+      });
+    }
+
+    function clearForm() {
+      document.getElementById('bangkeId').value = '';
+      document.getElementById('bangkeCode').value = '';
+      document.getElementById('bangkeName').value = '';
+      document.getElementById('bangkeShort').value = '';
+      document.getElementById('bangkeSubtitle').value = '';
+      document.getElementById('bangkeFile').value = '';
+      document.getElementById('bangkeUpdated').value = '';
+      document.getElementById('bangkeIcon').value = '📊';
+      document.getElementById('bangkeGuide').value = '';
+      selectedColor = 'green';
+      updateIconPreview();
+    }
+
+    function addSampleData() {
+      // Thêm dữ liệu mẫu
+      bangKeList = [
+        {
+          id: 'ld',
+          code: 'LD',
+          name: 'Bảng Kê LD',
+          short: 'Tính lãi LD',
+          subtitle: 'Bảng kê tính lãi tiền gửi có kỳ hạn',
+          file: 'Bang_ke_LD.xlsm',
+          updated: '10/11/2025',
+          icon: '💰',
+          color: 'green',
+          guide: [
+            'Nhập thông tin kỳ hạn và số tiền gốc',
+            'Hệ thống tự động tính lãi suất',
+            'Xem báo cáo chi tiết cuối kỳ'
+          ]
+        },
+        {
+          id: 'the',
+          code: 'TH',
+          name: 'Bảng Kê Thẻ',
+          short: 'Quản lý thẻ',
+          subtitle: 'Theo dõi chi tiêu và lãi thẻ tín dụng',
+          file: 'Bang_ke_The.xlsm',
+          updated: '10/11/2025',
+          icon: '💳',
+          color: 'blue',
+          guide: [
+            'Nhập các giao dịch thẻ hàng ngày',
+            'Theo dõi hạn mức và dư nợ',
+            'Tự động tính lãi và phí'
+          ]
+        }
+      ];
+      
+      renderBangKeList();
+      generateCode();
+    }
   </script>
 </body>
 </html>
