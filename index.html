@@ -438,6 +438,7 @@
       cursor: pointer;
     }
 
+    /* Cập nhật icon với màu sắc từ admin */
     .icon {
       width: 60px;
       height: 60px;
@@ -448,6 +449,7 @@
       flex-shrink: 0;
       position: relative;
       overflow: hidden;
+      font-size: 1.5rem;
     }
 
     .icon::before {
@@ -456,14 +458,6 @@
       inset: 0;
       opacity: 0.18;
       background: radial-gradient(circle at 0% 0%, #ffffff, transparent 60%);
-    }
-
-    .icon.ld {
-      background: linear-gradient(135deg, #22c55e, #a3e635);
-    }
-
-    .icon.the {
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
     }
 
     .icon-inner {
@@ -1066,55 +1060,54 @@
   <div class="image-overlay" id="imageOverlay" onclick="closeAllZoom()"></div>
 
   <script>
-   const BANG_KE_LIST = [
-  {
-    id: "ld",
-    code: "LD",
-    name: "Bảng Kê LD",
-    short: "Tính lãi LD",
-    subtitle: "Bảng kê tính lãi tiền gửi có kỳ hạn chuyên nghiệp",
-    file: "Bang_ke_LD.xlsm",
-    updated: "10/11/2025",
-    icon: "💰",
-    color: "green",
-    guide: [
-      "Nhập thông tin kỳ hạn và số tiền gốc vào các ô màu xanh",
-      "Hệ thống tự động tính lãi suất theo ngày thực tế",
-      "Xem báo cáo chi tiết và tổng hợp cuối kỳ",
-      "<strong>Lưu ý:</strong> Không sửa các ô công thức màu vàng"
-    ]
-  },
-  {
-    id: "the",
-    code: "TH",
-    name: "Bảng Kê Thẻ",
-    short: "Quản lý thẻ",
-    subtitle: "Theo dõi chi tiêu và tính lãi thẻ tín dụng",
-    file: "Bang_ke_The.xlsm",
-    updated: "10/11/2025",
-    icon: "💳",
-    color: "blue",
-    guide: [
-      "Nhập các giao dịch thẻ hàng ngày vào bảng chi tiết",
-      "Theo dõi hạn mức và dư nợ thực tế",
-      "Tự động tính lãi và phí phát sinh",
-      "Cảnh báo khi gần vượt hạn mức"
-    ]
-  },
-  {
-    id: "pd",
-    code: "PD",
-    name: "BKTL THẤU CHI (đang phát triển)",
-    short: "tính nhanh",
-    subtitle: "Đang phát triển",
-    file: "hihi",
-    updated: "Dự kiến tháng 12",
-    icon: "🎯",
-    color: "orange",
-    guide: [
-    ]
-  }
-];
+    // ==================== DÁN ĐOẠN CODE TỪ ADMIN VÀO ĐÂY ====================
+    const BANG_KE_LIST = [
+      {
+        id: "ld",
+        code: "LD",
+        name: "Bảng Kê LD",
+        short: "Tính lãi LD",
+        subtitle: "Bảng kê tính lãi tiền gửi có kỳ hạn chuyên nghiệp",
+        file: "Bang_ke_LD.xlsm",
+        updated: "10/11/2025",
+        icon: "💰",
+        color: "green",
+        guide: [
+          "Nhập thông tin kỳ hạn và số tiền gốc vào các ô màu xanh",
+          "Hệ thống tự động tính lãi suất theo ngày thực tế",
+          "Xem báo cáo chi tiết và tổng hợp cuối kỳ",
+          "<strong>Lưu ý:</strong> Không sửa các ô công thức màu vàng"
+        ]
+      },
+      {
+        id: "the",
+        code: "TH",
+        name: "Bảng Kê Thẻ",
+        short: "Quản lý thẻ",
+        subtitle: "Theo dõi chi tiêu và tính lãi thẻ tín dụng",
+        file: "Bang_ke_The.xlsm",
+        updated: "10/11/2025",
+        icon: "💳",
+        color: "blue",
+        guide: [
+          "Nhập các giao dịch thẻ hàng ngày vào bảng chi tiết",
+          "Theo dõi hạn mức và dư nợ thực tế",
+          "Tự động tính lãi và phí phát sinh",
+          "Cảnh báo khi gần vượt hạn mức"
+        ]
+      }
+    ];
+    // ==================== KẾT THÚC CODE TỪ ADMIN ====================
+
+    // Màu sắc cho icon (phải khớp với admin)
+    const colorSchemes = {
+      green: 'linear-gradient(135deg, #22c55e, #16a34a)',
+      blue: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+      purple: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+      orange: 'linear-gradient(135deg, #f59e0b, #d97706)',
+      pink: 'linear-gradient(135deg, #ec4899, #db2777)',
+      cyan: 'linear-gradient(135deg, #06b6d4, #0891b2)'
+    };
 
    // Hàm phóng to/thu nhỏ ảnh
    function toggleZoom(imageContainer) {
@@ -1169,20 +1162,11 @@
         const header = document.createElement('div');
         header.className = 'item-header';
 
+        // Icon với màu sắc từ admin
         const icon = document.createElement('div');
-        icon.className = 'icon ' + (item.id === 'the' ? 'the' : 'ld');
-
-        const iconInner = document.createElement('div');
-        iconInner.className = 'icon-inner';
-        const code = document.createElement('div');
-        code.className = 'icon-code';
-        code.textContent = item.code || '';
-        const mini = document.createElement('div');
-        mini.className = 'icon-mini';
-        mini.textContent = 'xlsm';
-        iconInner.appendChild(code);
-        iconInner.appendChild(mini);
-        icon.appendChild(iconInner);
+        icon.className = 'icon';
+        icon.style.background = colorSchemes[item.color] || colorSchemes.blue;
+        icon.innerHTML = item.icon || '📊';
 
         const textBox = document.createElement('div');
         textBox.className = 'text-box';
