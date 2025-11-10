@@ -332,18 +332,45 @@
       color: var(--primary);
     }
 
+    /* Cải tiến hiển thị ảnh */
     .setup-image {
       margin-top: 8px;
       border-radius: 10px;
       border: 1px solid var(--border-soft);
       overflow: hidden;
-      max-width: 300px;
+      max-width: 400px;
+      position: relative;
+      cursor: zoom-in;
+      transition: all 0.3s ease;
+      background: var(--card);
+    }
+
+    .setup-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .setup-image.zoomed {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1.2);
+      max-width: 90vw;
+      max-height: 90vh;
+      z-index: 1000;
+      cursor: zoom-out;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
 
     .setup-image img {
       width: 100%;
       height: auto;
       display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .setup-image.zoomed img {
+      transform: scale(1.1);
     }
 
     .setup-image-caption {
@@ -353,6 +380,22 @@
       padding: 6px 8px;
       background: rgba(15,23,42,0.5);
       border-top: 1px solid var(--border-soft);
+    }
+
+    .image-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 999;
+      cursor: zoom-out;
+    }
+
+    .image-overlay.active {
+      display: block;
     }
 
     .setup-note {
@@ -793,6 +836,12 @@
       max-width: 100%;
       border-radius: 16px;
       display: block;
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+    }
+
+    .donate-qr img:hover {
+      transform: scale(1.05);
     }
 
     .donate-note {
@@ -831,6 +880,11 @@
       }
       .setup-section {
         padding: 12px 14px 10px;
+      }
+      .setup-image.zoomed {
+        max-width: 95vw;
+        max-height: 95vh;
+        transform: translate(-50%, -50%) scale(1.1);
       }
     }
   </style>
@@ -900,8 +954,9 @@
                     <div class="setup-number">1</div>
                     <div class="setup-text">
                       <strong>Bước 1:</strong> Dưới thanh Taskbar, bạn hãy bấm vào ký hiệu Windows (hình ô cửa sổ) và bấm chọn vào <strong>Control Panel</strong> hoặc tại ô tìm kiếm thì tìm kiếm "Control Panel".
-                      <div class="setup-image">
-                        <img src="media/image1.jpeg" alt="Vào Control Panel" />
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image1.jpeg" alt="Vào Control Panel" 
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Vào Control Panel</small></div>';" />
                         <div class="setup-image-caption">Vào ký hiệu Windows và bấm chọn vào Control Panel</div>
                       </div>
                     </div>
@@ -911,8 +966,9 @@
                     <div class="setup-number">2</div>
                     <div class="setup-text">
                       <strong>Bước 2:</strong> Chọn vào <strong>Clock and Region</strong>, sau đó chọn tiếp vào <strong>Region</strong>.
-                      <div class="setup-image">
-                        <img src="media/image2.jpeg" alt="Chọn Clock and Region" />
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image2.jpeg" alt="Chọn Clock and Region" 
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Clock and Region</small></div>';" />
                         <div class="setup-image-caption">Chọn vào Clock and Region, sau đó chọn tiếp vào Region</div>
                       </div>
                     </div>
@@ -922,8 +978,9 @@
                     <div class="setup-number">3</div>
                     <div class="setup-text">
                       <strong>Bước 3:</strong> Tại phần <strong>Format</strong> hãy chọn sang <strong>Vietnamese (Vietnam)</strong> là các định dạng thời gian sẽ chuyển sang dd/mm/yyyy.
-                      <div class="setup-image">
-                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format" />
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format" 
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Vietnamese format</small></div>';" />
                         <div class="setup-image-caption">Tại phần Format hãy chọn sang Vietnamese (Vietnam)</div>
                       </div>
                     </div>
@@ -949,8 +1006,9 @@
                     <div class="setup-number">2</div>
                     <div class="setup-text">
                       <strong>Chọn FILE → OPTION → ADVANCED</strong> sau đó làm như hình dưới đây:
-                      <div class="setup-image">
-                        <img src="media/image4.png" alt="Cài đặt Excel" />
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image4.png" alt="Cài đặt Excel" 
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Cài đặt Excel</small></div>';" />
                         <div class="setup-image-caption">Cài đặt định dạng số trong Excel</div>
                       </div>
                     </div>
@@ -991,8 +1049,9 @@
           Nếu bạn thấy bộ bảng kê hữu ích, có thể ủng hộ mình một ly cà phê.
         </p>
         <div class="donate-qr">
-          <!-- Lưu ảnh QR thành momo_qr.png cạnh file index.html -->
-          <img src="momo_qr.png" alt="QR donate MoMo" />
+          <img src="momo_qr.png" alt="QR donate MoMo" 
+               onclick="zoomQR(this)"
+               onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:#9f1239; background:#fdf2f8; border-radius:16px;\'>📷 QR Code sẽ hiển thị tại đây<br><small>Upload file momo_qr.png lên GitHub</small></div>';" />
         </div>
         <div class="donate-note">
           Quét bằng MoMo hoặc app ngân hàng hỗ trợ VietQR.
@@ -1002,6 +1061,9 @@
 
     <footer>© baotg10</footer>
   </main>
+
+  <!-- Overlay cho ảnh phóng to -->
+  <div class="image-overlay" id="imageOverlay" onclick="closeAllZoom()"></div>
 
   <script>
    const BANG_KE_LIST = [
@@ -1026,6 +1088,48 @@
       guide: []
     }
    ];
+
+   // Hàm phóng to/thu nhỏ ảnh
+   function toggleZoom(imageContainer) {
+     const isZoomed = imageContainer.classList.contains('zoomed');
+     
+     if (!isZoomed) {
+       // Phóng to
+       imageContainer.classList.add('zoomed');
+       document.getElementById('imageOverlay').classList.add('active');
+       document.body.style.overflow = 'hidden';
+     } else {
+       // Thu nhỏ
+       closeAllZoom();
+     }
+   }
+
+   // Hàm phóng to QR code
+   function zoomQR(qrImage) {
+     const qrContainer = qrImage.parentElement;
+     qrContainer.style.transform = 'scale(1.2)';
+     qrContainer.style.transition = 'transform 0.3s ease';
+     
+     setTimeout(() => {
+       qrContainer.style.transform = 'scale(1)';
+     }, 2000);
+   }
+
+   // Hàm đóng tất cả ảnh phóng to
+   function closeAllZoom() {
+     document.querySelectorAll('.setup-image.zoomed').forEach(img => {
+       img.classList.remove('zoomed');
+     });
+     document.getElementById('imageOverlay').classList.remove('active');
+     document.body.style.overflow = 'auto';
+   }
+
+   // Đóng ảnh phóng to khi nhấn ESC
+   document.addEventListener('keydown', function(e) {
+     if (e.key === 'Escape') {
+       closeAllZoom();
+     }
+   });
 
     function renderList() {
       const listEl = document.getElementById('list');
