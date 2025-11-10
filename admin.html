@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bảng kê tính lãi</title>
+  <title>⚙️ Admin Bảng kê</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,1219 +12,520 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont,
                    "Segoe UI", sans-serif;
     }
-
     body {
       min-height: 100vh;
+      padding: 16px;
+      background: #020617;
+      color: #e5e7eb;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 24px;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.25s ease, color 0.25s ease;
     }
-
-    body[data-theme="dark"] {
-      --bg: radial-gradient(circle at 0% 0%, #020617, #020617 40%, #020617 100%);
-      --card: #020617;
-      --border: #1f2937;
-      --border-soft: #0f172a;
-      --border-strong: #374151;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --primary: #60a5fa;
-      --primary-soft: rgba(37,99,235,0.23);
-      --accent-green: #22c55e;
-      --accent-blue: #38bdf8;
-      --chip-bg: #020617;
-      --pill-bg: #020617;
-      --shadow-main: 0 28px 80px rgba(15,23,42,0.95);
-      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.15);
-    }
-
-    body[data-theme="light"] {
-      --bg: #e5e7eb;
-      --card: #ffffff;
-      --border: #d4d4d8;
-      --border-soft: #e5e7eb;
-      --border-strong: #9ca3af;
-      --text: #020617;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-soft: rgba(37,99,235,0.10);
-      --accent-green: #16a34a;
-      --accent-blue: #2563eb;
-      --chip-bg: #f9fafb;
-      --pill-bg: #eef2ff;
-      --shadow-main: 0 22px 60px rgba(15,23,42,0.18);
-      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.08);
-    }
-
     .shell {
       width: 100%;
-      max-width: 1040px;
+      max-width: 1120px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 16px;
     }
-
     .panel {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(148, 163, 184, 0.22), transparent 60%),
-        radial-gradient(circle at 100% 0%, rgba(59,130,246,0.25), transparent 55%),
-        var(--card);
-      border-radius: 30px;
-      border: 1px solid var(--border-soft);
-      padding: 22px 22px 18px;
-      box-shadow: var(--shadow-main);
-    }
-
-    .panel-inner {
-      border-radius: 26px;
-      border: 1px solid var(--border);
-      padding: 18px 18px 14px;
-      background: radial-gradient(circle at top left, rgba(15,23,42,0.35), transparent 55%);
-      box-shadow: var(--shadow-inner);
-    }
-
-    body[data-theme="light"] .panel-inner {
-      background: linear-gradient(135deg, #ffffff, #f9fafb);
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .title-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .badge-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--muted);
-      background: var(--chip-bg);
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.28);
-    }
-
-    h1 {
-      font-size: 26px;
-      font-weight: 650;
-      letter-spacing: 0.01em;
-    }
-
-    .subtitle {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.18), transparent 55%);
-      cursor: pointer;
-      position: relative;
-      min-width: 190px;
-    }
-
-    .theme-pill {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      left: 4px;
-      width: calc(50% - 6px);
-      border-radius: 999px;
-      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.7), transparent 55%);
-      box-shadow: 0 12px 26px rgba(15,23,42,0.6);
-      transform: translateX(100%);
-      transition: transform 0.22s ease;
-    }
-
-    body[data-theme="light"] .theme-pill {
-      transform: translateX(0);
-    }
-
-    body[data-theme="dark"] .theme-pill {
-      transform: translateX(100%);
-    }
-
-    .theme-option {
-      position: relative;
-      z-index: 1;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .theme-option span.icon {
-      font-size: 17px;
-    }
-
-    .theme-option span.label {
-      white-space: nowrap;
-    }
-
-    /* Hướng dẫn cài đặt */
-    .setup-guide {
-      margin: 16px 0 20px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.85);
-      padding: 16px 18px 14px;
-      transition: all 0.18s ease;
-    }
-
-    body[data-theme="light"] .setup-guide {
-      background: #ffffff;
-    }
-
-    .setup-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      margin-bottom: 8px;
-    }
-
-    .setup-title {
-      font-size: 16px;
-      font-weight: 620;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .setup-title-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #f97316, #ec4899);
-      font-size: 14px;
-      color: #fff;
-      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
-    }
-
-    .setup-chevron {
-      font-size: 18px;
-      color: var(--muted);
-      transition: transform 0.18s ease;
-    }
-
-    .setup-guide.active .setup-chevron {
-      transform: rotate(180deg);
-    }
-
-    .setup-content {
-      display: none;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border-strong);
-    }
-
-    .setup-guide.active .setup-content {
-      display: block;
-    }
-
-    .setup-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .setup-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .setup-section {
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.75);
-      padding: 14px 16px 12px;
-    }
-
-    body[data-theme="light"] .setup-section {
-      background: #f9fafb;
-    }
-
-    .setup-section-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .setup-section-title-icon {
-      font-size: 16px;
-    }
-
-    .setup-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .setup-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .setup-number {
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--primary-soft);
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 600;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .setup-text {
-      font-size: 13px;
-      color: var(--text);
-      flex: 1;
-    }
-
-    .setup-text strong {
-      color: var(--primary);
-    }
-
-    .setup-image {
-      margin-top: 8px;
-      border-radius: 10px;
-      border: 1px solid var(--border-soft);
-      overflow: hidden;
-      max-width: 300px;
-    }
-
-    .setup-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .setup-image-caption {
-      font-size: 11px;
-      color: var(--muted);
-      text-align: center;
-      padding: 6px 8px;
-      background: rgba(15,23,42,0.5);
-      border-top: 1px solid var(--border-soft);
-    }
-
-    .setup-note {
-      margin-top: 12px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: rgba(34,197,94,0.12);
-      border: 1px solid rgba(34,197,94,0.3);
-      font-size: 12px;
-      color: var(--accent-green);
-    }
-
-    .list {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .item {
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.85);
-      padding: 12px 14px 10px;
-      transition:
-        background 0.18s ease,
-        border-color 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.12s ease;
-    }
-
-    body[data-theme="light"] .item {
-      background: #ffffff;
-    }
-
-    .item-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-    }
-
-    .icon {
-      width: 60px;
-      height: 60px;
+      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.20), transparent 60%),
+                  #020617;
       border-radius: 18px;
-      display: flex;
+      border: 1px solid #1f2937;
+      padding: 14px 14px 12px;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.85);
+    }
+    .panel h1, .panel h2 {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
+      gap: 6px;
     }
-
-    .icon::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: 0.18;
-      background: radial-gradient(circle at 0% 0%, #ffffff, transparent 60%);
+    h1 {
+      font-size: 18px;
+      margin-bottom: 6px;
     }
-
-    .icon.ld {
-      background: linear-gradient(135deg, #22c55e, #a3e635);
+    h2 {
+      font-size: 14px;
+      margin: 4px 0 4px;
     }
-
-    .icon.the {
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
+    .small {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 6px;
     }
-
-    .icon-inner {
-      position: relative;
+    .bk-list {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 0;
-      color: #f9fafb;
+      gap: 10px;
+      margin-top: 4px;
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
+      padding-right: 4px;
     }
-
-    .icon-code {
-      font-size: 18px;
-      font-weight: 750;
-      letter-spacing: 0.14em;
+    .bk {
+      border-radius: 14px;
+      border: 1px solid #1f2937;
+      padding: 8px 10px 8px;
+      background: #020617;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.7);
     }
-
-    .icon-mini {
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    .text-box {
-      flex: 1;
-    }
-
-    .name-row {
+    .bk-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      margin-bottom: 6px;
     }
-
-    .name {
-      font-size: 16px;
-      font-weight: 620;
-    }
-
-    .chips {
-      margin-top: 6px;
+    .bk-title {
+      font-size: 13px;
+      font-weight: 600;
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 6px;
     }
-
-    .chip-pill {
-      padding: 3px 8px;
+    .bk-icon {
+      width: 22px;
+      height: 22px;
       border-radius: 999px;
-      font-size: 11px;
-      background: var(--pill-bg);
-      color: var(--muted);
-      border: 1px solid var(--border);
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
+      font-size: 13px;
+      background: radial-gradient(circle at 0% 0%, #22c55e, #3b82f6);
+      box-shadow: 0 6px 14px rgba(59,130,246,0.7);
+      flex-shrink: 0;
     }
-
-    .chip-color {
-      width: 7px;
-      height: 7px;
+    .bk-sub {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .bk-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tag {
+      font-size: 10px;
+      padding: 2px 7px;
       border-radius: 999px;
-      background: var(--accent-blue);
-    }
-
-    .chip-update {
+      background: #0f172a;
+      border: 1px solid #1f2937;
+      color: #9ca3af;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 2px 8px;
+    }
+    .tag-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
-      background: rgba(15,23,42,0.45);
-      border: 1px solid rgba(148,163,184,0.5);
+      background: #22c55e;
+    }
+    .btn-small {
       font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-      width: fit-content;
-    }
-
-    body[data-theme="light"] .chip-update {
-      background: #f3f4f6;
-      border-color: #e5e7eb;
-      color: #4b5563;
-    }
-
-    .chip-update-icon {
-      font-size: 13px;
-    }
-
-    .chevron {
-      font-size: 18px;
-      color: var(--muted);
-      transition: transform 0.18s ease;
-    }
-
-    .item.active {
-      border-color: var(--primary);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.75);
-      background: var(--primary-soft);
-      transform: translateY(-2px);
-    }
-
-    body[data-theme="light"] .item.active {
-      background: #eef2ff;
-    }
-
-    .item.active .chevron {
-      transform: rotate(180deg);
-    }
-
-    .extra {
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px dashed var(--border-strong);
-      display: none;
-    }
-
-    .extra.visible {
-      display: block;
-    }
-
-    .detail-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    .btn {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 9px 15px;
-      border-radius: 999px;
+      gap: 4px;
+    }
+    .btn-small span.icon {
       font-size: 13px;
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
     }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #ffffff;
-      box-shadow: 0 10px 28px rgba(37,99,235,0.5);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    .btn-guide {
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 8px 22px rgba(129,140,248,0.65);
-    }
-
-    .btn-icon {
-      font-size: 16px;
-    }
-
-    .guide {
-      border-radius: 14px;
-      border: 1px solid var(--border-strong);
-      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.16), transparent 65%);
-      padding: 12px 12px 10px;
-      font-size: 12px;
-      color: var(--muted);
-      display: none;
-      margin-top: 8px;
-    }
-
-    .guide.visible {
+    label {
       display: block;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 2px;
+      margin-top: 4px;
     }
-
-    .guide-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .guide-header-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
-      font-size: 13px;
-      color: #fff;
-      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
-      flex-shrink: 0;
-    }
-
-    .guide-header-title {
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 5px 7px;
+      border-radius: 8px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: #e5e7eb;
       font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
     }
-
-    .guide-list {
-      display: flex;
-      flex-direction: column;
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 1px #60a5fa;
+    }
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+    .row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 6px;
     }
-
-    .guide-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: rgba(15,23,42,0.75);
-      border: 1px dashed var(--border-soft);
-    }
-
-    body[data-theme="light"] .guide-row {
-      background: #f9fafb;
-      border-color: #e5e7eb;
-    }
-
-    .guide-bullet {
-      font-size: 14px;
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-
-    .guide-body {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .guide-body a {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-
-    .guide-body strong {
-      color: var(--text);
-    }
-
-    .guide-body img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-top: 4px;
-      display: block;
-    }
-
-    /* DONATE */
-    .donate-wrap {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    .donate-btn {
-      border: none;
-      border-radius: 999px;
-      padding: 6px 14px;
-      display: inline-flex;
+    .file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 6px;
       align-items: center;
-      gap: 8px;
+    }
+    input[type="file"] {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .file-hint {
+      font-size: 10px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .btn-main {
+      margin-top: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #22c55e, #4ade80);
+      color: #052e16;
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
-      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
-      color: #fff7ed;
-      box-shadow: 0 10px 26px rgba(248,113,113,0.7);
-    }
-
-    .donate-btn-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      background: rgba(248,250,252,0.2);
+      gap: 6px;
+      box-shadow: 0 10px 26px rgba(16,185,129,0.75);
+    }
+    .btn-main span.icon {
       font-size: 15px;
-      animation: wobble 1.6s ease-in-out infinite;
     }
-
-    .donate-btn-text strong {
-      font-weight: 650;
-    }
-
-    @keyframes wobble {
-      0%   { transform: translateY(0); }
-      25%  { transform: translateY(-3px); }
-      50%  { transform: translateY(0); }
-      75%  { transform: translateY(-2px); }
-      100% { transform: translateY(0); }
-    }
-
-    .donate-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(15,23,42,0.78);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 40;
-    }
-
-    .donate-modal.visible {
-      display: flex;
-    }
-
-    .donate-card {
+    #output {
       width: 100%;
-      max-width: 360px;
-      background: #fce7f3;
-      border-radius: 24px;
-      padding: 16px 14px 14px;
-      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
-      position: relative;
+      min-height: calc(100vh - 160px);
+      background: #020617;
+      border-radius: 10px;
+      border: 1px solid #1f2937;
+      padding: 8px 10px;
+      color: #e5e7eb;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      resize: none;
     }
-
-    .donate-close {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      border: none;
-      background: transparent;
-      font-size: 16px;
-      cursor: pointer;
-      color: #be185d;
+    .hint {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
     }
-
-    .donate-title {
-      font-size: 15px;
-      font-weight: 650;
-      color: #9d174d;
-      text-align: center;
-      margin-bottom: 4px;
-    }
-
-    .donate-text {
-      font-size: 12px;
-      color: #9f1239;
-      text-align: center;
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: #9ca3af;
       margin-bottom: 6px;
     }
-
-    .donate-qr {
-      background: #fdf2f8;
-      padding: 10px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 4px;
+    .pill span.icon {
+      font-size: 13px;
     }
-
-    .donate-qr img {
-      max-width: 100%;
-      border-radius: 16px;
-      display: block;
-    }
-
-    .donate-note {
-      font-size: 11px;
-      color: #9f1239;
-      text-align: center;
-    }
-
     footer {
-      margin-top: 10px;
+      position: fixed;
+      bottom: 6px;
+      left: 0;
+      right: 0;
       text-align: center;
       font-size: 11px;
-      color: var(--muted);
+      color: #6b7280;
     }
-
-    @media (max-width: 720px) {
-      body {
-        padding: 12px;
+    @media (max-width: 960px) {
+      .shell {
+        grid-template-columns: minmax(0, 1fr);
       }
-      .panel {
-        padding: 16px 12px 12px;
-        border-radius: 24px;
+      #output {
+        min-height: 220px;
       }
-      .panel-inner {
-        padding: 14px 12px 10px;
-      }
-      h1 {
-        font-size: 22px;
-      }
-      .icon {
-        width: 54px;
-        height: 54px;
-      }
-      .setup-title {
-        font-size: 15px;
-      }
-      .setup-section {
-        padding: 12px 14px 10px;
+      footer {
+        position: static;
+        margin-top: 8px;
       }
     }
   </style>
 </head>
-<body data-theme="dark">
+<body>
   <main class="shell">
+    <!-- CỘT TRÁI: CẤU HÌNH -->
     <section class="panel">
-      <div class="panel-inner">
-
-        <div class="donate-wrap">
-          <button id="donateBtn" class="donate-btn" type="button">
-            <span class="donate-btn-icon">🎁</span>
-            <span class="donate-btn-text">
-              <strong>Ủng hộ</strong> cho bộ bảng kê
-            </span>
-          </button>
-        </div>
-
-        <header class="panel-header">
-          <div class="title-wrap">
-            <div class="badge-row">
-              <div class="badge">
-                <span class="dot"></span>
-                <span>Bộ bảng kê tính lãi</span>
-              </div>
-            </div>
-            <div>
-              <h1>Bảng kê</h1>
-              <p class="subtitle">Bấm vào từng bảng kê để hiện nút tải và hướng dẫn</p>
-            </div>
-          </div>
-
-          <button id="themeToggle" class="theme-toggle" type="button">
-            <div class="theme-pill"></div>
-            <div class="theme-option">
-              <span class="icon">🌞</span>
-              <span class="label">Sáng</span>
-            </div>
-            <div class="theme-option">
-              <span class="icon">🌙</span>
-              <span class="label">Tối</span>
-            </div>
-          </button>
-        </header>
-
-        <!-- Hướng dẫn cài đặt máy -->
-        <div class="setup-guide" id="setupGuide">
-          <div class="setup-header">
-            <div class="setup-title">
-              <div class="setup-title-icon">⚙️</div>
-              <span>Cài đặt máy trước khi sử dụng</span>
-            </div>
-            <div class="setup-chevron">▾</div>
-          </div>
-          <div class="setup-content">
-            <p class="setup-subtitle">Để đảm bảo các bảng kê Excel hoạt động chính xác, vui lòng thực hiện các bước cài đặt sau:</p>
-            
-            <div class="setup-list">
-              <!-- Phần 1: Điều chỉnh Control Panel -->
-              <div class="setup-section">
-                <div class="setup-section-title">
-                  <span class="setup-section-title-icon">🔧</span>
-                  <span>1. Điều chỉnh trong Control Panel</span>
-                </div>
-                <div class="setup-steps">
-                  <div class="setup-step">
-                    <div class="setup-number">1</div>
-                    <div class="setup-text">
-                      <strong>Bước 1:</strong> Dưới thanh Taskbar, bạn hãy bấm vào ký hiệu Windows (hình ô cửa sổ) và bấm chọn vào <strong>Control Panel</strong> hoặc tại ô tìm kiếm thì tìm kiếm "Control Panel".
-                      <div class="setup-image">
-                        <img src="media/image1.jpeg" alt="Vào Control Panel" />
-                        <div class="setup-image-caption">Vào ký hiệu Windows và bấm chọn vào Control Panel</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">2</div>
-                    <div class="setup-text">
-                      <strong>Bước 2:</strong> Chọn vào <strong>Clock and Region</strong>, sau đó chọn tiếp vào <strong>Region</strong>.
-                      <div class="setup-image">
-                        <img src="media/image2.jpeg" alt="Chọn Clock and Region" />
-                        <div class="setup-image-caption">Chọn vào Clock and Region, sau đó chọn tiếp vào Region</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">3</div>
-                    <div class="setup-text">
-                      <strong>Bước 3:</strong> Tại phần <strong>Format</strong> hãy chọn sang <strong>Vietnamese (Vietnam)</strong> là các định dạng thời gian sẽ chuyển sang dd/mm/yyyy.
-                      <div class="setup-image">
-                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format" />
-                        <div class="setup-image-caption">Tại phần Format hãy chọn sang Vietnamese (Vietnam)</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Phần 2: Điều chỉnh Excel -->
-              <div class="setup-section">
-                <div class="setup-section-title">
-                  <span class="setup-section-title-icon">📊</span>
-                  <span>2. Điều chỉnh trong Excel</span>
-                </div>
-                <div class="setup-steps">
-                  <div class="setup-step">
-                    <div class="setup-number">1</div>
-                    <div class="setup-text">
-                      <strong>Mở file Excel lên</strong>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">2</div>
-                    <div class="setup-text">
-                      <strong>Chọn FILE → OPTION → ADVANCED</strong> sau đó làm như hình dưới đây:
-                      <div class="setup-image">
-                        <img src="media/image4.png" alt="Cài đặt Excel" />
-                        <div class="setup-image-caption">Cài đặt định dạng số trong Excel</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">3</div>
-                    <div class="setup-text">
-                      <strong>"Chấm" dưới "phẩy" đó là dạng số của bạn chuyển sang "phẩy" phần ngàn.</strong> Nếu bạn muốn để "chấm" phần ngàn thì đổi ngược lại.
-                    </div>
-                  </div>
-                  
-                  <div class="setup-step">
-                    <div class="setup-number">4</div>
-                    <div class="setup-text">
-                      <strong>Đổi xong thì bấm OK</strong>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="setup-note">
-              💡 <strong>Lưu ý quan trọng:</strong> Các bước cài đặt này cần thiết để đảm bảo bảng kê tính lãi hoạt động chính xác. Nếu gặp lỗi khi mở file, hãy kiểm tra lại các bước trên.
-            </div>
-          </div>
-        </div>
-
-        <div class="list" id="list"></div>
+      <h1><span>⚙️</span><span>Admin Bảng kê</span></h1>
+      <div class="pill">
+        <span class="icon">📘</span>
+        <span>Mỗi card = 1 bảng kê Excel (LD, Thẻ, ...)</span>
       </div>
+      <p class="small">
+        Điền thông tin từng bảng kê bên dưới. Sau đó COPY đoạn <b>BANG_KE_LIST</b> ở cột phải
+        sang file <code>index.html</code> (dán đè phần cũ).
+      </p>
+
+      <button class="btn-main" type="button" onclick="addBK()">
+        <span class="icon">➕</span>
+        <span>Thêm bảng kê mới</span>
+      </button>
+
+      <div class="bk-list" id="bkList"></div>
     </section>
 
-    <div id="donateModal" class="donate-modal">
-      <div class="donate-card">
-        <button id="donateClose" class="donate-close" type="button">✕</button>
-        <div class="donate-title">Donate ủng hộ phát triển</div>
-        <p class="donate-text">
-          Nếu bạn thấy bộ bảng kê hữu ích, có thể ủng hộ mình một ly cà phê.
-        </p>
-        <div class="donate-qr">
-          <!-- Lưu ảnh QR thành momo_qr.png cạnh file index.html -->
-          <img src="momo_qr.png" alt="QR donate MoMo" />
-        </div>
-        <div class="donate-note">
-          Quét bằng MoMo hoặc app ngân hàng hỗ trợ VietQR.
-        </div>
-      </div>
-    </div>
-
-    <footer>© baotg10</footer>
+    <!-- CỘT PHẢI: CODE BANG_KE_LIST -->
+    <section class="panel">
+      <h2><span>🧩</span><span>Đoạn mã JS BANG_KE_LIST</span></h2>
+      <p class="small">
+        Bấm vào ô bên dưới, nhấn <b>Ctrl + A</b> → <b>Ctrl + C</b> để copy toàn bộ.<br>
+        Dán đè vào phần <code>const BANG_KE_LIST = [...]</code> trong file <b>index.html</b>.
+      </p>
+      <textarea id="output" readonly></textarea>
+      <p class="hint">
+        💡 Gợi ý: Trong ô Hướng dẫn bạn có thể dùng HTML:
+        <code>&lt;strong&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code> để in đậm, chèn link, chèn hình.
+      </p>
+    </section>
   </main>
 
+  <footer>© baotg10</footer>
+
   <script>
-   const BANG_KE_LIST = [
-    {
-      id: "ld",
-      code: "LD",
-      name: "Bảng kê tính lãi LD",
-      short: "Tính nhanh",
-      subtitle: "Có thể tính nhanh một lúc 10 LD và hơn thế nữa",
-      file: "BKTL_LD.xlsm",
-      updated: "10/11/2025",
-      guide: []
-    },
-    {
-      id: "the",
-      code: "TH",
-      name: "Bảng kê tính lãi Thẻ",
-      short: "Tính thẻ nhanh",
-      subtitle: "Tự động lọc thông tin tính nhanh thẻ",
-      file: "BKTL_THE.xlsm",
-      updated: "10/11/2025",
-      guide: []
+    // escape để sinh JS an toàn, vẫn giữ nguyên HTML (<, >)
+    function esc(str) {
+      return String(str)
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, "\\\"")
+        .replace(/\r?\n/g, "\\n");
     }
-   ];
 
-    function renderList() {
-      const listEl = document.getElementById('list');
-      listEl.innerHTML = '';
-      BANG_KE_LIST.forEach(item => {
-        const wrap = document.createElement('div');
-        wrap.className = 'item';
-        wrap.dataset.id = item.id;
+    function addBK(data) {
+      const list = document.getElementById('bkList');
+      const d = data || {};
 
-        const header = document.createElement('div');
-        header.className = 'item-header';
+      const wrap = document.createElement('div');
+      wrap.className = 'bk';
 
-        const icon = document.createElement('div');
-        icon.className = 'icon ' + (item.id === 'the' ? 'the' : 'ld');
+      const header = document.createElement('div');
+      header.className = 'bk-header';
 
-        const iconInner = document.createElement('div');
-        iconInner.className = 'icon-inner';
-        const code = document.createElement('div');
-        code.className = 'icon-code';
-        code.textContent = item.code || '';
-        const mini = document.createElement('div');
-        mini.className = 'icon-mini';
-        mini.textContent = 'xlsm';
-        iconInner.appendChild(code);
-        iconInner.appendChild(mini);
-        icon.appendChild(iconInner);
+      const titleBox = document.createElement('div');
+      const t1 = document.createElement('div');
+      t1.className = 'bk-title';
 
-        const textBox = document.createElement('div');
-        textBox.className = 'text-box';
+      const tIcon = document.createElement('div');
+      tIcon.className = 'bk-icon';
+      tIcon.textContent = '📊';
 
-        const nameRow = document.createElement('div');
-        nameRow.className = 'name-row';
-        const name = document.createElement('div');
-        name.className = 'name';
-        name.textContent = item.name || '';
-        const chevron = document.createElement('div');
-        chevron.className = 'chevron';
-        chevron.textContent = '▾';
-        nameRow.appendChild(name);
-        nameRow.appendChild(chevron);
-        textBox.appendChild(nameRow);
+      const tName = document.createElement('span');
+      tName.textContent = d.name || 'Bảng kê mới';
 
-        const chips = document.createElement('div');
-        chips.className = 'chips';
-        const chip1 = document.createElement('div');
-        chip1.className = 'chip-pill';
-        chip1.innerHTML = '<span class="chip-color"></span><span>Excel</span>';
-        const chip2 = document.createElement('div');
-        chip2.className = 'chip-pill';
-        chip2.textContent = item.short || '';
-        chips.appendChild(chip1);
-        chips.appendChild(chip2);
-        textBox.appendChild(chips);
+      t1.appendChild(tIcon);
+      t1.appendChild(tName);
 
-        if (item.updated) {
-          const up = document.createElement('div');
-          up.className = 'chip-update';
-          up.innerHTML = '<span class="chip-update-icon">🕒</span><span>Cập nhật: ' +
-            item.updated + '</span>';
-          textBox.appendChild(up);
+      const t2 = document.createElement('div');
+      t2.className = 'bk-sub';
+      t2.textContent = d.id ? ('ID: ' + d.id) : 'Chưa có ID';
+
+      titleBox.appendChild(t1);
+      titleBox.appendChild(t2);
+
+      const actions = document.createElement('div');
+      actions.className = 'bk-actions';
+
+      const tag = document.createElement('div');
+      tag.className = 'tag';
+      tag.innerHTML = '<span class="tag-dot"></span><span>Excel / xlsm</span>';
+
+      const btnDel = document.createElement('button');
+      btnDel.type = 'button';
+      btnDel.className = 'btn-small';
+      btnDel.innerHTML = '<span class="icon">🗑️</span><span>Xóa</span>';
+      btnDel.onclick = function () {
+        wrap.remove();
+        generate();
+      };
+
+      actions.appendChild(tag);
+      actions.appendChild(btnDel);
+
+      header.appendChild(titleBox);
+      header.appendChild(actions);
+      wrap.appendChild(header);
+
+      // Hàng ID + CODE
+      const rowIds = document.createElement('div');
+      rowIds.className = 'row-2';
+      rowIds.innerHTML = `
+        <div>
+          <label>ID (không dấu, không khoảng trắng)</label>
+          <input type="text" class="f-id" value="${d.id || ''}" />
+        </div>
+        <div>
+          <label>Code hiển thị (ví dụ: LD, TH)</label>
+          <input type="text" class="f-code" value="${d.code || ''}" />
+        </div>
+      `;
+      wrap.appendChild(rowIds);
+
+      // Tên + mô tả
+      const rowNames = document.createElement('div');
+      rowNames.innerHTML = `
+        <label>📝 Tên hiển thị (ví dụ: Bảng kê LD)</label>
+        <input type="text" class="f-name" value="${d.name || ''}" />
+        <label>🏷️ Mô tả ngắn (chip bên cạnh, ví dụ: Mẫu Excel LD)</label>
+        <input type="text" class="f-short" value="${d.short || ''}" />
+        <label>📄 Mô tả chi tiết (hiện khi bung nội dung)</label>
+        <input type="text" class="f-subtitle" value="${d.subtitle || ''}" />
+      `;
+      wrap.appendChild(rowNames);
+
+      // File + ngày cập nhật
+      const fileRow = document.createElement('div');
+      fileRow.className = 'file-row';
+      fileRow.innerHTML = `
+        <div>
+          <label>📂 Tên file Excel trên hosting (ví dụ: Bang_ke_LD.xlsm)</label>
+          <input type="text" class="f-file" value="${d.file || ''}" />
+          <div class="file-hint">Tên này phải trùng với file bạn upload lên cùng thư mục với index.html</div>
+        </div>
+        <div>
+          <label>📅 Ngày cập nhật (hiển trên từng bảng kê)</label>
+          <input type="text" class="f-updated" placeholder="dd/mm/yyyy" value="${d.updated || ''}" />
+        </div>
+      `;
+
+      // input file chỉ để lấy tên, không upload
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = '.xlsx,.xlsm,.xls';
+      fileInput.onchange = function () {
+        if (fileInput.files[0]) {
+          fileRow.querySelector('.f-file').value = fileInput.files[0].name;
+          generate();
         }
+      };
+      const fileInputWrap = document.createElement('div');
+      fileInputWrap.style.marginTop = '4px';
+      fileInputWrap.appendChild(fileInput);
+      fileRow.appendChild(fileInputWrap);
 
-        header.appendChild(icon);
-        header.appendChild(textBox);
+      wrap.appendChild(fileRow);
 
-        const extra = document.createElement('div');
-        extra.className = 'extra';
+      // Hướng dẫn
+      const guideBox = document.createElement('div');
+      guideBox.innerHTML = `
+        <label>📘 Hướng dẫn  
+          <span style="font-weight:400;color:#6b7280;">(mỗi dòng = 1 bước, có thể dùng HTML: &lt;strong&gt;, &lt;a&gt;, &lt;img&gt;)</span>
+        </label>
+        <textarea class="f-guide">${d.guide ? d.guide.join('\n') : ''}</textarea>
+      `;
+      wrap.appendChild(guideBox);
 
-        const subtitle = document.createElement('div');
-        subtitle.className = 'detail-subtitle';
-        subtitle.textContent = item.subtitle || '';
-        extra.appendChild(subtitle);
+      list.appendChild(wrap);
 
-        const actions = document.createElement('div');
-        actions.className = 'actions';
-
-        const download = document.createElement('a');
-        download.className = 'btn btn-primary';
-        download.href = item.file || '#';
-        download.setAttribute('download', '');
-        download.innerHTML = '<span class="btn-icon">⬇</span><span>Tải ' + (item.name || 'file') + '</span>';
-
-        const guideBtn = document.createElement('button');
-        guideBtn.type = 'button';
-        guideBtn.className = 'btn btn-outline btn-guide';
-        guideBtn.innerHTML = '<span class="btn-icon">📘</span><span>Hướng dẫn sử dụng</span>';
-
-        actions.appendChild(download);
-        actions.appendChild(guideBtn);
-        extra.appendChild(actions);
-
-        const guideBox = document.createElement('div');
-        guideBox.className = 'guide';
-
-        const gHeader = document.createElement('div');
-        gHeader.className = 'guide-header';
-        const gIcon = document.createElement('div');
-        gIcon.className = 'guide-header-icon';
-        gIcon.textContent = '💡';
-        const gTitle = document.createElement('div');
-        gTitle.className = 'guide-header-title';
-        gTitle.textContent = 'Hướng dẫn chi tiết';
-        gHeader.appendChild(gIcon);
-        gHeader.appendChild(gTitle);
-        guideBox.appendChild(gHeader);
-
-        const gList = document.createElement('div');
-        gList.className = 'guide-list';
-
-        (item.guide || []).forEach((line, i) => {
-          const row = document.createElement('div');
-          row.className = 'guide-row';
-
-          const bullet = document.createElement('div');
-          bullet.className = 'guide-bullet';
-          bullet.textContent = i === 0 ? '⭐' : '•';
-
-          const body = document.createElement('div');
-          body.className = 'guide-body';
-          body.innerHTML = line;
-
-          row.appendChild(bullet);
-          row.appendChild(body);
-          gList.appendChild(row);
+      // cập nhật tiêu đề + sinh code khi nhập
+      wrap.querySelectorAll('input,textarea').forEach(el => {
+        el.addEventListener('input', () => {
+          const nameVal = wrap.querySelector('.f-name').value.trim();
+          tName.textContent = nameVal || 'Bảng kê mới';
+          const idVal = wrap.querySelector('.f-id').value.trim();
+          t2.textContent = idVal ? ('ID: ' + idVal) : 'Chưa có ID';
+          generate();
         });
-
-        guideBox.appendChild(gList);
-        extra.appendChild(guideBox);
-
-        wrap.appendChild(header);
-        wrap.appendChild(extra);
-
-        header.addEventListener('click', function () {
-          const isVisible = extra.classList.contains('visible');
-          document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
-          document.querySelectorAll('.extra').forEach(el => el.classList.remove('visible'));
-          document.querySelectorAll('.guide').forEach(el => el.classList.remove('visible'));
-          if (!isVisible) {
-            wrap.classList.add('active');
-            extra.classList.add('visible');
-          }
-        });
-
-        guideBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          guideBox.classList.toggle('visible');
-        });
-
-        listEl.appendChild(wrap);
       });
+
+      generate();
     }
 
-    function applyTheme(theme) {
-      const t = theme === 'light' ? 'light' : 'dark';
-      document.body.setAttribute('data-theme', t);
-      try { localStorage.setItem('bangke-theme', t); } catch (e) {}
+    function collect() {
+      const items = [];
+      document.querySelectorAll('.bk').forEach(wrap => {
+        const id = wrap.querySelector('.f-id').value.trim();
+        if (!id) return;
+        const code = wrap.querySelector('.f-code').value.trim();
+        const name = wrap.querySelector('.f-name').value.trim();
+        const short = wrap.querySelector('.f-short').value.trim();
+        const subtitle = wrap.querySelector('.f-subtitle').value.trim();
+        const file = wrap.querySelector('.f-file').value.trim();
+        const updated = wrap.querySelector('.f-updated').value.trim();
+        const guideRaw = wrap.querySelector('.f-guide').value;
+        const guide = guideRaw
+          .split(/\r?\n/)
+          .map(s => s.trim())
+          .filter(Boolean);
+        items.push({ id, code, name, short, subtitle, file, updated, guide });
+      });
+      return items;
+    }
+
+    function generate() {
+      const items = collect();
+      let out = 'const BANG_KE_LIST = [\n';
+      items.forEach((it, idx) => {
+        out += '  {\n';
+        out += '    id: "' + esc(it.id) + '",\n';
+        out += '    code: "' + esc(it.code) + '",\n';
+        out += '    name: "' + esc(it.name) + '",\n';
+        out += '    short: "' + esc(it.short) + '",\n';
+        out += '    subtitle: "' + esc(it.subtitle) + '",\n';
+        out += '    file: "' + esc(it.file) + '",\n';
+        out += '    updated: "' + esc(it.updated) + '",\n';
+        out += '    guide: [\n';
+        it.guide.forEach((g, i2) => {
+          out += '      "' + esc(g) + '"';
+          out += i2 < it.guide.length - 1 ? ',\n' : '\n';
+        });
+        out += '    ]\n';
+        out += idx < items.length - 1 ? '  },\n' : '  }\n';
+      });
+      out += '];\n';
+      document.getElementById('output').value = out;
+    }
+
+    function seedDefault() {
+      // Mặc định sẵn 2 bảng kê: LD và Thẻ
+      addBK({
+        id: 'ld',
+        code: 'LD',
+        name: 'Bảng kê LD',
+        short: 'Mẫu Excel LD',
+        subtitle: 'File Excel theo dõi và tính lãi dạng LD',
+        file: 'Bang_ke_LD.xlsm',
+        updated: '10/11/2025',
+        guide: [
+          'Nhập kỳ (tháng/quý/năm) và các thông tin LD ở từng dòng.',
+          'Điền số tiền gốc, lãi suất, số ngày/kỳ theo mẫu trong file.',
+          '<strong>Không sửa trực tiếp</strong> các ô tổng, lãi, số dư đã có công thức.',
+          'Nếu cần đổi cách tính, chỉnh công thức ở hàng mẫu rồi sao chép xuống.',
+          'Nên lưu 1 bản gốc, làm việc trên bản sao để tránh mất cấu trúc ban đầu.'
+        ]
+      });
+      addBK({
+        id: 'the',
+        code: 'TH',
+        name: 'Bảng kê Thẻ',
+        short: 'Mẫu Excel Thẻ',
+        subtitle: 'File Excel theo dõi giao dịch và lãi theo thẻ',
+        file: 'Bang_ke_The.xlsm',
+        updated: '10/11/2025',
+        guide: [
+          'Nhập kỳ sao kê, số dư đầu kỳ và hạn mức thẻ (nếu có).',
+          'Ghi các giao dịch phát sinh đúng cột: chi tiêu, hoàn tiền, phí, v.v.',
+          'Các cột tính lãi, phí phạt và số dư cuối kỳ đã có sẵn công thức.',
+          'Có thể tách mỗi thẻ thành một sheet riêng để quản lý cho rõ ràng.',
+          'Nên lưu 1 bản gốc, thao tác trên bản sao để tránh hỏng công thức.'
+        ]
+      });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      let saved = null;
-      try {
-        saved = localStorage.getItem('bangke-theme');
-      } catch (e) {}
-      if (saved === 'light' || saved === 'dark') {
-        applyTheme(saved);
-      } else {
-        applyTheme('dark');
-      }
-
-      renderList();
-
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const current = document.body.getAttribute('data-theme') || 'dark';
-        applyTheme(current === 'dark' ? 'light' : 'dark');
-      });
-
-      // Xử lý mở/đóng hướng dẫn cài đặt
-      const setupGuide = document.getElementById('setupGuide');
-      if (setupGuide) {
-        setupGuide.querySelector('.setup-header').addEventListener('click', function() {
-          setupGuide.classList.toggle('active');
-        });
-      }
-
-      const donateBtn = document.getElementById('donateBtn');
-      const donateModal = document.getElementById('donateModal');
-      const donateClose = document.getElementById('donateClose');
-
-      if (donateBtn && donateModal && donateClose) {
-        donateBtn.addEventListener('click', () => {
-          donateModal.classList.add('visible');
-        });
-        donateClose.addEventListener('click', () => {
-          donateModal.classList.remove('visible');
-        });
-        donateModal.addEventListener('click', (e) => {
-          if (e.target === donateModal) donateModal.classList.remove('visible');
-        });
-      }
+      seedDefault();
     });
   </script>
 </body>
