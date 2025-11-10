@@ -41,6 +41,19 @@
       color: #94a3b8;
       font-size: 1.1rem;
     }
+
+    .auto-save-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #22c55e;
+      margin-top: 10px;
+    }
     
     .grid {
       display: grid;
@@ -218,6 +231,15 @@
     .btn-danger:hover {
       background: #dc2626;
     }
+
+    .btn-warning {
+      background: #f59e0b;
+      color: white;
+    }
+    
+    .btn-warning:hover {
+      background: #d97706;
+    }
     
     .bangke-list {
       display: grid;
@@ -345,13 +367,38 @@
       width: 100%;
       margin-top: 15px;
     }
+
+    .save-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #22c55e;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transform: translateX(150%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .save-notification.show {
+      transform: translateX(0);
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <h1>⚙️ Admin Bảng Kê</h1>
-      <p>Quản lý và tạo bảng kê Excel tự động - Tương thích với index mới</p>
+      <p>Quản lý và tạo bảng kê Excel tự động - Tự động lưu dữ liệu</p>
+      <div class="auto-save-status">
+        <span>💾</span>
+        <span>Tự động lưu: <strong>BẬT</strong></span>
+      </div>
     </div>
 
     <div class="grid">
@@ -441,14 +488,18 @@ Bước 3: ..."></textarea>
           </div>
         </div>
 
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           <button class="btn btn-primary" onclick="addBangKe()">
             <span>➕</span>
             <span>Thêm Bảng Kê</span>
           </button>
           <button class="btn btn-secondary" onclick="clearForm()">
             <span>🔄</span>
-            <span>Làm Mới</span>
+            <span>Làm Mới Form</span>
+          </button>
+          <button class="btn btn-warning" onclick="clearAllData()">
+            <span>🗑️</span>
+            <span>Xóa Tất Cả</span>
           </button>
         </div>
       </div>
@@ -475,14 +526,20 @@ Bước 3: ..."></textarea>
     <div class="instructions">
       <h3>📖 Hướng Dẫn Sử Dụng</h3>
       <ol>
+        <li><strong>Dữ liệu tự động lưu</strong> vào trình duyệt - không mất khi reload</li>
         <li>Điền đầy đủ thông tin bảng kê ở cột trái</li>
         <li>Chọn <strong>icon và màu sắc</strong> phù hợp cho từng bảng kê</li>
         <li>Nhấn <strong>"Thêm Bảng Kê"</strong> để thêm vào danh sách</li>
         <li>Nhấn <strong>"Sao Chép Code"</strong> để copy đoạn mã BANG_KE_LIST</li>
         <li>Mở file <code>index.html</code> và <strong>thay thế toàn bộ phần BANG_KE_LIST</strong> bằng code mới</li>
-        <li>Upload file Excel lên GitHub repository (cùng thư mục với index.html)</li>
       </ol>
     </div>
+  </div>
+
+  <!-- Thông báo lưu -->
+  <div class="save-notification" id="saveNotification">
+    <span>💾</span>
+    <span>Đã lưu tự động!</span>
   </div>
 
   <script>
@@ -522,9 +579,57 @@ Bước 3: ..."></textarea>
         });
       });
 
-      // Thêm dữ liệu mẫu
-      addSampleData();
+      // Tải dữ liệu đã lưu
+      loadSavedData();
     });
+
+    // ==================== TỰ ĐỘNG LƯU ====================
+    function saveToLocalStorage() {
+      try {
+        localStorage.setItem('bangke_admin_data', JSON.stringify(bangKeList));
+        showSaveNotification();
+      } catch (e) {
+        console.error('Lỗi khi lưu dữ liệu:', e);
+      }
+    }
+
+    function loadSavedData() {
+      try {
+        const saved = localStorage.getItem('bangke_admin_data');
+        if (saved) {
+          bangKeList = JSON.parse(saved);
+          renderBangKeList();
+          generateCode();
+          console.log('✅ Đã tải dữ liệu đã lưu:', bangKeList.length, 'bảng kê');
+        } else {
+          // Nếu không có dữ liệu lưu, thêm mẫu
+          addSampleData();
+        }
+      } catch (e) {
+        console.error('Lỗi khi tải dữ liệu:', e);
+        addSampleData();
+      }
+    }
+
+    function showSaveNotification() {
+      const notification = document.getElementById('saveNotification');
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 2000);
+    }
+
+    function clearAllData() {
+      if (confirm('Bạn có chắc muốn xóa TẤT CẢ dữ liệu? Hành động này không thể hoàn tác!')) {
+        bangKeList = [];
+        localStorage.removeItem('bangke_admin_data');
+        renderBangKeList();
+        generateCode();
+        clearForm();
+        alert('✅ Đã xóa tất cả dữ liệu!');
+      }
+    }
+    // ==================== KẾT THÚC TỰ ĐỘNG LƯU ====================
 
     function updateIconPreview() {
       const preview = document.getElementById('iconPreview');
@@ -566,11 +671,17 @@ Bước 3: ..."></textarea>
       renderBangKeList();
       generateCode();
       clearForm();
+      saveToLocalStorage(); // TỰ ĐỘNG LƯU
     }
 
     function renderBangKeList() {
       const list = document.getElementById('bangkeList');
       list.innerHTML = '';
+
+      if (bangKeList.length === 0) {
+        list.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 20px;">📝 Chưa có bảng kê nào</div>';
+        return;
+      }
 
       bangKeList.forEach((item, index) => {
         const itemElement = document.createElement('div');
@@ -597,6 +708,7 @@ Bước 3: ..."></textarea>
         bangKeList.splice(index, 1);
         renderBangKeList();
         generateCode();
+        saveToLocalStorage(); // TỰ ĐỘNG LƯU
       }
     }
 
@@ -630,6 +742,7 @@ Bước 3: ..."></textarea>
       bangKeList.splice(index, 1);
       renderBangKeList();
       generateCode();
+      saveToLocalStorage(); // TỰ ĐỘNG LƯU
       document.getElementById('bangkeId').focus();
     }
 
@@ -747,6 +860,7 @@ Bước 3: ..."></textarea>
       
       renderBangKeList();
       generateCode();
+      saveToLocalStorage(); // TỰ ĐỘNG LƯU
     }
   </script>
 </body>
