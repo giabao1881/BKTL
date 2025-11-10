@@ -195,6 +195,176 @@
       white-space: nowrap;
     }
 
+    /* Hướng dẫn cài đặt */
+    .setup-guide {
+      margin: 16px 0 20px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.85);
+      padding: 16px 18px 14px;
+      transition: all 0.18s ease;
+    }
+
+    body[data-theme="light"] .setup-guide {
+      background: #ffffff;
+    }
+
+    .setup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .setup-title {
+      font-size: 16px;
+      font-weight: 620;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .setup-title-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      font-size: 14px;
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
+    }
+
+    .setup-chevron {
+      font-size: 18px;
+      color: var(--muted);
+      transition: transform 0.18s ease;
+    }
+
+    .setup-guide.active .setup-chevron {
+      transform: rotate(180deg);
+    }
+
+    .setup-content {
+      display: none;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-strong);
+    }
+
+    .setup-guide.active .setup-content {
+      display: block;
+    }
+
+    .setup-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .setup-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .setup-section {
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.75);
+      padding: 14px 16px 12px;
+    }
+
+    body[data-theme="light"] .setup-section {
+      background: #f9fafb;
+    }
+
+    .setup-section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .setup-section-title-icon {
+      font-size: 16px;
+    }
+
+    .setup-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .setup-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .setup-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .setup-text {
+      font-size: 13px;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .setup-text strong {
+      color: var(--primary);
+    }
+
+    .setup-image {
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      max-width: 300px;
+    }
+
+    .setup-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .setup-image-caption {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      padding: 6px 8px;
+      background: rgba(15,23,42,0.5);
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .setup-note {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.3);
+      font-size: 12px;
+      color: var(--accent-green);
+    }
+
     .list {
       margin-top: 10px;
       display: flex;
@@ -656,6 +826,12 @@
         width: 54px;
         height: 54px;
       }
+      .setup-title {
+        font-size: 15px;
+      }
+      .setup-section {
+        padding: 12px 14px 10px;
+      }
     }
   </style>
 </head>
@@ -699,6 +875,109 @@
             </div>
           </button>
         </header>
+
+        <!-- Hướng dẫn cài đặt máy -->
+        <div class="setup-guide" id="setupGuide">
+          <div class="setup-header">
+            <div class="setup-title">
+              <div class="setup-title-icon">⚙️</div>
+              <span>Cài đặt máy trước khi sử dụng</span>
+            </div>
+            <div class="setup-chevron">▾</div>
+          </div>
+          <div class="setup-content">
+            <p class="setup-subtitle">Để đảm bảo các bảng kê Excel hoạt động chính xác, vui lòng thực hiện các bước cài đặt sau:</p>
+            
+            <div class="setup-list">
+              <!-- Phần 1: Điều chỉnh Control Panel -->
+              <div class="setup-section">
+                <div class="setup-section-title">
+                  <span class="setup-section-title-icon">🔧</span>
+                  <span>1. Điều chỉnh trong Control Panel</span>
+                </div>
+                <div class="setup-steps">
+                  <div class="setup-step">
+                    <div class="setup-number">1</div>
+                    <div class="setup-text">
+                      <strong>Bước 1:</strong> Dưới thanh Taskbar, bạn hãy bấm vào ký hiệu Windows (hình ô cửa sổ) và bấm chọn vào <strong>Control Panel</strong> hoặc tại ô tìm kiếm thì tìm kiếm "Control Panel".
+                      <div class="setup-image">
+                        <img src="media/image1.jpeg" alt="Vào Control Panel" />
+                        <div class="setup-image-caption">Vào ký hiệu Windows và bấm chọn vào Control Panel</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="setup-step">
+                    <div class="setup-number">2</div>
+                    <div class="setup-text">
+                      <strong>Bước 2:</strong> Chọn vào <strong>Clock and Region</strong>, sau đó chọn tiếp vào <strong>Region</strong>.
+                      <div class="setup-image">
+                        <img src="media/image2.jpeg" alt="Chọn Clock and Region" />
+                        <div class="setup-image-caption">Chọn vào Clock and Region, sau đó chọn tiếp vào Region</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="setup-step">
+                    <div class="setup-number">3</div>
+                    <div class="setup-text">
+                      <strong>Bước 3:</strong> Tại phần <strong>Format</strong> hãy chọn sang <strong>Vietnamese (Vietnam)</strong> là các định dạng thời gian sẽ chuyển sang dd/mm/yyyy.
+                      <div class="setup-image">
+                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format" />
+                        <div class="setup-image-caption">Tại phần Format hãy chọn sang Vietnamese (Vietnam)</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Phần 2: Điều chỉnh Excel -->
+              <div class="setup-section">
+                <div class="setup-section-title">
+                  <span class="setup-section-title-icon">📊</span>
+                  <span>2. Điều chỉnh trong Excel</span>
+                </div>
+                <div class="setup-steps">
+                  <div class="setup-step">
+                    <div class="setup-number">1</div>
+                    <div class="setup-text">
+                      <strong>Mở file Excel lên</strong>
+                    </div>
+                  </div>
+                  
+                  <div class="setup-step">
+                    <div class="setup-number">2</div>
+                    <div class="setup-text">
+                      <strong>Chọn FILE → OPTION → ADVANCED</strong> sau đó làm như hình dưới đây:
+                      <div class="setup-image">
+                        <img src="media/image4.png" alt="Cài đặt Excel" />
+                        <div class="setup-image-caption">Cài đặt định dạng số trong Excel</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="setup-step">
+                    <div class="setup-number">3</div>
+                    <div class="setup-text">
+                      <strong>"Chấm" dưới "phẩy" đó là dạng số của bạn chuyển sang "phẩy" phần ngàn.</strong> Nếu bạn muốn để "chấm" phần ngàn thì đổi ngược lại.
+                    </div>
+                  </div>
+                  
+                  <div class="setup-step">
+                    <div class="setup-number">4</div>
+                    <div class="setup-text">
+                      <strong>Đổi xong thì bấm OK</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="setup-note">
+              💡 <strong>Lưu ý quan trọng:</strong> Các bước cài đặt này cần thiết để đảm bảo bảng kê tính lãi hoạt động chính xác. Nếu gặp lỗi khi mở file, hãy kiểm tra lại các bước trên.
+            </div>
+          </div>
+        </div>
 
         <div class="list" id="list"></div>
       </div>
@@ -922,6 +1201,14 @@
         const current = document.body.getAttribute('data-theme') || 'dark';
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
+
+      // Xử lý mở/đóng hướng dẫn cài đặt
+      const setupGuide = document.getElementById('setupGuide');
+      if (setupGuide) {
+        setupGuide.querySelector('.setup-header').addEventListener('click', function() {
+          setupGuide.classList.toggle('active');
+        });
+      }
 
       const donateBtn = document.getElementById('donateBtn');
       const donateModal = document.getElementById('donateModal');
