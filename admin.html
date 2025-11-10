@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>⚙️ Admin Bảng Kê</title>
+  <title>📊 Bảng Kê Tính Lãi</title>
   <style>
     * {
       box-sizing: border-box;
@@ -11,396 +11,375 @@
       padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-    
+
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
+      --card-bg: rgba(30, 41, 59, 0.8);
+      --card-border: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --success: #22c55e;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: #cbd5e1;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --accent: #2563eb;
+      --success: #16a34a;
+    }
+
     body {
       min-height: 100vh;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
       padding: 20px;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: #f1f5f9;
     }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
     }
-    
+
     .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 50px;
+      padding-top: 40px;
     }
-    
+
     .header h1 {
       font-size: 2.5rem;
       background: linear-gradient(135deg, #60a5fa, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
-    
+
     .header p {
-      color: #94a3b8;
       font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
     }
-    
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-    
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    .card {
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid #334155;
-      border-radius: 16px;
-      padding: 25px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    
-    .card h2 {
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      color: #e2e8f0;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #cbd5e1;
-      font-size: 0.95rem;
-    }
-    
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #475569;
-      border-radius: 10px;
-      background: #1e293b;
-      color: #f1f5f9;
-      font-size: 1rem;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
       transition: all 0.3s ease;
     }
-    
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      outline: none;
-      border-color: #60a5fa;
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
     }
-    
-    .form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    
-    .form-row {
+
+    .bangke-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
     }
-    
-    .icon-preview {
+
+    .bangke-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .bangke-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .bangke-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(96, 165, 250, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .card-icon {
       width: 60px;
       height: 60px;
-      border-radius: 12px;
+      border-radius: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
-      margin-bottom: 10px;
-      border: 2px solid;
+      flex-shrink: 0;
     }
-    
-    .color-options {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+    .card-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .card-info .code {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .card-description {
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: rgba(96, 165, 250, 0.1);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(96, 165, 250, 0.3);
+    }
+
+    .tag.update {
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--success);
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+
+    .card-actions {
+      display: flex;
       gap: 10px;
-      margin-top: 10px;
     }
-    
-    .color-option {
-      width: 100%;
-      height: 40px;
-      border-radius: 8px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-    }
-    
-    .color-option.selected {
-      border-color: #fff;
-      transform: scale(1.05);
-    }
-    
+
     .btn {
-      padding: 12px 24px;
+      padding: 10px 20px;
       border: none;
       border-radius: 10px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      text-decoration: none;
     }
-    
+
     .btn-primary {
       background: linear-gradient(135deg, #3b82f6, #6366f1);
       color: white;
       box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     }
-    
+
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
     }
-    
+
     .btn-secondary {
-      background: #475569;
-      color: white;
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--card-border);
     }
-    
+
     .btn-secondary:hover {
-      background: #64748b;
+      background: rgba(148, 163, 184, 0.1);
     }
-    
-    .btn-danger {
-      background: #ef4444;
-      color: white;
+
+    .card-details {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
+      display: none;
     }
-    
-    .btn-danger:hover {
-      background: #dc2626;
+
+    .card-details.active {
+      display: block;
     }
-    
-    .bangke-list {
-      display: grid;
-      gap: 15px;
-      max-height: 400px;
-      overflow-y: auto;
-      padding-right: 10px;
-    }
-    
-    .bangke-item {
-      background: #334155;
-      border: 1px solid #475569;
+
+    .guide-section {
+      background: rgba(15, 23, 42, 0.5);
       border-radius: 12px;
-      padding: 15px;
+      padding: 20px;
+      margin-top: 15px;
+    }
+
+    .guide-section h4 {
       display: flex;
       align-items: center;
-      justify-content: between;
-      gap: 15px;
+      gap: 10px;
+      margin-bottom: 15px;
+      color: var(--accent);
     }
-    
-    .bangke-icon {
+
+    .guide-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .guide-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      color: var(--text-secondary);
+    }
+
+    .guide-list li:last-child {
+      border-bottom: none;
+    }
+
+    .guide-list li strong {
+      color: var(--text-primary);
+    }
+
+    .admin-link {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 50%;
       width: 50px;
       height: 50px;
-      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
+      cursor: pointer;
+      font-size: 1.2rem;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text-primary);
     }
-    
-    .bangke-info {
-      flex: 1;
+
+    .admin-link:hover {
+      transform: scale(1.1);
     }
-    
-    .bangke-info h3 {
-      margin: 0 0 5px 0;
-      font-size: 1.1rem;
-    }
-    
-    .bangke-info p {
-      margin: 0;
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
-    
-    .bangke-actions {
-      display: flex;
-      gap: 8px;
-    }
-    
-    .code-output {
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 10px;
+
+    .github-info {
+      text-align: center;
+      margin-top: 40px;
       padding: 20px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: #e2e8f0;
-      white-space: pre-wrap;
-      max-height: 400px;
-      overflow-y: auto;
+      background: var(--card-bg);
+      border-radius: 15px;
+      border: 1px solid var(--card-border);
     }
-    
-    .instructions {
-      background: linear-gradient(135deg, #1e293b, #334155);
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 30px;
+
+    .github-info a {
+      color: var(--accent);
+      text-decoration: none;
     }
-    
-    .instructions h3 {
-      color: #60a5fa;
-      margin-bottom: 15px;
+
+    .github-info a:hover {
+      text-decoration: underline;
     }
-    
-    .instructions ol {
-      color: #cbd5e1;
-      line-height: 1.6;
-    }
-    
-    .instructions li {
-      margin-bottom: 10px;
-    }
-    
-    .instructions code {
-      background: #0f172a;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      color: #fbbf24;
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .bangke-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .card-actions {
+        flex-direction: column;
+      }
+      
+      body {
+        padding: 10px;
+      }
     }
   </style>
 </head>
-<body>
+<body data-theme="dark">
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  
+  <a href="admin.html" class="admin-link" title="Admin Panel">⚙️</a>
+
   <div class="container">
     <div class="header">
-      <h1>⚙️ Admin Bảng Kê</h1>
-      <p>Quản lý và tạo bảng kê Excel tự động</p>
+      <h1>📊 Bảng Kê Tính Lãi</h1>
+      <p>Công cụ quản lý và tính toán lãi suất chuyên nghiệp - Hosted on GitHub Pages</p>
     </div>
 
-    <div class="grid">
-      <!-- Cột trái: Form thêm/sửa -->
-      <div class="card">
-        <h2>📝 Thêm Bảng Kê Mới</h2>
-        
-        <div class="form-group">
-          <label>ID (duy nhất, không dấu)</label>
-          <input type="text" id="bangkeId" placeholder="vd: ld, the, vay">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Mã hiển thị</label>
-            <input type="text" id="bangkeCode" placeholder="vd: LD, TH, VAY">
-          </div>
-          <div class="form-group">
-            <label>Tên bảng kê</label>
-            <input type="text" id="bangkeName" placeholder="vd: Bảng kê LD">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Mô tả ngắn</label>
-          <input type="text" id="bangkeShort" placeholder="vd: Tính lãi LD nhanh">
-        </div>
-
-        <div class="form-group">
-          <label>Mô tả chi tiết</label>
-          <textarea id="bangkeSubtitle" placeholder="Mô tả đầy đủ về bảng kê..."></textarea>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Tên file Excel</label>
-            <input type="text" id="bangkeFile" placeholder="vd: Bang_ke_LD.xlsm">
-          </div>
-          <div class="form-group">
-            <label>Ngày cập nhật</label>
-            <input type="text" id="bangkeUpdated" placeholder="dd/mm/yyyy">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Icon & Màu sắc</label>
-          <div class="icon-preview" id="iconPreview">📊</div>
-          <input type="text" id="bangkeIcon" value="📊" placeholder="Chọn icon">
-          
-          <div class="color-options">
-            <div class="color-option selected" style="background: linear-gradient(135deg, #22c55e, #16a34a);" data-color="green"></div>
-            <div class="color-option" style="background: linear-gradient(135deg, #3b82f6, #2563eb);" data-color="blue"></div>
-            <div class="color-option" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);" data-color="purple"></div>
-            <div class="color-option" style="background: linear-gradient(135deg, #f59e0b, #d97706);" data-color="orange"></div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Hướng dẫn sử dụng (mỗi dòng = 1 bước)</label>
-          <textarea id="bangkeGuide" placeholder="Bước 1: Mở file Excel...
-Bước 2: Nhập dữ liệu...
-Bước 3: ..."></textarea>
-        </div>
-
-        <div style="display: flex; gap: 10px;">
-          <button class="btn btn-primary" onclick="addBangKe()">
-            <span>➕</span>
-            <span>Thêm Bảng Kê</span>
-          </button>
-          <button class="btn btn-secondary" onclick="clearForm()">
-            <span>🔄</span>
-            <span>Làm Mới</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Cột phải: Danh sách và code -->
-      <div class="card">
-        <h2>📋 Danh Sách Bảng Kê</h2>
-        <div class="bangke-list" id="bangkeList">
-          <!-- Danh sách sẽ được thêm ở đây bằng JavaScript -->
-        </div>
-
-        <h2 style="margin-top: 30px;">📦 Đoạn Mã BANG_KE_LIST</h2>
-        <div class="code-output" id="codeOutput">
-          // Code sẽ hiển thị ở đây
-        </div>
-        
-        <button class="btn btn-primary" onclick="copyCode()" style="margin-top: 15px; width: 100%;">
-          <span>📋</span>
-          <span>Sao Chép Code</span>
-        </button>
-      </div>
+    <div class="bangke-grid" id="bangkeGrid">
+      <!-- Nội dung sẽ được thêm bằng JavaScript -->
     </div>
 
-    <div class="instructions">
-      <h3>📖 Hướng Dẫn Sử Dụng</h3>
-      <ol>
-        <li>Điền đầy đủ thông tin bảng kê ở cột trái</li>
-        <li>Nhấn <strong>"Thêm Bảng Kê"</strong> để thêm vào danh sách</li>
-        <li>Nhấn <strong>"Sao Chép Code"</strong> để copy đoạn mã BANG_KE_LIST</li>
-        <li>Mở file <code>index.html</code> và thay thế phần <code>const BANG_KE_LIST</code> cũ bằng code mới</li>
-        <li>Upload file Excel lên cùng thư mục với file HTML</li>
-      </ol>
+    <div class="github-info">
+      <p>🚀 <strong>GitHub Pages Ready</strong> - Tự động deploy khi push code lên GitHub</p>
+      <p>📧 Liên hệ: <a href="https://github.com/giabao1881">github.com/giabao1881</a></p>
     </div>
   </div>
 
   <script>
-    let bangKeList = [];
-    let selectedColor = 'green';
+    // ==================== DÁN ĐOẠN CODE TỪ ADMIN VÀO ĐÂY ====================
+    const BANG_KE_LIST = [
+      {
+        id: 'ld',
+        code: 'LD',
+        name: 'Bảng Kê LD',
+        short: 'Tính lãi LD',
+        subtitle: 'Bảng kê tính lãi tiền gửi có kỳ hạn chuyên nghiệp',
+        file: 'Bang_ke_LD.xlsm',
+        updated: '10/11/2025',
+        icon: '💰',
+        color: 'green',
+        guide: [
+          'Nhập thông tin kỳ hạn và số tiền gốc vào các ô màu xanh',
+          'Hệ thống tự động tính lãi suất theo ngày thực tế',
+          'Xem báo cáo chi tiết và tổng hợp cuối kỳ',
+          '<strong>Lưu ý:</strong> Không sửa các ô công thức màu vàng'
+        ]
+      },
+      {
+        id: 'the',
+        code: 'TH',
+        name: 'Bảng Kê Thẻ',
+        short: 'Quản lý thẻ',
+        subtitle: 'Theo dõi chi tiêu và tính lãi thẻ tín dụng',
+        file: 'Bang_ke_The.xlsm',
+        updated: '10/11/2025',
+        icon: '💳',
+        color: 'blue',
+        guide: [
+          'Nhập các giao dịch thẻ hàng ngày vào bảng chi tiết',
+          'Theo dõi hạn mức và dư nợ thực tế',
+          'Tự động tính lãi và phí phát sinh',
+          'Cảnh báo khi gần vượt hạn mức'
+        ]
+      }
+    ];
+    // ==================== KẾT THÚC CODE TỪ ADMIN ====================
 
     // Màu sắc cho icon
     const colorSchemes = {
@@ -410,225 +389,117 @@ Bước 3: ..."></textarea>
       orange: 'linear-gradient(135deg, #f59e0b, #d97706)'
     };
 
-    // Khởi tạo
-    document.addEventListener('DOMContentLoaded', function() {
-      // Xử lý chọn màu
-      document.querySelectorAll('.color-option').forEach(option => {
-        option.addEventListener('click', function() {
-          document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedColor = this.getAttribute('data-color');
-          updateIconPreview();
-        });
-      });
+    function renderBangKe() {
+      const grid = document.getElementById('bangkeGrid');
+      grid.innerHTML = '';
 
-      // Xử lý thay đổi icon
-      document.getElementById('bangkeIcon').addEventListener('input', updateIconPreview);
-
-      // Thêm dữ liệu mẫu
-      addSampleData();
-    });
-
-    function updateIconPreview() {
-      const icon = document.getElementById('bangkeIcon').value || '📊';
-      const preview = document.getElementById('iconPreview');
-      preview.textContent = icon;
-      preview.style.background = colorSchemes[selectedColor];
-    }
-
-    function addBangKe() {
-      const id = document.getElementById('bangkeId').value.trim();
-      const code = document.getElementById('bangkeCode').value.trim();
-      const name = document.getElementById('bangkeName').value.trim();
-      const short = document.getElementById('bangkeShort').value.trim();
-      const subtitle = document.getElementById('bangkeSubtitle').value.trim();
-      const file = document.getElementById('bangkeFile').value.trim();
-      const updated = document.getElementById('bangkeUpdated').value.trim();
-      const icon = document.getElementById('bangkeIcon').value.trim() || '📊';
-      const guideText = document.getElementById('bangkeGuide').value;
-
-      if (!id || !name || !file) {
-        alert('Vui lòng điền đầy đủ ID, Tên và File!');
-        return;
-      }
-
-      const guide = guideText.split('\n').filter(line => line.trim());
-
-      const bangKe = {
-        id,
-        code,
-        name,
-        short,
-        subtitle,
-        file,
-        updated,
-        icon,
-        color: selectedColor,
-        guide
-      };
-
-      bangKeList.push(bangKe);
-      renderBangKeList();
-      generateCode();
-      clearForm();
-    }
-
-    function renderBangKeList() {
-      const list = document.getElementById('bangkeList');
-      list.innerHTML = '';
-
-      bangKeList.forEach((item, index) => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'bangke-item';
-        itemElement.innerHTML = `
-          <div class="bangke-icon" style="background: ${colorSchemes[item.color]}">
-            ${item.icon}
+      BANG_KE_LIST.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'bangke-card';
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon" style="background: ${colorSchemes[item.color]}">
+              ${item.icon}
+            </div>
+            <div class="card-info">
+              <h3>${item.name}</h3>
+              <div class="code">${item.code} • Excel</div>
+            </div>
           </div>
-          <div class="bangke-info">
-            <h3>${item.name}</h3>
-            <p>${item.file} • ${item.updated || 'Chưa cập nhật'}</p>
+          
+          <div class="card-description">
+            ${item.subtitle}
           </div>
-          <div class="bangke-actions">
-            <button class="btn btn-secondary" onclick="editBangKe(${index})">✏️</button>
-            <button class="btn btn-danger" onclick="deleteBangKe(${index})">🗑️</button>
+          
+          <div class="card-tags">
+            <div class="tag">${item.short}</div>
+            ${item.updated ? `<div class="tag update">🕐 ${item.updated}</div>` : ''}
+          </div>
+          
+          <div class="card-actions">
+            <a href="${item.file}" class="btn btn-primary" download>
+              <span>📥</span>
+              <span>Tải Xuống</span>
+            </a>
+            <button class="btn btn-secondary" onclick="toggleDetails(this)">
+              <span>📖</span>
+              <span>Hướng Dẫn</span>
+            </button>
+          </div>
+          
+          <div class="card-details">
+            <div class="guide-section">
+              <h4>
+                <span>💡</span>
+                <span>Hướng Dẫn Sử Dụng</span>
+              </h4>
+              <ul class="guide-list">
+                ${item.guide.map(step => `<li>${step}</li>`).join('')}
+              </ul>
+            </div>
           </div>
         `;
-        list.appendChild(itemElement);
+        grid.appendChild(card);
       });
     }
 
-    function deleteBangKe(index) {
-      if (confirm('Bạn có chắc muốn xóa bảng kê này?')) {
-        bangKeList.splice(index, 1);
-        renderBangKeList();
-        generateCode();
+    function toggleDetails(button) {
+      const card = button.closest('.bangke-card');
+      const details = card.querySelector('.card-details');
+      const isActive = details.classList.contains('active');
+      
+      // Đóng tất cả các card khác
+      document.querySelectorAll('.card-details').forEach(d => d.classList.remove('active'));
+      document.querySelectorAll('.bangke-card').forEach(c => c.classList.remove('active'));
+      
+      if (!isActive) {
+        details.classList.add('active');
+        card.classList.add('active');
       }
     }
 
-    function editBangKe(index) {
-      const item = bangKeList[index];
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
       
-      document.getElementById('bangkeId').value = item.id;
-      document.getElementById('bangkeCode').value = item.code;
-      document.getElementById('bangkeName').value = item.name;
-      document.getElementById('bangkeShort').value = item.short;
-      document.getElementById('bangkeSubtitle').value = item.subtitle;
-      document.getElementById('bangkeFile').value = item.file;
-      document.getElementById('bangkeUpdated').value = item.updated;
-      document.getElementById('bangkeIcon').value = item.icon;
-      document.getElementById('bangkeGuide').value = item.gide.join('\n');
-
-      // Chọn màu
-      selectedColor = item.color;
-      document.querySelectorAll('.color-option').forEach(opt => {
-        opt.classList.toggle('selected', opt.getAttribute('data-color') === item.color);
-      });
-      updateIconPreview();
-
-      // Xóa item cũ và focus vào form
-      bangKeList.splice(index, 1);
-      renderBangKeList();
-      generateCode();
-      document.getElementById('bangkeId').focus();
+      const themeToggle = document.querySelector('.theme-toggle');
+      themeToggle.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+      
+      localStorage.setItem('theme', newTheme);
     }
 
-    function generateCode() {
-      const output = document.getElementById('codeOutput');
-      let code = 'const BANG_KE_LIST = [\n';
+    // Khởi tạo theme từ localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.body.setAttribute('data-theme', savedTheme);
       
-      bangKeList.forEach((item, index) => {
-        code += `  {\n`;
-        code += `    id: "${escapeString(item.id)}",\n`;
-        code += `    code: "${escapeString(item.code)}",\n`;
-        code += `    name: "${escapeString(item.name)}",\n`;
-        code += `    short: "${escapeString(item.short)}",\n`;
-        code += `    subtitle: "${escapeString(item.subtitle)}",\n`;
-        code += `    file: "${escapeString(item.file)}",\n`;
-        code += `    updated: "${escapeString(item.updated)}",\n`;
-        code += `    icon: "${escapeString(item.icon)}",\n`;
-        code += `    color: "${escapeString(item.color)}",\n`;
-        code += `    guide: [\n`;
+      const themeToggle = document.querySelector('.theme-toggle');
+      themeToggle.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+      
+      renderBangKe();
+    });
+
+    // Xử lý lỗi download file
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.btn-primary')) {
+        const link = e.target.closest('.btn-primary');
+        const file = link.getAttribute('href');
         
-        item.guide.forEach((line, lineIndex) => {
-          code += `      "${escapeString(line)}"`;
-          code += lineIndex < item.guide.length - 1 ? ',\n' : '\n';
-        });
-        
-        code += `    ]\n`;
-        code += index < bangKeList.length - 1 ? '  },\n' : '  }\n';
-      });
-      
-      code += '];';
-      output.textContent = code;
-    }
-
-    function escapeString(str) {
-      return str.replace(/"/g, '\\"').replace(/\n/g, '\\n');
-    }
-
-    function copyCode() {
-      const code = document.getElementById('codeOutput').textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        alert('✅ Đã sao chép code thành công!');
-      }).catch(() => {
-        alert('❌ Lỗi khi sao chép code');
-      });
-    }
-
-    function clearForm() {
-      document.getElementById('bangkeId').value = '';
-      document.getElementById('bangkeCode').value = '';
-      document.getElementById('bangkeName').value = '';
-      document.getElementById('bangkeShort').value = '';
-      document.getElementById('bangkeSubtitle').value = '';
-      document.getElementById('bangkeFile').value = '';
-      document.getElementById('bangkeUpdated').value = '';
-      document.getElementById('bangkeIcon').value = '📊';
-      document.getElementById('bangkeGuide').value = '';
-      selectedColor = 'green';
-      updateIconPreview();
-    }
-
-    function addSampleData() {
-      // Thêm dữ liệu mẫu
-      bangKeList = [
-        {
-          id: 'ld',
-          code: 'LD',
-          name: 'Bảng Kê LD',
-          short: 'Tính lãi LD',
-          subtitle: 'Bảng kê tính lãi tiền gửi có kỳ hạn',
-          file: 'Bang_ke_LD.xlsm',
-          updated: '10/11/2025',
-          icon: '💰',
-          color: 'green',
-          guide: [
-            'Nhập thông tin kỳ hạn và số tiền gốc',
-            'Hệ thống tự động tính lãi suất',
-            'Xem báo cáo chi tiết cuối kỳ'
-          ]
-        },
-        {
-          id: 'the',
-          code: 'TH',
-          name: 'Bảng Kê Thẻ',
-          short: 'Quản lý thẻ',
-          subtitle: 'Theo dõi chi tiêu và lãi thẻ tín dụng',
-          file: 'Bang_ke_The.xlsm',
-          updated: '10/11/2025',
-          icon: '💳',
-          color: 'blue',
-          guide: [
-            'Nhập các giao dịch thẻ hàng ngày',
-            'Theo dõi hạn mức và dư nợ',
-            'Tự động tính lãi và phí'
-          ]
-        }
-      ];
-      
-      renderBangKeList();
-      generateCode();
-    }
+        // Kiểm tra file có tồn tại không (basic check)
+        fetch(file, { method: 'HEAD' })
+          .then(response => {
+            if (!response.ok) {
+              alert('❌ File không tồn tại trên server. Vui lòng kiểm tra lại tên file.');
+              e.preventDefault();
+            }
+          })
+          .catch(() => {
+            alert('❌ Không thể tải file. Vui lòng kiểm tra kết nối.');
+            e.preventDefault();
+          });
+      }
+    });
   </script>
 </body>
 </html>
