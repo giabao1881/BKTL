@@ -1067,27 +1067,39 @@
 
   <script>
    const BANG_KE_LIST = [
-    {
-      id: "ld",
-      code: "LD",
-      name: "Bảng kê tính lãi LD",
-      short: "Tính nhanh",
-      subtitle: "Có thể tính nhanh một lúc 10 LD và hơn thế nữa",
-      file: "BKTL_LD.xlsm",
-      updated: "10/11/2025",
-      guide: []
-    },
-    {
-      id: "the",
-      code: "TH",
-      name: "Bảng kê tính lãi Thẻ",
-      short: "Tính thẻ nhanh",
-      subtitle: "Tự động lọc thông tin tính nhanh thẻ",
-      file: "BKTL_THE.xlsm",
-      updated: "10/11/2025",
-      guide: []
-    }
-   ];
+  {
+    id: "the",
+    code: "TH",
+    name: "Bảng Kê Thẻ",
+    short: "Quản lý thẻ",
+    subtitle: "Theo dõi chi tiêu và tính lãi thẻ tín dụng",
+    file: "Bang_ke_The.xlsm",
+    updated: "10/11/2025",
+    icon: "💳",
+    color: "blue",
+    guide: [
+      "Nhập các giao dịch thẻ hàng ngày vào bảng chi tiết",
+      "Theo dõi hạn mức và dư nợ thực tế",
+      "Tự động tính lãi và phí phát sinh",
+      "Cảnh báo khi gần vượt hạn mức"
+    ]
+  },
+  {
+    id: "ld",
+    code: "LD",
+    name: "Bảng Kê LD",
+    short: "Tính lãi LD",
+    subtitle: "Bảng kê tính lãi tiền gửi có kỳ hạn chuyên nghiệp",
+    file: "Bang_ke_LD.xlsm",
+    updated: "11/11/2025",
+    icon: "💰",
+    color: "orange",
+    guide: [
+      "Bước 1: Nhập tất cả thông tin trong sheet \"<strong><span style=\"color:red\">THTT</span>\"</strong>",
+      "Bước 2: "
+    ]
+  }
+];
 
    // Hàm phóng to/thu nhỏ ảnh
    function toggleZoom(imageContainer) {
