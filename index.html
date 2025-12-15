@@ -2,498 +2,1329 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BKTL | Bảng kê tính lãi</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bảng kê tính lãi</title>
   <style>
-    :root{
-      --bg0:#0b1220; --bg1:#0f172a;
-      --border: rgba(255,255,255,.10);
-      --text:#e5e7eb; --muted:#94a3b8;
-      --p1:#3b82f6; --p2:#8b5cf6; --p3:#ec4899;
-      --shadow: 0 16px 36px rgba(0,0,0,.32);
-      --r:16px; --w: 980px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", sans-serif;
     }
-    *{margin:0;padding:0;box-sizing:border-box;font-family: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.35s ease, color 0.35s ease;
+      overflow-x: hidden;
+    }
+
+    body[data-theme="dark"] {
+      --bg: radial-gradient(circle at 0% 0%, #0f172a, #1e293b 40%, #0f172a 100%);
+      --card: #1e293b;
+      --card-hover: #334155;
+      --border: #475569;
+      --border-soft: #334155;
+      --border-strong: #64748b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary: #60a5fa;
+      --primary-soft: rgba(37,99,235,0.23);
+      --primary-glow: rgba(96,165,250,0.4);
+      --accent-green: #22c55e;
+      --accent-blue: #38bdf8;
+      --accent-purple: #a78bfa;
+      --chip-bg: #0f172a;
+      --pill-bg: #0f172a;
+      --shadow-main: 0 28px 80px rgba(2,6,23,0.95);
+      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.15);
+      --shadow-glow: 0 0 20px rgba(96,165,250,0.3);
+
+      /* Buttons */
+      --btn-shadow: 0 10px 26px rgba(2,6,23,0.55);
+      --btn-shadow-hover: 0 14px 34px rgba(2,6,23,0.65);
+      --btn-ring: rgba(96,165,250,0.35);
+    }
+
+    body[data-theme="light"] {
+      --bg: linear-gradient(135deg, #e2e8f0, #f1f5f9);
+      --card: #ffffff;
+      --card-hover: #f8fafc;
+      --border: #cbd5e1;
+      --border-soft: #e2e8f0;
+      --border-strong: #94a3b8;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --primary-soft: rgba(37,99,235,0.10);
+      --primary-glow: rgba(37,99,235,0.2);
+      --accent-green: #16a34a;
+      --accent-blue: #2563eb;
+      --accent-purple: #7c3aed;
+      --chip-bg: #f9fafb;
+      --pill-bg: #eef2ff;
+      --shadow-main: 0 22px 60px rgba(15,23,42,0.18);
+      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.08);
+      --shadow-glow: 0 0 20px rgba(37,99,235,0.15);
+
+      /* Buttons */
+      --btn-shadow: 0 10px 22px rgba(15,23,42,0.14);
+      --btn-shadow-hover: 0 14px 28px rgba(15,23,42,0.18);
+      --btn-ring: rgba(37,99,235,0.20);
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1040px;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel {
+      background:
+        radial-gradient(circle at 0% 0%, rgba(148, 163, 184, 0.22), transparent 60%),
+        radial-gradient(circle at 100% 0%, rgba(59,130,246,0.25), transparent 55%),
+        var(--card);
+      border-radius: 30px;
+      border: 1px solid var(--border-soft);
+      padding: 22px 22px 18px;
+      box-shadow: var(--shadow-main);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .panel:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-main), var(--shadow-glow);
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      z-index: 1;
+    }
+
+    .panel-inner {
+      border-radius: 26px;
+      border: 1px solid var(--border);
+      padding: 18px 18px 14px;
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.35), transparent 55%);
+      box-shadow: var(--shadow-inner);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body[data-theme="light"] .panel-inner {
+      background: linear-gradient(135deg, #ffffff, #f9fafb);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--chip-bg);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .badge:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--btn-shadow);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.28);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 750;
+      letter-spacing: 0.01em;
+      background: linear-gradient(135deg, var(--text), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 600px;
+    }
+
+    /* ===================== NÚT: THEME TOGGLE (CHỈ CHỈNH UI) ===================== */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      cursor: pointer;
+      position: relative;
+      min-width: 170px;
+      height: 40px;
+      transition: all 0.25s ease;
+      box-shadow: var(--btn-shadow);
+      user-select: none;
+    }
+
+    body[data-theme="light"] .theme-toggle {
+      background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(255,255,255,0.65));
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--btn-shadow-hover);
+    }
+
+    .theme-toggle:active {
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px var(--btn-ring), var(--btn-shadow-hover);
+    }
+
+    .theme-pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 6px);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.10));
+      box-shadow: 0 10px 22px rgba(15,23,42,0.45);
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    body[data-theme="light"] .theme-pill { transform: translateX(0); }
+    body[data-theme="dark"] .theme-pill { transform: translateX(100%); }
+
+    .theme-option {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .theme-option span.icon { font-size: 16px; }
+    .theme-option span.label { white-space: nowrap; }
+
+    /* ===================== NÚT: CÔNG CỤ KHÁC (CHỈ CHỈNH UI) ===================== */
+    .tools-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 650;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 10px 22px rgba(139, 92, 246, 0.42);
+      transition: all 0.25s ease;
+      margin-left: auto;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.01em;
+    }
+
+    .tools-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      transition: left 0.5s;
+    }
+
+    .tools-btn:hover::before { left: 100%; }
+
+    .tools-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(139, 92, 246, 0.58);
+    }
+
+    .tools-btn:active { transform: translateY(-1px); }
+
+    .tools-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(167,139,250,0.28), 0 12px 28px rgba(139,92,246,0.58);
+    }
+
+    .tools-icon { font-size: 16px; animation: float 3s ease-in-out infinite; }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* ===================== HƯỚNG DẪN CÀI ĐẶT (GIỮ NGUYÊN) ===================== */
+    .setup-guide { /* giữ nguyên như bạn */ 
+      margin: 16px 0 20px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.85);
+      padding: 16px 18px 14px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    body[data-theme="light"] .setup-guide { background: #ffffff; }
+    .setup-guide::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: linear-gradient(to bottom, #f97316, #ec4899); }
+
+    .setup-header { display:flex; align-items:center; justify-content:space-between; cursor:pointer; margin-bottom:8px; padding-left:8px; }
+    .setup-title { font-size:16px; font-weight:620; display:flex; align-items:center; gap:10px; }
+    .setup-title-icon { width:28px; height:28px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #f97316, #ec4899); font-size:14px; color:#fff; box-shadow: 0 6px 14px rgba(248,113,113,0.65); }
+    .setup-chevron { font-size:18px; color:var(--muted); transition: transform .3s ease; }
+    .setup-guide.active .setup-chevron { transform: rotate(180deg); }
+    .setup-content { display:none; padding-top:10px; border-top:1px dashed var(--border-strong); animation: slideDown 0.4s ease-out; }
+    .setup-guide.active .setup-content { display:block; }
+
+    @keyframes slideDown { from { opacity:0; transform: translateY(-10px);} to { opacity:1; transform: translateY(0);} }
+
+    .setup-subtitle { font-size:13px; color: var(--muted); margin-bottom:12px; padding-left:8px; }
+    .setup-list { display:flex; flex-direction:column; gap:16px; }
+    .setup-section { border-radius:14px; border:1px solid var(--border); background: rgba(15,23,42,0.75); padding: 14px 16px 12px; transition: all .3s ease; }
+    .setup-section:hover { transform: translateY(-2px); box-shadow: var(--btn-shadow); }
+    body[data-theme="light"] .setup-section { background:#f9fafb; }
+    .setup-section-title { font-size:15px; font-weight:600; color: var(--primary); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+    .setup-section-title-icon { font-size:16px; }
+    .setup-steps { display:flex; flex-direction:column; gap:12px; }
+    .setup-step { display:flex; align-items:flex-start; gap:10px; transition: all .3s ease; }
+    .setup-step:hover { transform: translateX(5px); }
+    .setup-number { width:24px; height:24px; border-radius:999px; display:flex; align-items:center; justify-content:center; background: var(--primary-soft); color: var(--primary); font-size:12px; font-weight:600; flex-shrink:0; margin-top:2px; transition: all .3s ease; }
+    .setup-step:hover .setup-number { background: var(--primary); color: #fff; transform: scale(1.1); }
+    .setup-text { font-size:13px; color: var(--text); flex:1; }
+    .setup-text strong { color: var(--primary); }
+
+    .setup-image { margin-top:8px; border-radius:10px; border:1px solid var(--border-soft); overflow:hidden; max-width:400px; position:relative; cursor: zoom-in; transition: all .3s ease; background: var(--card); }
+    .setup-image:hover { transform: scale(1.02); box-shadow: var(--btn-shadow); }
+    .setup-image.zoomed { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.2); max-width: 90vw; max-height: 90vh; z-index:1000; cursor: zoom-out; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .setup-image img { width:100%; height:auto; display:block; transition: transform .3s ease; }
+    .setup-image.zoomed img { transform: scale(1.1); }
+    .setup-image-caption { font-size:11px; color: var(--muted); text-align:center; padding:6px 8px; background: rgba(15,23,42,0.5); border-top: 1px solid var(--border-soft); }
+
+    .image-overlay { display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999; cursor: zoom-out; backdrop-filter: blur(5px); }
+    .image-overlay.active { display:block; }
+
+    .setup-note { margin-top:12px; padding:10px 14px; border-radius:12px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); font-size:12px; color: var(--accent-green); animation: pulse-glow 2s infinite; }
+
+    @keyframes pulse-glow {
+      0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    }
+
+    .list { margin-top: 10px; display:flex; flex-direction:column; gap:10px; }
+
+    .item {
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.85);
+      padding: 12px 14px 10px;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    body[data-theme="light"] .item { background: #ffffff; }
+    .item:hover { transform: translateY(-3px); box-shadow: var(--btn-shadow); }
+    .item-header { display:flex; align-items:center; gap:14px; cursor:pointer; }
+
+    .icon {
+      width: 60px; height: 60px; border-radius: 18px;
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; position:relative; overflow:hidden;
+      font-size: 1.5rem; transition: all .3s ease;
+    }
+    .icon::before { content:""; position:absolute; inset:0; opacity:.18; background: radial-gradient(circle at 0% 0%, #ffffff, transparent 60%); }
+
+    .text-box{flex:1}
+    .name-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .name { font-size:16px; font-weight:620; transition: color .3s ease; }
+    .item:hover .name { color: var(--primary); }
+
+    .chips { margin-top:6px; display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-pill {
+      padding: 3px 8px; border-radius:999px; font-size:11px;
+      background: var(--pill-bg); color: var(--muted);
+      border: 1px solid var(--border);
+      display:inline-flex; align-items:center; gap:5px;
+      transition: all .3s ease;
+    }
+    .chip-pill:hover { transform: translateY(-2px); }
+    .chip-color { width:7px; height:7px; border-radius:999px; background: var(--accent-blue); }
+
+    .chip-update{
+      display:inline-flex; align-items:center; gap:4px;
+      padding: 2px 8px; border-radius:999px;
+      background: rgba(15,23,42,0.45);
+      border: 1px solid rgba(148,163,184,0.5);
+      font-size: 11px; color: var(--muted);
+      margin-top:4px; width: fit-content;
+      transition: all .3s ease;
+    }
+    body[data-theme="light"] .chip-update { background:#f3f4f6; border-color:#e5e7eb; color:#4b5563; }
+    .chip-update:hover { transform: translateY(-1px); }
+
+    .chevron{ font-size:18px; color: var(--muted); transition: transform .3s ease; }
+
+    .item.active{
+      border-color: var(--primary);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.75), var(--shadow-glow);
+      background: var(--primary-soft);
+      transform: translateY(-5px);
+    }
+    body[data-theme="light"] .item.active{ background:#eef2ff; }
+    .item.active .chevron{ transform: rotate(180deg); }
+
+    .extra{
+      margin-top:10px; padding-top:8px;
+      border-top:1px dashed var(--border-strong);
+      display:none; animation: slideDown .4s ease-out;
+    }
+    .extra.visible{ display:block; }
+
+    .detail-subtitle{ font-size:13px; color: var(--muted); margin-bottom:8px; }
+
+    /* ===================== NÚT TRONG ITEM (DOWNLOAD / GUIDE) ===================== */
+    .actions{
+      display:flex; flex-wrap:wrap; gap:10px; margin-bottom:6px; align-items:center;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      height:40px; padding:0 16px;
+      border-radius:999px;
+      font-size:13px; font-weight:650;
+      border:1px solid transparent;
+      cursor:pointer; text-decoration:none; white-space:nowrap;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease, color .22s ease;
+      position:relative; overflow:hidden; letter-spacing:.01em;
+      user-select:none; -webkit-tap-highlight-color: transparent;
+    }
+    .btn::before{
+      content:'';
+      position:absolute; top:0; left:-110%;
+      width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      transition: left .55s;
+    }
+    .btn:hover::before{ left:110%; }
+    .btn:hover{ transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
+    .btn:active{ transform: translateY(-1px); }
+    .btn:focus-visible{ outline:none; box-shadow: 0 0 0 4px var(--btn-ring), var(--btn-shadow-hover); }
+    .btn-icon{ font-size:16px; }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--primary), rgba(255,255,255,0.08));
+      color:#fff;
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: var(--btn-shadow);
+    }
+    body[data-theme="light"] .btn-primary{
+      background: linear-gradient(135deg, var(--primary), rgba(255,255,255,0.6));
+      color:#fff;
+    }
+
+    .btn-outline{
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border-color: var(--border);
+      box-shadow: var(--btn-shadow);
+    }
+    body[data-theme="light"] .btn-outline{
+      background:#fff; color: var(--text);
+    }
+    .btn-outline:hover{
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-guide{
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color:#fff;
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: 0 10px 24px rgba(129,140,248,0.45);
+    }
+    .btn-guide:hover{ box-shadow: 0 14px 32px rgba(129,140,248,0.6); }
+
+    .guide{
+      border-radius: 14px;
+      border: 1px solid var(--border-strong);
+      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.16), transparent 65%);
+      padding: 12px 12px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      display:none; margin-top:8px;
+      animation: slideDown .4s ease-out;
+    }
+    .guide.visible{ display:block; }
+
+    .guide-header{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .guide-header-icon{
+      width:22px;height:22px;border-radius:999px;
+      display:flex; align-items:center; justify-content:center;
+      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
+      font-size: 13px; color:#fff;
+      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
+      flex-shrink:0;
+    }
+    .guide-header-title{ font-size:12px; font-weight:650; color: var(--text); }
+    .guide-list{ display:flex; flex-direction:column; gap:6px; }
+    .guide-row{
+      display:flex; align-items:flex-start; gap:8px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(15,23,42,0.75);
+      border: 1px dashed var(--border-soft);
+      transition: all .3s ease;
+    }
+    .guide-row:hover{ transform: translateX(3px); background: rgba(15,23,42,0.9); }
+    body[data-theme="light"] .guide-row{ background:#f9fafb; border-color:#e5e7eb; }
+    body[data-theme="light"] .guide-row:hover{ background:#f1f5f9; }
+    .guide-bullet{ font-size:14px; margin-top:2px; flex-shrink:0; transition: transform .3s ease; }
+    .guide-row:hover .guide-bullet{ transform: scale(1.2); }
+    .guide-body{ font-size:12px; color: var(--muted); }
+    .guide-body a{ color: var(--primary); text-decoration: underline; }
+    .guide-body strong{ color: var(--text); }
+    .guide-body img{ max-width:100%; border-radius: 8px; margin-top:4px; display:block; }
+
+    /* ===================== DONATE BUTTON (GIỮ NGUYÊN) ===================== */
+    .donate-wrap { width:100%; display:flex; justify-content:center; margin-bottom: 10px; }
+    .donate-btn{
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:999px;
+      height:40px;
+      padding: 0 16px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      font-weight:750;
+      cursor:pointer;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      color:#fff7ed;
+      box-shadow: 0 12px 28px rgba(248,113,113,0.55);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      position:relative;
+      overflow:hidden;
+      letter-spacing:.01em;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .donate-btn::before{
+      content:'';
+      position:absolute;
+      top:0; left:-110%;
+      width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.20), transparent);
+      transition: left .55s;
+    }
+    .donate-btn:hover::before{ left:110%; }
+    .donate-btn:hover{ transform: translateY(-2px); box-shadow: 0 16px 36px rgba(248,113,113,0.65); }
+    .donate-btn:active{ transform: translateY(-1px); }
+    .donate-btn:focus-visible{ outline:none; box-shadow: 0 0 0 4px rgba(248,113,113,0.20), 0 16px 36px rgba(248,113,113,0.65); }
+    .donate-btn-icon{
+      width:22px;height:22px;border-radius:999px;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(248,250,252,0.2);
+      font-size: 15px;
+      animation: wobble 1.6s ease-in-out infinite;
+    }
+    .donate-btn-text strong{ font-weight:800; }
+    @keyframes wobble { 0%{transform:translateY(0)}25%{transform:translateY(-3px)}50%{transform:translateY(0)}75%{transform:translateY(-2px)}100%{transform:translateY(0)} }
+
+    .donate-modal{
+      position:fixed; inset:0;
+      background: rgba(15,23,42,0.78);
+      display:none; align-items:center; justify-content:center;
+      z-index:40;
+      backdrop-filter: blur(5px);
+      animation: fadeIn .3s ease-out;
+    }
+    .donate-modal.visible{ display:flex; }
+    .donate-card{
+      width:100%; max-width:360px;
+      background:#fce7f3;
+      border-radius:24px;
+      padding:16px 14px 14px;
+      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
+      position:relative;
+      animation: scaleIn .3s ease-out;
+    }
+    @keyframes scaleIn{ from{ transform: scale(.9); opacity:0;} to{ transform: scale(1); opacity:1;} }
+    .donate-close{ position:absolute; top:8px; right:10px; border:none; background:transparent; font-size:16px; cursor:pointer; color:#be185d; transition: all .3s ease; }
+    .donate-close:hover{ transform: scale(1.2); }
+    .donate-title{ font-size:15px; font-weight:750; color:#9d174d; text-align:center; margin-bottom:4px; }
+    .donate-text{ font-size:12px; color:#9f1239; text-align:center; margin-bottom:6px; }
+    .donate-qr{ background:#fdf2f8; padding:10px; border-radius:18px; display:flex; align-items:center; justify-content:center; margin-bottom:4px; transition: all .3s ease; }
+    .donate-qr:hover{ transform: scale(1.02); }
+    .donate-qr img{ max-width:100%; border-radius:16px; display:block; transition: transform .3s ease; cursor: zoom-in; }
+    .donate-qr img:hover{ transform: scale(1.05); }
+    .donate-note{ font-size:11px; color:#9f1239; text-align:center; }
+
+    footer { margin-top:10px; text-align:center; font-size:11px; color: var(--muted); }
+
+    /* Floating particles effect */
+    .particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+    .particle { position:absolute; background: var(--primary); border-radius:50%; opacity:.1; animation: float-particle 15s infinite linear; }
+    @keyframes float-particle { 0%{ transform: translateY(0) translateX(0);} 100%{ transform: translateY(-100vh) translateX(100px);} }
+
+    @media (max-width: 720px) {
+      body { padding: 12px; }
+      .panel { padding: 16px 12px 12px; border-radius: 24px; }
+      .panel-inner { padding: 14px 12px 10px; }
+      h1 { font-size: 22px; }
+      .icon { width: 54px; height: 54px; }
+      .setup-title { font-size: 15px; }
+      .setup-section { padding: 12px 14px 10px; }
+      .setup-image.zoomed { max-width: 95vw; max-height: 95vh; transform: translate(-50%, -50%) scale(1.1); }
+      .theme-toggle { min-width: 160px; height: 38px; }
+      .tools-btn { height: 34px; }
+    }
+    @media (max-width: 480px) {
+      .actions { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .tools-btn { margin-left: 0; }
+      .badge-row { gap: 8px; }
+    }
+
+    /* =========================
+       UI OVERRIDE (GIỐNG STYLE ĐKK&BTK - GỌN / PRO)
+       Giữ nguyên toàn bộ chức năng & JS
+       ========================= */
     body{
-      min-height:100vh;color:var(--text);
+      /* nhìn giống BKTL-ĐKK (nền sâu + glow) */
       background:
         radial-gradient(900px 520px at 12% 10%, rgba(59,130,246,.18), transparent 55%),
         radial-gradient(820px 460px at 88% 22%, rgba(236,72,153,.14), transparent 55%),
         radial-gradient(860px 480px at 55% 105%, rgba(139,92,246,.16), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      padding:14px;
+        linear-gradient(180deg, #0b1220, #0f172a) !important;
+      align-items: flex-start;
+      padding: 14px;
     }
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--w);margin:0 auto}
-
-    .card{
-      border:1px solid var(--border);
-      border-radius: var(--r);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
+    body[data-theme="light"]{
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(37,99,235,.10), transparent 55%),
+        radial-gradient(820px 460px at 88% 22%, rgba(124,58,237,.08), transparent 55%),
+        linear-gradient(180deg, #eef2ff, #f8fafc) !important;
     }
 
-    /* top bar */
-    .top{
-      position: sticky; top: 10px; z-index: 10;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
-      padding:10px 12px;
+    .shell{
+      max-width: 980px;
+      margin-top: 10px;
     }
-    .brand{display:flex;align-items:center;gap:10px}
-    .logo{
-      width:36px;height:36px;border-radius:12px;
-      display:grid;place-items:center;font-weight:950;color:#fff;
-      background: linear-gradient(135deg,var(--p1),var(--p2));
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: 0 10px 22px rgba(59,130,246,.20);
-    }
-    .b1{font-weight:950}
-    .b2{color:var(--muted);font-size:.83rem;margin-top:1px}
 
-    .btns{display:flex;gap:8px;flex-wrap:wrap}
-    .btnTop{
-      border:none;border-radius:12px;padding:9px 11px;
-      cursor:pointer;font-weight:950;font-size:.88rem;
-      display:inline-flex;align-items:center;gap:8px;
-      transition:.16s ease; user-select:none;
+    .panel{
+      border-radius: 18px;
+      padding: 12px;
+      transform: none !important;
     }
-    .btnTop:hover{transform: translateY(-1px); box-shadow: 0 12px 20px rgba(0,0,0,.22)}
-    .btnTop:active{transform: translateY(1px)}
-    .btnTop.primary{background: linear-gradient(90deg,var(--p1),var(--p2)); color:#fff}
-    .btnTop.ghost{background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); color: var(--text)}
+    .panel:hover{
+      transform:none !important;
+    }
 
-    /* hero */
-    .hero{margin-top:10px;padding:14px}
-    .title{
-      font-size: clamp(1.45rem, 4.1vw, 2.15rem);
-      font-weight: 950; letter-spacing:-.5px; line-height:1.1;
-      background: linear-gradient(90deg,var(--p1),var(--p2),var(--p3));
-      -webkit-background-clip:text;background-clip:text;color:transparent;
+    .panel::before{
+      height: 3px;
+      background: linear-gradient(90deg, rgba(59,130,246,.95), rgba(139,92,246,.95), rgba(236,72,153,.90)) !important;
+      opacity: .9;
+    }
+
+    .panel-inner{
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(15,23,42,.32);
+    }
+    body[data-theme="light"] .panel-inner{
+      background: rgba(255,255,255,.75);
+    }
+
+    .donate-wrap{
       margin-bottom: 6px;
     }
-    .sub{color:var(--muted);line-height:1.6;font-size:.98rem}
-
-    /* list */
-    .list{margin-top:10px;display:grid;gap:10px}
-    .item{
-      padding:14px;
-      border-radius: var(--r);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(15,23,42,.32);
-      position:relative; overflow:hidden;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
-      cursor: pointer;
-    }
-    .item::before{
-      content:""; position:absolute; left:0; top:0; right:0; height:3px;
-      background: linear-gradient(90deg,var(--p1),var(--p2),var(--p3)); opacity:.85;
-    }
-    .item:hover{transform: translateY(-2px); box-shadow: 0 18px 32px rgba(0,0,0,.28)}
-    .item.active{
-      border-color: rgba(96,165,250,.38);
-      background: rgba(59,130,246,.08);
-      transform: translateY(-3px);
-      box-shadow: 0 22px 40px rgba(0,0,0,.30);
+    .donate-btn{
+      height: 38px;
+      font-size: 12px;
+      box-shadow: 0 12px 22px rgba(248,113,113,.40);
     }
 
-    .headRow{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
-    .leftRow{display:flex;gap:10px;align-items:flex-start}
-    .ico{
-      width:44px;height:44px;border-radius:14px;
-      display:grid;place-items:center;
-      background: rgba(59,130,246,.12);
-      border:1px solid rgba(59,130,246,.25);
-      color: rgba(147,197,253,.95);
-      flex:0 0 auto;
-      margin-top:1px;
-      font-size:18px;
+    .panel-header{
+      margin-bottom: 10px;
+      gap: 10px;
     }
-    .name{
-      font-size:1.05rem;font-weight:950;line-height:1.25
+    h1{
+      font-size: 22px;
+      letter-spacing: -.2px;
     }
-    .desc{margin-top:6px;color:var(--muted);line-height:1.55;font-size:.93rem}
-    .meta{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
-    .tag{
-      padding:5px 9px;border-radius:999px;
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
-      color: rgba(203,213,225,.9);
-      font-size:.80rem;font-weight:900;
+    .subtitle{
+      font-size: 13px;
+      max-width: 720px;
     }
 
     .badge{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:4px 9px;border-radius:999px;
-      font-size:.80rem;font-weight:950;border:1px solid;
-      margin-left:6px; transform: translateY(-1px);
+      padding: 5px 12px;
+      font-size: 12px;
     }
-    .live{background: rgba(34,197,94,.12); color:#22c55e; border-color: rgba(34,197,94,.25)}
-    .soon{background: rgba(245,158,11,.12); color:#f59e0b; border-color: rgba(245,158,11,.25)}
 
-    .chev{color:var(--muted);font-size:18px; margin-top:4px; transition: transform .18s ease}
-    .item.active .chev{transform: rotate(180deg)}
-
-    /* expand area */
-    .extra{
-      margin-top:10px;
-      padding-top:10px;
-      border-top: 1px dashed rgba(255,255,255,.16);
-      display:none;
+    .tools-btn{
+      height: 36px;
+      font-weight: 800;
+      box-shadow: 0 10px 18px rgba(139,92,246,.35);
     }
-    .extra.visible{display:block}
+
+    /* setup guide gọn hơn chút */
+    .setup-guide{
+      margin: 12px 0 12px;
+      border-radius: 16px;
+      padding: 12px 12px 10px;
+    }
+
+    /* item giống card ĐKK/BTK */
+    .item{
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .item::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; top:0;
+      height:3px;
+      background: linear-gradient(90deg, rgba(59,130,246,.95), rgba(139,92,246,.95), rgba(236,72,153,.90));
+      opacity:.85;
+    }
+    .item-header{ gap: 12px; }
+
+    .icon{
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      font-size: 1.35rem;
+    }
+
+    .name{ font-size: 15px; }
 
     .actions{
-      display:grid;
+      /* giống DKK: 2 nút đều nhau */
+      display: grid;
       grid-template-columns: 1fr 1fr;
-      gap:8px;
+      gap: 8px;
       margin-bottom: 8px;
     }
-    @media (max-width: 620px){ .actions{grid-template-columns:1fr} }
+    @media (max-width: 520px){
+      .actions{ grid-template-columns: 1fr; }
+    }
 
-    .dl{
-      width:100%;
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding: 11px 12px;
+    .btn{
+      height: 40px;
       border-radius: 12px;
-      font-weight: 950;
-      font-size: .92rem;
-      border:none;
-      cursor:pointer;
-      transition:.16s ease;
-      color:#fff;
+      font-weight: 900;
+    }
+    .btn-primary{
+      border-radius: 12px;
       background: linear-gradient(90deg, rgba(59,130,246,.95), rgba(139,92,246,.95));
     }
-    .dl:hover{transform: translateY(-1px); box-shadow: 0 14px 22px rgba(59,130,246,.18)}
-    .dl:active{transform: translateY(1px)}
-    .dl.disabled{
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.14);
-      color: rgba(203,213,225,.8);
-      cursor:not-allowed;
-      box-shadow:none;
-    }
-
-    .guideVideo{
-      width:100%;
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding: 11px 12px;
+    .btn-guide{
       border-radius: 12px;
-      font-weight: 950;
-      font-size: .92rem;
-      border:1px solid rgba(255,255,255,.14);
-      cursor:pointer;
-      transition:.16s ease;
-      color: var(--text);
       background: rgba(255,255,255,.06);
-    }
-    .guideVideo:hover{transform: translateY(-1px); background: rgba(59,130,246,.10)}
-    .guideVideo.disabled{opacity:.6; pointer-events:none}
-
-    /* guide steps box (giữ đúng tinh thần của bạn) */
-    .guideBox{
-      border-radius: 14px;
       border: 1px solid rgba(255,255,255,.14);
-      background: rgba(2,6,23,.30);
-      padding: 12px 12px 10px;
-      font-size: 12.5px;
-      color: var(--muted);
-      display:none;
-      margin-top: 8px;
+      box-shadow: none;
     }
-    .guideBox.visible{display:block}
+    body[data-theme="light"] .btn-guide{
+      background: #fff;
+      border-color: rgba(15,23,42,.14);
+    }
+    .btn-guide:hover{
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 10px 18px rgba(0,0,0,.12);
+    }
 
-    .gHead{
-      display:flex;align-items:center;gap:8px;margin-bottom:8px;
-      color: var(--text); font-weight: 900;
+    .guide{
+      border-radius: 14px;
+      background: rgba(2,6,23,.20);
+      border: 1px solid rgba(255,255,255,.12);
     }
-    .gHead .b{
-      width:22px;height:22px;border-radius:999px;
-      display:grid;place-items:center;
-      background: linear-gradient(135deg,#f97316,#ec4899);
-      color:#fff; font-size: 13px;
-      box-shadow: 0 6px 14px rgba(248,113,113,.45);
-      flex: 0 0 auto;
-    }
-    .gList{display:flex;flex-direction:column;gap:8px}
-    .gRow{
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px dashed rgba(255,255,255,.14);
-      background: rgba(15,23,42,.35);
-      line-height: 1.55;
-    }
-    .gRow strong{color: var(--text)}
-    .gRow a{color: rgba(147,197,253,.98); text-decoration: underline}
-
-    /* setup guide (giữ phần của bạn nhưng gọn lại một chút) */
-    .setup{
-      margin-top:10px;
-      padding: 14px;
-      border-radius: var(--r);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(15,23,42,.32);
-    }
-    .setupHead{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer}
-    .setupTitle{font-weight:950}
-    .setupNote{color:var(--muted);font-size:.92rem;line-height:1.55;margin-top:6px}
-    .setupBody{display:none;margin-top:10px;border-top:1px dashed rgba(255,255,255,.16);padding-top:10px}
-    .setup.active .setupBody{display:block}
-
-    .foot{
-      margin-top:10px;
-      text-align:center;
-      color: rgba(100,116,139,.95);
-      font-size: .88rem;
-      padding: 10px 6px 18px;
-    }
-    .hl{
-      font-weight: 950;
-      background: linear-gradient(90deg,var(--p1),var(--p2),var(--p3));
-      -webkit-background-clip:text;background-clip:text;color:transparent;
+    body[data-theme="light"] .guide{
+      background: rgba(255,255,255,.70);
+      border-color: rgba(15,23,42,.10);
     }
   </style>
 </head>
 
-<body>
-  <div class="wrap">
+<body data-theme="dark">
+  <div class="particles" id="particles"></div>
 
-    <div class="top card">
-      <div class="brand">
-        <div class="logo">B</div>
-        <div>
-          <div class="b1">baotg10</div>
-          <div class="b2">BKTL — Bộ bảng kê tính lãi</div>
+  <main class="shell">
+    <section class="panel">
+      <div class="panel-inner">
+
+        <div class="donate-wrap">
+          <button id="donateBtn" class="donate-btn" type="button">
+            <span class="donate-btn-icon">🎁</span>
+            <span class="donate-btn-text">
+              <strong>Ủng hộ</strong> cho bộ bảng kê
+            </span>
+          </button>
+        </div>
+
+        <header class="panel-header">
+          <div class="title-wrap">
+            <div class="badge-row">
+              <div class="badge">
+                <span class="dot"></span>
+                <span>Bộ bảng kê tính lãi</span>
+              </div>
+
+              <!-- Nút Công cụ khác -->
+              <a href="https://giabao1881.github.io/baotg10/" class="tools-btn" target="_blank" rel="noopener">
+                <span class="tools-icon">🛠️</span>
+                <span>Công cụ khác</span>
+              </a>
+            </div>
+
+            <div>
+              <h1>BẢNG KÊ TÍNH LÃI</h1>
+              <p class="subtitle">Bấm vào từng bảng kê để hiện nút tải và hướng dẫn (THEO DÕI THƯỜNG XUYÊN ĐỂ CẬP NHẬT BẢNG MỚI NHẤT NHÉ)</p>
+            </div>
+          </div>
+
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Đổi giao diện sáng/tối">
+            <div class="theme-pill"></div>
+            <div class="theme-option">
+              <span class="icon">🌞</span>
+              <span class="label">Sáng</span>
+            </div>
+            <div class="theme-option">
+              <span class="icon">🌙</span>
+              <span class="label">Tối</span>
+            </div>
+          </button>
+        </header>
+
+        <!-- Hướng dẫn cài đặt máy -->
+        <div class="setup-guide" id="setupGuide">
+          <div class="setup-header">
+            <div class="setup-title">
+              <div class="setup-title-icon">⚙️</div>
+              <span>Cài đặt máy trước khi sử dụng</span>
+            </div>
+            <div class="setup-chevron">▾</div>
+          </div>
+
+          <div class="setup-content">
+            <p class="setup-subtitle">Để đảm bảo các bảng kê Excel hoạt động chính xác, vui lòng thực hiện các bước cài đặt sau:</p>
+
+            <div class="setup-list">
+              <div class="setup-section">
+                <div class="setup-section-title">
+                  <span class="setup-section-title-icon">🔧</span>
+                  <span>1. Điều chỉnh trong Control Panel</span>
+                </div>
+
+                <div class="setup-steps">
+                  <div class="setup-step">
+                    <div class="setup-number">1</div>
+                    <div class="setup-text">
+                      <strong>Bước 1:</strong> Dưới thanh Taskbar, bạn hãy bấm vào ký hiệu Windows (hình ô cửa sổ) và bấm chọn vào <strong>Control Panel</strong> hoặc tại ô tìm kiếm thì tìm kiếm "Control Panel".
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image1.jpeg" alt="Vào Control Panel"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Vào Control Panel</small></div>';" />
+                        <div class="setup-image-caption">Vào ký hiệu Windows và bấm chọn vào Control Panel</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="setup-step">
+                    <div class="setup-number">2</div>
+                    <div class="setup-text">
+                      <strong>Bước 2:</strong> Chọn vào <strong>Clock and Region</strong>, sau đó chọn tiếp vào <strong>Region</strong>.
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image2.jpeg" alt="Chọn Clock and Region"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Clock and Region</small></div>';" />
+                        <div class="setup-image-caption">Chọn vào Clock and Region, sau đó chọn tiếp vào Region</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="setup-step">
+                    <div class="setup-number">3</div>
+                    <div class="setup-text">
+                      <strong>Bước 3:</strong> Tại phần <strong>Format</strong> hãy chọn sang <strong>Vietnamese (Vietnam)</strong> là các định dạng thời gian sẽ chuyển sang dd/mm/yyyy.
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Vietnamese format</small></div>';" />
+                        <div class="setup-image-caption">Tại phần Format hãy chọn sang Vietnamese (Vietnam)</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="setup-section">
+                <div class="setup-section-title">
+                  <span class="setup-section-title-icon">📊</span>
+                  <span>2. Điều chỉnh trong Excel</span>
+                </div>
+
+                <div class="setup-steps">
+                  <div class="setup-step">
+                    <div class="setup-number">1</div>
+                    <div class="setup-text"><strong>Mở file Excel lên</strong></div>
+                  </div>
+
+                  <div class="setup-step">
+                    <div class="setup-number">2</div>
+                    <div class="setup-text">
+                      <strong>Chọn FILE → OPTION → ADVANCED</strong> sau đó làm như hình dưới đây:
+                      <div class="setup-image" onclick="toggleZoom(this)">
+                        <img src="media/image4.png" alt="Cài đặt Excel"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Cài đặt Excel</small></div>';" />
+                        <div class="setup-image-caption">Cài đặt định dạng số trong Excel</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="setup-step">
+                    <div class="setup-number">3</div>
+                    <div class="setup-text">
+                      <strong>"Chấm" dưới "phẩy" đó là dạng số của bạn chuyển sang "phẩy" phần ngàn.</strong> Nếu bạn muốn để "chấm" phần ngàn thì đổi ngược lại.
+                    </div>
+                  </div>
+
+                  <div class="setup-step">
+                    <div class="setup-number">4</div>
+                    <div class="setup-text"><strong>Đổi xong thì bấm OK</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="setup-note">
+              💡 <strong>Lưu ý quan trọng:</strong> Các bước cài đặt này cần thiết để đảm bảo bảng kê tính lãi hoạt động chính xác. Nếu gặp lỗi khi mở file, hãy kiểm tra lại các bước trên.
+            </div>
+          </div>
+        </div>
+
+        <div class="list" id="list"></div>
+      </div>
+    </section>
+
+    <div id="donateModal" class="donate-modal">
+      <div class="donate-card">
+        <button id="donateClose" class="donate-close" type="button">✕</button>
+        <div class="donate-title">Donate ủng hộ phát triển</div>
+        <p class="donate-text">
+          Nếu bạn thấy bộ bảng kê hữu ích, có thể ủng hộ mình một ly cà phê.
+        </p>
+        <div class="donate-qr">
+          <img src="momo_qr.png" alt="QR donate MoMo"
+               onclick="zoomQR(this)"
+               onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:#9f1239; background:#fdf2f8; border-radius:16px;\'>📷 QR Code sẽ hiển thị tại đây<br><small>Upload file momo_qr.png lên GitHub</small></div>';" />
+        </div>
+        <div class="donate-note">
+          Quét bằng MoMo hoặc app ngân hàng hỗ trợ VietQR.
         </div>
       </div>
-
-      <div class="btns">
-        <a class="btnTop ghost" href="https://giabao1881.github.io/baotg10/" target="_blank" rel="noopener">
-          <i class="fa-solid fa-grid-2"></i> Công cụ khác
-        </a>
-        <a class="btnTop primary" href="mailto:baotg10@vpbank.com.vn">
-          <i class="fa-solid fa-envelope"></i> Liên hệ
-        </a>
-      </div>
     </div>
 
-    <div class="hero card">
-      <div class="title">BẢNG KÊ TÍNH LÃI (BKTL)</div>
-      <div class="sub">Bấm vào từng tool để mở nút tải + hướng dẫn. Hướng dẫn dạng bước vẫn giữ nguyên.</div>
-    </div>
+    <footer>© baotg10</footer>
+  </main>
 
-    <!-- GIỮ HƯỚNG DẪN CÀI ĐẶT: gọn + toggle -->
-    <div class="setup card" id="setup">
-      <div class="setupHead">
-        <div class="setupTitle"><i class="fa-solid fa-gear"></i> Cài đặt máy trước khi sử dụng</div>
-        <div style="color:var(--muted)"><i class="fa-solid fa-chevron-down"></i></div>
-      </div>
-      <div class="setupNote">Click để mở/đóng. (Bạn có thể giữ nguyên phần chi tiết hình ảnh như code cũ nếu muốn)</div>
-      <div class="setupBody">
-        <div style="color:var(--muted);line-height:1.6;font-size:.95rem">
-          Bạn có thể dán nguyên khối “setup-guide” cũ của bạn vào đây nếu muốn giữ đầy đủ hình ảnh hướng dẫn.
-        </div>
-      </div>
-    </div>
-
-    <div class="list" id="list"></div>
-
-    <div class="foot">© 2024 <span class="hl">baotg10</span></div>
-  </div>
+  <div class="image-overlay" id="imageOverlay" onclick="closeAllZoom()"></div>
 
   <script>
-    // ====== Danh sách BKTL ======
     const BANG_KE_LIST = [
       {
         id: "ld",
-        status: "LIVE",
+        code: "LD",
         name: "BKTL LD",
+        short: "Tool siêu cấp",
         subtitle: "Có thể tính cùng lúc 10 bảng LD và hơn thế nữa",
+        file: "BKTL_LD.xlsm",
         updated: "Cập nhật 12/11/2025, sửa lỗi một số máy không up được LKLS..",
-        file: "BKTL_LD.xlsm",              // đặt file tại cùng thư mục trang
-        fileName: "BKTL_LD.xlsm",
-        video: "",                         // <- dán link video hướng dẫn ở đây (YouTube/Drive/Pages)
-        tags: ["Excel", "LD", "Macro"],
-        icon: "fa-sack-dollar",
+        icon: "💰",
+        color: "green",
         guide: [
-          "Bước 1: Nhập đầy đủ thông tin tại sheet <strong>THTT</strong>.",
-          "Bước 2: Tải tất cả LKGD và LKLS về (tool hỗ trợ tải nhanh).",
-          "Bước 3: Up file đúng sheet (có thể up nhiều file cùng lúc).",
-          "Bước 4: Bấm ROBOT và nhập pass <strong>baotg10</strong>.",
-          "Bước 5: Kiểm tra gốc / giải ngân kỹ thuật / dữ liệu hợp lệ."
+          "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\"",
+          "Bước 2: Tải tất cả các LKGD và LKLS các LD về. <em>Lưu ý:</em> tool này đã cập nhật tất cả tải bằng HTML nhanh và tiện.",
+          "Bước 3: Up file vô đúng SHEET. <span style=\"color:red\"> Có thể up nhiều file cùng lúc</span>. (Trong LKLS có thể sửa lại lãi đối với thế chấp)",
+          "Bước 4: Bấm ROBOT nhập pass \"<span style=\"color:red\">baotg10</span>\"",
+          "Bước 5: Kiểm tra đúng gốc chưa, có giải ngân kĩ thuật không,...",
+          "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
         ]
       },
       {
         id: "the",
-        status: "LIVE",
+        code: "TH",
         name: "BKTL THẺ",
+        short: "TOOL tính thẻ",
         subtitle: "Tính thẻ nhanh, bốc tách lãi hợp lý, tiết kiệm thời gian",
-        updated: "12/11/2025 fix lỗi thiếu công thức dư nợ đầu kỳ",
         file: "BKTL_THE.xlsm",
-        fileName: "BKTL_THE.xlsm",
-        video: "",
-        tags: ["Excel", "THẺ", "Macro"],
-        icon: "fa-credit-card",
+        updated: "12/11/2025 fix lỗi thiếu công thức dư nợ đầu kỳ",
+        icon: "💳",
+        color: "pink",
         guide: [
-          "Bước 1: Nhập thông tin tại sheet <strong>THTT</strong> (đúng ngày sao kê).",
-          "Bước 2: Tải sao kê Way4 dạng <strong>Excel</strong>.",
-          "Bước 3: Up file sao kê lên tool.",
-          "Bước 4: Bấm ROBOT nhập pass.",
-          "Bước 5: Ẩn dòng dư thừa và kiểm tra phần tự động."
+          "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\". Lưu ý: Chỗ \"<span style=\"color:red\">Nhập dư nợ gốc trên fin</span>\" nhập sao cho bên phần tự động hiện \"<span style=\"color:red\">REF</span>\" là ok! Đồng thời, tại mục \"<span style=\"color:red\">Nhập ngày bắt đầu sao kê</span>\": vào Way4 → Docs, tìm dòng có chữ \"<span style=\"color:red\">interest</span>\"; ví dụ nếu là 26/01/2025 thì nhập <strong>26</strong>.",
+          "Bước 2: Tải sao kê trên way4 về dạng \"<span style=\"color:red\">Excel</span>\"",
+          "Bước 3: Up file sao kê lên",
+          "Bước 4: Bấm vô robot và nhập pass",
+          "Bước 5: Ẩn dòng dư thừa. Lưu ý chỉ: <span style=\"color:red\">Ẩn</span>",
+          "Bước 6: Xem bên sheet THTT chỗ phần Tự động và làm theo hướng dẫn. Thêm bớt cho hợp lý",
+          "Bước 7: Sửa ngày cần tính chỗ dòng cuối cùng",
+          "Bước 8: Tính lãi tới kì hiện tại: <em>=Lãi kỳ trên / 30 * (ngày cần tính - <span style=\"color:red\">ngày bắt đầu sao kê của kì đó</span> + 1)</em>",
+          "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
         ]
       },
       {
         id: "pd",
-        status: "SOON",
+        code: "PD",
         name: "BKTL THẤU CHI (đang phát triển)",
+        short: "tính nhanh thấu chi",
         subtitle: "Đang phát triển",
+        file: "hihi",
         updated: "Dự kiến tháng 12",
-        file: "",
-        fileName: "",
-        video: "",
-        tags: ["Soon"],
-        icon: "fa-bullseye",
+        icon: "🎯",
+        color: "orange",
         guide: [
           "🛠️ Tính năng đang được phát triển...",
+          "Dự kiến ra mắt vào tháng 12/2024",
           "Theo dõi để cập nhật phiên bản mới nhất!"
         ]
       }
     ];
 
-    function esc(s){ return (s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    const colorSchemes = {
+      green: 'linear-gradient(135deg, #22c55e, #16a34a)',
+      blue: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+      purple: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+      orange: 'linear-gradient(135deg, #f59e0b, #d97706)',
+      pink: 'linear-gradient(135deg, #ec4899, #db2777)',
+      cyan: 'linear-gradient(135deg, #06b6d4, #0891b2)'
+    };
 
-    // Tải trực tiếp
-    function directDownload(url, filename){
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename || "";
-      a.rel = "noopener";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+    function toggleZoom(imageContainer) {
+      const isZoomed = imageContainer.classList.contains('zoomed');
+      if (!isZoomed) {
+        imageContainer.classList.add('zoomed');
+        document.getElementById('imageOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        closeAllZoom();
+      }
     }
 
-    function render(){
-      const listEl = document.getElementById("list");
-      listEl.innerHTML = "";
+    function zoomQR(qrImage) {
+      const qrContainer = qrImage.parentElement;
+      qrContainer.style.transform = 'scale(1.2)';
+      qrContainer.style.transition = 'transform 0.3s ease';
+      setTimeout(() => {
+        qrContainer.style.transform = 'scale(1)';
+      }, 2000);
+    }
 
-      BANG_KE_LIST.forEach(item=>{
-        const tags = (item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
-        const isLive = (item.status||"").toUpperCase()==="LIVE";
-        const badge = isLive
-          ? `<span class="badge live">LIVE</span>`
-          : `<span class="badge soon">${esc(item.status||"SOON")}</span>`;
-
-        const canDownload = !!item.file && isLive;
-        const canVideo = !!item.video;
-
-        const tool = document.createElement("div");
-        tool.className = "item";
-        tool.dataset.id = item.id;
-
-        tool.innerHTML = `
-          <div class="headRow">
-            <div class="leftRow">
-              <div class="ico"><i class="fa-solid ${esc(item.icon||"fa-file")}"></i></div>
-              <div>
-                <div class="name">${esc(item.name||"")} ${badge}</div>
-                <div class="desc">${esc(item.subtitle||"")}</div>
-                <div class="meta">
-                  ${tags}
-                  ${item.updated ? `<span class="tag">🕒 ${esc(item.updated)}</span>` : ``}
-                </div>
-              </div>
-            </div>
-            <div class="chev">▾</div>
-          </div>
-
-          <div class="extra">
-            <div class="actions">
-              ${
-                canDownload
-                  ? `<button class="dl" data-url="${esc(item.file)}" data-name="${esc(item.fileName||"")}">
-                       <i class="fa-solid fa-download"></i> Tải ngay
-                     </button>`
-                  : `<button class="dl disabled" disabled>
-                       <i class="fa-solid fa-lock"></i> Chưa mở tải
-                     </button>`
-              }
-
-              ${
-                canVideo
-                  ? `<a class="guideVideo" href="${esc(item.video)}" target="_blank" rel="noopener">
-                       <i class="fa-solid fa-circle-play"></i> Hướng dẫn video
-                     </a>`
-                  : `<span class="guideVideo disabled">
-                       <i class="fa-solid fa-circle-play"></i> Hướng dẫn video
-                     </span>`
-              }
-            </div>
-
-            <button class="guideVideo" type="button" data-toggle-guide="1" style="background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);">
-              <i class="fa-solid fa-list-check"></i> Hướng dẫn chi tiết
-            </button>
-
-            <div class="guideBox">
-              <div class="gHead"><span class="b">💡</span> Hướng dẫn chi tiết</div>
-              <div class="gList">
-                ${(item.guide||[]).map(line=>`<div class="gRow">${line}</div>`).join("")}
-              </div>
-            </div>
-          </div>
-        `;
-
-        listEl.appendChild(tool);
+    function closeAllZoom() {
+      document.querySelectorAll('.setup-image.zoomed').forEach(img => {
+        img.classList.remove('zoomed');
       });
+      document.getElementById('imageOverlay').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
 
-      // bind click open/close
-      document.querySelectorAll(".item").forEach(itemEl=>{
-        const extra = itemEl.querySelector(".extra");
-        const guideBox = itemEl.querySelector(".guideBox");
-        const toggleGuideBtn = itemEl.querySelector('[data-toggle-guide="1"]');
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeAllZoom();
+      }
+    });
 
-        itemEl.addEventListener("click", (e)=>{
-          // nếu click vào nút bên trong thì không toggle item
-          const isButton = e.target.closest("button, a");
-          if (isButton) return;
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 20;
 
-          const isOpen = itemEl.classList.contains("active");
-          document.querySelectorAll(".item").forEach(x=>x.classList.remove("active"));
-          document.querySelectorAll(".extra").forEach(x=>x.classList.remove("visible"));
-          document.querySelectorAll(".guideBox").forEach(x=>x.classList.remove("visible"));
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
 
-          if (!isOpen){
-            itemEl.classList.add("active");
-            extra.classList.add("visible");
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+
+        const duration = Math.random() * 20 + 10;
+        particle.style.animationDuration = `${duration}s`;
+
+        const delay = Math.random() * 5;
+        particle.style.animationDelay = `${delay}s`;
+
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    function renderList() {
+      const listEl = document.getElementById('list');
+      listEl.innerHTML = '';
+
+      BANG_KE_LIST.forEach(item => {
+        const wrap = document.createElement('div');
+        wrap.className = 'item';
+        wrap.dataset.id = item.id;
+
+        const header = document.createElement('div');
+        header.className = 'item-header';
+
+        const icon = document.createElement('div');
+        icon.className = 'icon';
+        icon.style.background = colorSchemes[item.color] || colorSchemes.blue;
+        icon.innerHTML = item.icon || '📊';
+
+        const textBox = document.createElement('div');
+        textBox.className = 'text-box';
+
+        const nameRow = document.createElement('div');
+        nameRow.className = 'name-row';
+
+        const name = document.createElement('div');
+        name.className = 'name';
+        name.textContent = item.name || '';
+
+        const chevron = document.createElement('div');
+        chevron.className = 'chevron';
+        chevron.textContent = '▾';
+
+        nameRow.appendChild(name);
+        nameRow.appendChild(chevron);
+        textBox.appendChild(nameRow);
+
+        const chips = document.createElement('div');
+        chips.className = 'chips';
+
+        const chip1 = document.createElement('div');
+        chip1.className = 'chip-pill';
+        chip1.innerHTML = '<span class="chip-color"></span><span>Excel</span>';
+
+        const chip2 = document.createElement('div');
+        chip2.className = 'chip-pill';
+        chip2.textContent = item.short || '';
+
+        chips.appendChild(chip1);
+        chips.appendChild(chip2);
+        textBox.appendChild(chips);
+
+        if (item.updated) {
+          const up = document.createElement('div');
+          up.className = 'chip-update';
+          up.innerHTML = '<span class="chip-update-icon">🕒</span><span>Cập nhật: ' + item.updated + '</span>';
+          textBox.appendChild(up);
+        }
+
+        header.appendChild(icon);
+        header.appendChild(textBox);
+
+        const extra = document.createElement('div');
+        extra.className = 'extra';
+
+        const subtitle = document.createElement('div');
+        subtitle.className = 'detail-subtitle';
+        subtitle.textContent = item.subtitle || '';
+        extra.appendChild(subtitle);
+
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+
+        const download = document.createElement('a');
+        download.className = 'btn btn-primary';
+        download.href = item.file || '#';
+        download.setAttribute('download', '');
+        download.innerHTML = '<span class="btn-icon">⬇</span><span>Tải ' + (item.name || 'file') + '</span>';
+
+        const guideBtn = document.createElement('button');
+        guideBtn.type = 'button';
+        guideBtn.className = 'btn btn-outline btn-guide';
+        guideBtn.innerHTML = '<span class="btn-icon">📘</span><span>Hướng dẫn sử dụng</span>';
+
+        actions.appendChild(download);
+        actions.appendChild(guideBtn);
+        extra.appendChild(actions);
+
+        const guideBox = document.createElement('div');
+        guideBox.className = 'guide';
+
+        const gHeader = document.createElement('div');
+        gHeader.className = 'guide-header';
+
+        const gIcon = document.createElement('div');
+        gIcon.className = 'guide-header-icon';
+        gIcon.textContent = '💡';
+
+        const gTitle = document.createElement('div');
+        gTitle.className = 'guide-header-title';
+        gTitle.textContent = 'Hướng dẫn chi tiết';
+
+        gHeader.appendChild(gIcon);
+        gHeader.appendChild(gTitle);
+        guideBox.appendChild(gHeader);
+
+        const gList = document.createElement('div');
+        gList.className = 'guide-list';
+
+        (item.guide || []).forEach((line, i) => {
+          const row = document.createElement('div');
+          row.className = 'guide-row';
+
+          const bullet = document.createElement('div');
+          bullet.className = 'guide-bullet';
+          bullet.textContent = i === 0 ? '⭐' : '•';
+
+          const body = document.createElement('div');
+          body.className = 'guide-body';
+          body.innerHTML = line;
+
+          row.appendChild(bullet);
+          row.appendChild(body);
+          gList.appendChild(row);
+        });
+
+        guideBox.appendChild(gList);
+        extra.appendChild(guideBox);
+
+        wrap.appendChild(header);
+        wrap.appendChild(extra);
+
+        header.addEventListener('click', function () {
+          const isVisible = extra.classList.contains('visible');
+          document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
+          document.querySelectorAll('.extra').forEach(el => el.classList.remove('visible'));
+          document.querySelectorAll('.guide').forEach(el => el.classList.remove('visible'));
+          if (!isVisible) {
+            wrap.classList.add('active');
+            extra.classList.add('visible');
           }
         });
 
-        // nút hướng dẫn chi tiết (giữ chức năng cũ)
-        toggleGuideBtn.addEventListener("click", (e)=>{
+        guideBtn.addEventListener('click', function (e) {
           e.stopPropagation();
-          guideBox.classList.toggle("visible");
+          guideBox.classList.toggle('visible');
         });
-      });
 
-      // bind download
-      document.querySelectorAll(".dl[data-url]").forEach(btn=>{
-        btn.addEventListener("click", (e)=>{
-          e.stopPropagation();
-          const url = btn.getAttribute("data-url");
-          const name = btn.getAttribute("data-name") || "";
-          directDownload(url, name);
-        });
+        listEl.appendChild(wrap);
       });
     }
 
-    // setup toggle
-    document.getElementById("setup").addEventListener("click", ()=> {
-      document.getElementById("setup").classList.toggle("active");
-    });
+    function applyTheme(theme) {
+      const t = theme === 'light' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', t);
+      try { localStorage.setItem('bangke-theme', t); } catch (e) {}
+    }
 
-    render();
+    document.addEventListener('DOMContentLoaded', () => {
+      let saved = null;
+      try { saved = localStorage.getItem('bangke-theme'); } catch (e) {}
+      if (saved === 'light' || saved === 'dark') applyTheme(saved);
+      else applyTheme('dark');
+
+      renderList();
+      createParticles();
+
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const current = document.body.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+
+      const setupGuide = document.getElementById('setupGuide');
+      if (setupGuide) {
+        setupGuide.querySelector('.setup-header').addEventListener('click', function() {
+          setupGuide.classList.toggle('active');
+        });
+      }
+
+      const donateBtn = document.getElementById('donateBtn');
+      const donateModal = document.getElementById('donateModal');
+      const donateClose = document.getElementById('donateClose');
+
+      if (donateBtn && donateModal && donateClose) {
+        donateBtn.addEventListener('click', () => donateModal.classList.add('visible'));
+        donateClose.addEventListener('click', () => donateModal.classList.remove('visible'));
+        donateModal.addEventListener('click', (e) => {
+          if (e.target === donateModal) donateModal.classList.remove('visible');
+        });
+      }
+    });
   </script>
 </body>
 </html>
