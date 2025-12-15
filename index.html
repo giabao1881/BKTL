@@ -45,6 +45,11 @@
       --shadow-main: 0 28px 80px rgba(2,6,23,0.95);
       --shadow-inner: 0 0 0 1px rgba(148,163,184,0.15);
       --shadow-glow: 0 0 20px rgba(96,165,250,0.3);
+
+      /* Buttons */
+      --btn-shadow: 0 10px 26px rgba(2,6,23,0.55);
+      --btn-shadow-hover: 0 14px 34px rgba(2,6,23,0.65);
+      --btn-ring: rgba(96,165,250,0.35);
     }
 
     body[data-theme="light"] {
@@ -67,6 +72,11 @@
       --shadow-main: 0 22px 60px rgba(15,23,42,0.18);
       --shadow-inner: 0 0 0 1px rgba(148,163,184,0.08);
       --shadow-glow: 0 0 20px rgba(37,99,235,0.15);
+
+      /* Buttons */
+      --btn-shadow: 0 10px 22px rgba(15,23,42,0.14);
+      --btn-shadow-hover: 0 14px 28px rgba(15,23,42,0.18);
+      --btn-ring: rgba(37,99,235,0.20);
     }
 
     .shell {
@@ -137,6 +147,8 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      flex: 1;
+      min-width: 260px;
     }
 
     .badge-row {
@@ -144,24 +156,26 @@
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+      width: 100%;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 14px;
+      padding: 5px 14px;
       border-radius: 999px;
       border: 1px solid var(--border);
       font-size: 12px;
       color: var(--muted);
       background: var(--chip-bg);
       transition: all 0.3s ease;
+      backdrop-filter: blur(6px);
     }
 
     .badge:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: var(--btn-shadow);
     }
 
     .dot {
@@ -195,23 +209,40 @@
       max-width: 600px;
     }
 
+    /* ===================== NÚT: THEME TOGGLE (CHỈ CHỈNH UI) ===================== */
     .theme-toggle {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 6px;
+      gap: 8px;
+      padding: 5px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.18), transparent 55%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
       cursor: pointer;
       position: relative;
-      min-width: 190px;
-      transition: all 0.3s ease;
+      min-width: 170px;
+      height: 40px;
+      transition: all 0.25s ease;
+      box-shadow: var(--btn-shadow);
+      user-select: none;
+    }
+
+    body[data-theme="light"] .theme-toggle {
+      background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(255,255,255,0.65));
     }
 
     .theme-toggle:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      box-shadow: var(--btn-shadow-hover);
+    }
+
+    .theme-toggle:active {
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px var(--btn-ring), var(--btn-shadow-hover);
     }
 
     .theme-pill {
@@ -221,19 +252,14 @@
       left: 4px;
       width: calc(50% - 6px);
       border-radius: 999px;
-      background: radial-gradient(circle at 0% 0%, rgba(248,250,252,0.7), transparent 55%);
-      box-shadow: 0 12px 26px rgba(15,23,42,0.6);
+      background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.10));
+      box-shadow: 0 10px 22px rgba(15,23,42,0.45);
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    body[data-theme="light"] .theme-pill {
-      transform: translateX(0);
-    }
-
-    body[data-theme="dark"] .theme-pill {
-      transform: translateX(100%);
-    }
+    body[data-theme="light"] .theme-pill { transform: translateX(0); }
+    body[data-theme="dark"] .theme-pill { transform: translateX(100%); }
 
     .theme-option {
       position: relative;
@@ -245,37 +271,33 @@
       gap: 6px;
       font-size: 12px;
       color: var(--muted);
-      transition: color 0.3s ease;
+      transition: color 0.3s ease, transform 0.2s ease;
     }
 
-    .theme-option span.icon {
-      font-size: 17px;
-    }
+    .theme-option span.icon { font-size: 16px; }
+    .theme-option span.label { white-space: nowrap; }
 
-    .theme-option span.label {
-      white-space: nowrap;
-    }
-
-    /* Nút Công cụ khác */
+    /* ===================== NÚT: CÔNG CỤ KHÁC (CHỈ CHỈNH UI) ===================== */
     .tools-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
+      padding: 0 14px;
+      height: 34px;
       border-radius: 999px;
-      border: none;
+      border: 1px solid rgba(255,255,255,0.14);
       background: linear-gradient(135deg, #8b5cf6, #7c3aed);
       color: #fff;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 650;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 10px 26px rgba(139, 92, 246, 0.5);
-      transition: all 0.3s ease;
-      margin-left: auto;
-      margin-right: 10px;
+      box-shadow: 0 10px 22px rgba(139, 92, 246, 0.42);
+      transition: all 0.25s ease;
+      margin-left: auto; /* giữ hành vi đẩy qua phải như bạn đang dùng */
       position: relative;
       overflow: hidden;
+      letter-spacing: 0.01em;
     }
 
     .tools-btn::before {
@@ -285,37 +307,33 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
       transition: left 0.5s;
     }
 
-    .tools-btn:hover::before {
-      left: 100%;
-    }
+    .tools-btn:hover::before { left: 100%; }
 
     .tools-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.7);
+      box-shadow: 0 12px 28px rgba(139, 92, 246, 0.58);
     }
 
-    .tools-icon {
-      font-size: 16px;
-      animation: float 3s ease-in-out infinite;
+    .tools-btn:active { transform: translateY(-1px); }
+
+    .tools-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(167,139,250,0.28), 0 12px 28px rgba(139,92,246,0.58);
     }
+
+    .tools-icon { font-size: 16px; animation: float 3s ease-in-out infinite; }
 
     @keyframes float {
-      0% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-3px);
-      }
-      100% {
-        transform: translateY(0px);
-      }
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+      100% { transform: translateY(0px); }
     }
 
-    /* Hướng dẫn cài đặt */
+    /* ===================== HƯỚNG DẪN CÀI ĐẶT (GIỮ NGUYÊN) ===================== */
     .setup-guide {
       margin: 16px 0 20px;
       border-radius: 20px;
@@ -327,17 +345,13 @@
       overflow: hidden;
     }
 
-    body[data-theme="light"] .setup-guide {
-      background: #ffffff;
-    }
+    body[data-theme="light"] .setup-guide { background: #ffffff; }
 
     .setup-guide::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
       background: linear-gradient(to bottom, #f97316, #ec4899);
     }
 
@@ -377,9 +391,7 @@
       transition: transform 0.3s ease;
     }
 
-    .setup-guide.active .setup-chevron {
-      transform: rotate(180deg);
-    }
+    .setup-guide.active .setup-chevron { transform: rotate(180deg); }
 
     .setup-content {
       display: none;
@@ -393,9 +405,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .setup-guide.active .setup-content {
-      display: block;
-    }
+    .setup-guide.active .setup-content { display: block; }
 
     .setup-subtitle {
       font-size: 13px;
@@ -404,11 +414,7 @@
       padding-left: 8px;
     }
 
-    .setup-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .setup-list { display: flex; flex-direction: column; gap: 16px; }
 
     .setup-section {
       border-radius: 14px;
@@ -418,14 +424,8 @@
       transition: all 0.3s ease;
     }
 
-    .setup-section:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    }
-
-    body[data-theme="light"] .setup-section {
-      background: #f9fafb;
-    }
+    .setup-section:hover { transform: translateY(-2px); box-shadow: var(--btn-shadow); }
+    body[data-theme="light"] .setup-section { background: #f9fafb; }
 
     .setup-section-title {
       font-size: 15px;
@@ -437,15 +437,9 @@
       gap: 8px;
     }
 
-    .setup-section-title-icon {
-      font-size: 16px;
-    }
+    .setup-section-title-icon { font-size: 16px; }
 
-    .setup-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .setup-steps { display: flex; flex-direction: column; gap: 12px; }
 
     .setup-step {
       display: flex;
@@ -454,9 +448,7 @@
       transition: all 0.3s ease;
     }
 
-    .setup-step:hover {
-      transform: translateX(5px);
-    }
+    .setup-step:hover { transform: translateX(5px); }
 
     .setup-number {
       width: 24px;
@@ -480,17 +472,9 @@
       transform: scale(1.1);
     }
 
-    .setup-text {
-      font-size: 13px;
-      color: var(--text);
-      flex: 1;
-    }
+    .setup-text { font-size: 13px; color: var(--text); flex: 1; }
+    .setup-text strong { color: var(--primary); }
 
-    .setup-text strong {
-      color: var(--primary);
-    }
-
-    /* Cải tiến hiển thị ảnh */
     .setup-image {
       margin-top: 8px;
       border-radius: 10px;
@@ -503,10 +487,7 @@
       background: var(--card);
     }
 
-    .setup-image:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
+    .setup-image:hover { transform: scale(1.02); box-shadow: var(--btn-shadow); }
 
     .setup-image.zoomed {
       position: fixed;
@@ -520,16 +501,8 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
 
-    .setup-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    .setup-image.zoomed img {
-      transform: scale(1.1);
-    }
+    .setup-image img { width: 100%; height: auto; display: block; transition: transform 0.3s ease; }
+    .setup-image.zoomed img { transform: scale(1.1); }
 
     .setup-image-caption {
       font-size: 11px;
@@ -543,8 +516,7 @@
     .image-overlay {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.8);
@@ -553,9 +525,7 @@
       backdrop-filter: blur(5px);
     }
 
-    .image-overlay.active {
-      display: block;
-    }
+    .image-overlay.active { display: block; }
 
     .setup-note {
       margin-top: 12px;
@@ -574,12 +544,7 @@
       100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
     }
 
-    .list {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .list { margin-top: 10px; display: flex; flex-direction: column; gap: 10px; }
 
     .item {
       border-radius: 20px;
@@ -595,14 +560,9 @@
       overflow: hidden;
     }
 
-    body[data-theme="light"] .item {
-      background: #ffffff;
-    }
+    body[data-theme="light"] .item { background: #ffffff; }
 
-    .item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
+    .item:hover { transform: translateY(-3px); box-shadow: var(--btn-shadow); }
 
     .item-header {
       display: flex;
@@ -611,7 +571,6 @@
       cursor: pointer;
     }
 
-    /* Cập nhật icon với màu sắc từ admin */
     .icon {
       width: 60px;
       height: 60px;
@@ -634,29 +593,7 @@
       background: radial-gradient(circle at 0% 0%, #ffffff, transparent 60%);
     }
 
-    .icon-inner {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      color: #f9fafb;
-    }
-
-    .icon-code {
-      font-size: 18px;
-      font-weight: 750;
-      letter-spacing: 0.14em;
-    }
-
-    .icon-mini {
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    .text-box {
-      flex: 1;
-    }
+    .text-box { flex: 1; }
 
     .name-row {
       display: flex;
@@ -671,9 +608,7 @@
       transition: color 0.3s ease;
     }
 
-    .item:hover .name {
-      color: var(--primary);
-    }
+    .item:hover .name { color: var(--primary); }
 
     .chips {
       margin-top: 6px;
@@ -695,9 +630,7 @@
       transition: all 0.3s ease;
     }
 
-    .chip-pill:hover {
-      transform: translateY(-2px);
-    }
+    .chip-pill:hover { transform: translateY(-2px); }
 
     .chip-color {
       width: 7px;
@@ -727,13 +660,7 @@
       color: #4b5563;
     }
 
-    .chip-update:hover {
-      transform: translateY(-1px);
-    }
-
-    .chip-update-icon {
-      font-size: 13px;
-    }
+    .chip-update:hover { transform: translateY(-1px); }
 
     .chevron {
       font-size: 18px;
@@ -748,13 +675,8 @@
       transform: translateY(-5px);
     }
 
-    body[data-theme="light"] .item.active {
-      background: #eef2ff;
-    }
-
-    .item.active .chevron {
-      transform: rotate(180deg);
-    }
+    body[data-theme="light"] .item.active { background: #eef2ff; }
+    .item.active .chevron { transform: rotate(180deg); }
 
     .extra {
       margin-top: 10px;
@@ -764,9 +686,7 @@
       animation: slideDown 0.4s ease-out;
     }
 
-    .extra.visible {
-      display: block;
-    }
+    .extra.visible { display: block; }
 
     .detail-subtitle {
       font-size: 13px;
@@ -774,65 +694,80 @@
       margin-bottom: 8px;
     }
 
+    /* ===================== NÚT TRONG ITEM (DOWNLOAD / GUIDE) ===================== */
     .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 6px;
+      align-items: center;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      padding: 9px 15px;
+      gap: 8px;
+      height: 40px;
+      padding: 0 16px;
       border-radius: 999px;
       font-size: 13px;
-      font-weight: 500;
-      border: none;
+      font-weight: 650;
+      border: 1px solid transparent;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
-      transition: all 0.3s ease;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
       position: relative;
       overflow: hidden;
+      letter-spacing: 0.01em;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .btn::before {
       content: '';
       position: absolute;
       top: 0;
-      left: -100%;
+      left: -110%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      transition: left 0.55s;
     }
 
-    .btn:hover::before {
-      left: 100%;
-    }
+    .btn:hover::before { left: 110%; }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
+    .btn:active { transform: translateY(-1px); }
+    .btn:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--btn-ring), var(--btn-shadow-hover); }
+
+    .btn-icon { font-size: 16px; }
 
     .btn-primary {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), rgba(255,255,255,0.08));
       color: #ffffff;
-      box-shadow: 0 10px 28px rgba(37,99,235,0.5);
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: var(--btn-shadow);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(37,99,235,0.7);
+    body[data-theme="light"] .btn-primary {
+      background: linear-gradient(135deg, var(--primary), rgba(255,255,255,0.6));
+      color: #ffffff;
     }
 
     .btn-outline {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border-color: var(--border);
+      box-shadow: var(--btn-shadow);
+    }
+
+    body[data-theme="light"] .btn-outline {
+      background: #ffffff;
+      color: var(--text);
     }
 
     .btn-outline:hover {
-      transform: translateY(-2px);
       border-color: var(--primary);
       color: var(--primary);
     }
@@ -840,17 +775,12 @@
     .btn-guide {
       background: linear-gradient(135deg, #a855f7, #6366f1);
       color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 8px 22px rgba(129,140,248,0.65);
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: 0 10px 24px rgba(129,140,248,0.45);
     }
 
     .btn-guide:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(129,140,248,0.8);
-    }
-
-    .btn-icon {
-      font-size: 16px;
+      box-shadow: 0 14px 32px rgba(129,140,248,0.6);
     }
 
     .guide {
@@ -865,9 +795,7 @@
       animation: slideDown 0.4s ease-out;
     }
 
-    .guide.visible {
-      display: block;
-    }
+    .guide.visible { display: block; }
 
     .guide-header {
       display: flex;
@@ -892,7 +820,7 @@
 
     .guide-header-title {
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 650;
       color: var(--text);
     }
 
@@ -913,19 +841,14 @@
       transition: all 0.3s ease;
     }
 
-    .guide-row:hover {
-      transform: translateX(3px);
-      background: rgba(15,23,42,0.9);
-    }
+    .guide-row:hover { transform: translateX(3px); background: rgba(15,23,42,0.9); }
 
     body[data-theme="light"] .guide-row {
       background: #f9fafb;
       border-color: #e5e7eb;
     }
 
-    body[data-theme="light"] .guide-row:hover {
-      background: #f1f5f9;
-    }
+    body[data-theme="light"] .guide-row:hover { background: #f1f5f9; }
 
     .guide-bullet {
       font-size: 14px;
@@ -934,32 +857,14 @@
       transition: transform 0.3s ease;
     }
 
-    .guide-row:hover .guide-bullet {
-      transform: scale(1.2);
-    }
+    .guide-row:hover .guide-bullet { transform: scale(1.2); }
 
-    .guide-body {
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .guide-body { font-size: 12px; color: var(--muted); }
+    .guide-body a { color: var(--primary); text-decoration: underline; }
+    .guide-body strong { color: var(--text); }
+    .guide-body img { max-width: 100%; border-radius: 8px; margin-top: 4px; display: block; }
 
-    .guide-body a {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-
-    .guide-body strong {
-      color: var(--text);
-    }
-
-    .guide-body img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-top: 4px;
-      display: block;
-    }
-
-    /* DONATE */
+    /* ===================== DONATE BUTTON (CHỈ CHỈNH UI) ===================== */
     .donate-wrap {
       width: 100%;
       display: flex;
@@ -968,42 +873,42 @@
     }
 
     .donate-btn {
-      border: none;
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius: 999px;
-      padding: 6px 14px;
+      height: 40px;
+      padding: 0 16px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 750;
       cursor: pointer;
-      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
+      background: linear-gradient(135deg, #f97316, #ec4899);
       color: #fff7ed;
-      box-shadow: 0 10px 26px rgba(248,113,113,0.7);
-      transition: all 0.3s ease;
+      box-shadow: 0 12px 28px rgba(248,113,113,0.55);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
       position: relative;
       overflow: hidden;
+      letter-spacing: 0.01em;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .donate-btn::before {
       content: '';
       position: absolute;
       top: 0;
-      left: -100%;
+      left: -110%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.20), transparent);
+      transition: left 0.55s;
     }
 
-    .donate-btn:hover::before {
-      left: 100%;
-    }
-
-    .donate-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(248,113,113,0.8);
-    }
+    .donate-btn:hover::before { left: 110%; }
+    .donate-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(248,113,113,0.65); }
+    .donate-btn:active { transform: translateY(-1px); }
+    .donate-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(248,113,113,0.20), 0 16px 36px rgba(248,113,113,0.65); }
 
     .donate-btn-icon {
       width: 22px;
@@ -1017,9 +922,7 @@
       animation: wobble 1.6s ease-in-out infinite;
     }
 
-    .donate-btn-text strong {
-      font-weight: 650;
-    }
+    .donate-btn-text strong { font-weight: 800; }
 
     @keyframes wobble {
       0%   { transform: translateY(0); }
@@ -1041,9 +944,7 @@
       animation: fadeIn 0.3s ease-out;
     }
 
-    .donate-modal.visible {
-      display: flex;
-    }
+    .donate-modal.visible { display: flex; }
 
     .donate-card {
       width: 100%;
@@ -1073,13 +974,11 @@
       transition: all 0.3s ease;
     }
 
-    .donate-close:hover {
-      transform: scale(1.2);
-    }
+    .donate-close:hover { transform: scale(1.2); }
 
     .donate-title {
       font-size: 15px;
-      font-weight: 650;
+      font-weight: 750;
       color: #9d174d;
       text-align: center;
       margin-bottom: 4px;
@@ -1103,9 +1002,7 @@
       transition: all 0.3s ease;
     }
 
-    .donate-qr:hover {
-      transform: scale(1.02);
-    }
+    .donate-qr:hover { transform: scale(1.02); }
 
     .donate-qr img {
       max-width: 100%;
@@ -1115,9 +1012,7 @@
       cursor: zoom-in;
     }
 
-    .donate-qr img:hover {
-      transform: scale(1.05);
-    }
+    .donate-qr img:hover { transform: scale(1.05); }
 
     .donate-note {
       font-size: 11px;
@@ -1152,49 +1047,42 @@
     }
 
     @keyframes float-particle {
-      0% {
-        transform: translateY(0) translateX(0);
-      }
-      100% {
-        transform: translateY(-100vh) translateX(100px);
-      }
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-100vh) translateX(100px); }
     }
 
     @media (max-width: 720px) {
-      body {
-        padding: 12px;
-      }
-      .panel {
-        padding: 16px 12px 12px;
-        border-radius: 24px;
-      }
-      .panel-inner {
-        padding: 14px 12px 10px;
-      }
-      h1 {
-        font-size: 22px;
-      }
-      .icon {
-        width: 54px;
-        height: 54px;
-      }
-      .setup-title {
-        font-size: 15px;
-      }
-      .setup-section {
-        padding: 12px 14px 10px;
-      }
+      body { padding: 12px; }
+      .panel { padding: 16px 12px 12px; border-radius: 24px; }
+      .panel-inner { padding: 14px 12px 10px; }
+      h1 { font-size: 22px; }
+      .icon { width: 54px; height: 54px; }
+
+      .setup-title { font-size: 15px; }
+      .setup-section { padding: 12px 14px 10px; }
+
       .setup-image.zoomed {
         max-width: 95vw;
         max-height: 95vh;
         transform: translate(-50%, -50%) scale(1.1);
       }
+
+      /* Buttons mobile */
+      .theme-toggle { min-width: 160px; height: 38px; }
+      .tools-btn { height: 34px; }
+    }
+
+    @media (max-width: 480px) {
+      .actions { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .tools-btn { margin-left: 0; } /* tránh bị ép lệch trên màn nhỏ */
+      .badge-row { gap: 8px; }
     }
   </style>
 </head>
 <body data-theme="dark">
   <div class="particles" id="particles"></div>
-  
+
   <main class="shell">
     <section class="panel">
       <div class="panel-inner">
@@ -1215,19 +1103,21 @@
                 <span class="dot"></span>
                 <span>Bộ bảng kê tính lãi</span>
               </div>
+
               <!-- Nút Công cụ khác -->
-              <a href="https://giabao1881.github.io/baotg10/" class="tools-btn" target="_blank">
+              <a href="https://giabao1881.github.io/baotg10/" class="tools-btn" target="_blank" rel="noopener">
                 <span class="tools-icon">🛠️</span>
                 <span>Công cụ khác</span>
               </a>
             </div>
+
             <div>
               <h1>BẢNG KÊ TÍNH LÃI</h1>
               <p class="subtitle">Bấm vào từng bảng kê để hiện nút tải và hướng dẫn (THEO DÕI THƯỜNG XUYÊN ĐỂ CẬP NHẬT BẢNG MỚI NHẤT NHÉ)</p>
             </div>
           </div>
 
-          <button id="themeToggle" class="theme-toggle" type="button">
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Đổi giao diện sáng/tối">
             <div class="theme-pill"></div>
             <div class="theme-option">
               <span class="icon">🌞</span>
@@ -1249,47 +1139,48 @@
             </div>
             <div class="setup-chevron">▾</div>
           </div>
+
           <div class="setup-content">
             <p class="setup-subtitle">Để đảm bảo các bảng kê Excel hoạt động chính xác, vui lòng thực hiện các bước cài đặt sau:</p>
-            
+
             <div class="setup-list">
-              <!-- Phần 1: Điều chỉnh Control Panel -->
               <div class="setup-section">
                 <div class="setup-section-title">
                   <span class="setup-section-title-icon">🔧</span>
                   <span>1. Điều chỉnh trong Control Panel</span>
                 </div>
+
                 <div class="setup-steps">
                   <div class="setup-step">
                     <div class="setup-number">1</div>
                     <div class="setup-text">
                       <strong>Bước 1:</strong> Dưới thanh Taskbar, bạn hãy bấm vào ký hiệu Windows (hình ô cửa sổ) và bấm chọn vào <strong>Control Panel</strong> hoặc tại ô tìm kiếm thì tìm kiếm "Control Panel".
                       <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image1.jpeg" alt="Vào Control Panel" 
+                        <img src="media/image1.jpeg" alt="Vào Control Panel"
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Vào Control Panel</small></div>';" />
                         <div class="setup-image-caption">Vào ký hiệu Windows và bấm chọn vào Control Panel</div>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div class="setup-step">
                     <div class="setup-number">2</div>
                     <div class="setup-text">
                       <strong>Bước 2:</strong> Chọn vào <strong>Clock and Region</strong>, sau đó chọn tiếp vào <strong>Region</strong>.
                       <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image2.jpeg" alt="Chọn Clock and Region" 
+                        <img src="media/image2.jpeg" alt="Chọn Clock and Region"
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Clock and Region</small></div>';" />
                         <div class="setup-image-caption">Chọn vào Clock and Region, sau đó chọn tiếp vào Region</div>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div class="setup-step">
                     <div class="setup-number">3</div>
                     <div class="setup-text">
                       <strong>Bước 3:</strong> Tại phần <strong>Format</strong> hãy chọn sang <strong>Vietnamese (Vietnam)</strong> là các định dạng thời gian sẽ chuyển sang dd/mm/yyyy.
                       <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format" 
+                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format"
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Vietnamese format</small></div>';" />
                         <div class="setup-image-caption">Tại phần Format hãy chọn sang Vietnamese (Vietnam)</div>
                       </div>
@@ -1297,50 +1188,46 @@
                   </div>
                 </div>
               </div>
-              
-              <!-- Phần 2: Điều chỉnh Excel -->
+
               <div class="setup-section">
                 <div class="setup-section-title">
                   <span class="setup-section-title-icon">📊</span>
                   <span>2. Điều chỉnh trong Excel</span>
                 </div>
+
                 <div class="setup-steps">
                   <div class="setup-step">
                     <div class="setup-number">1</div>
-                    <div class="setup-text">
-                      <strong>Mở file Excel lên</strong>
-                    </div>
+                    <div class="setup-text"><strong>Mở file Excel lên</strong></div>
                   </div>
-                  
+
                   <div class="setup-step">
                     <div class="setup-number">2</div>
                     <div class="setup-text">
                       <strong>Chọn FILE → OPTION → ADVANCED</strong> sau đó làm như hình dưới đây:
                       <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image4.png" alt="Cài đặt Excel" 
+                        <img src="media/image4.png" alt="Cài đặt Excel"
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Cài đặt Excel</small></div>';" />
                         <div class="setup-image-caption">Cài đặt định dạng số trong Excel</div>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div class="setup-step">
                     <div class="setup-number">3</div>
                     <div class="setup-text">
                       <strong>"Chấm" dưới "phẩy" đó là dạng số của bạn chuyển sang "phẩy" phần ngàn.</strong> Nếu bạn muốn để "chấm" phần ngàn thì đổi ngược lại.
                     </div>
                   </div>
-                  
+
                   <div class="setup-step">
                     <div class="setup-number">4</div>
-                    <div class="setup-text">
-                      <strong>Đổi xong thì bấm OK</strong>
-                    </div>
+                    <div class="setup-text"><strong>Đổi xong thì bấm OK</strong></div>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div class="setup-note">
               💡 <strong>Lưu ý quan trọng:</strong> Các bước cài đặt này cần thiết để đảm bảo bảng kê tính lãi hoạt động chính xác. Nếu gặp lỗi khi mở file, hãy kiểm tra lại các bước trên.
             </div>
@@ -1359,7 +1246,7 @@
           Nếu bạn thấy bộ bảng kê hữu ích, có thể ủng hộ mình một ly cà phê.
         </p>
         <div class="donate-qr">
-          <img src="momo_qr.png" alt="QR donate MoMo" 
+          <img src="momo_qr.png" alt="QR donate MoMo"
                onclick="zoomQR(this)"
                onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:#9f1239; background:#fdf2f8; border-radius:16px;\'>📷 QR Code sẽ hiển thị tại đây<br><small>Upload file momo_qr.png lên GitHub</small></div>';" />
         </div>
@@ -1372,73 +1259,69 @@
     <footer>© baotg10</footer>
   </main>
 
-  <!-- Overlay cho ảnh phóng to -->
   <div class="image-overlay" id="imageOverlay" onclick="closeAllZoom()"></div>
 
   <script>
-    // ==================== DÁN ĐOẠN CODE TỪ ADMIN VÀO ĐÂY ====================
     const BANG_KE_LIST = [
-  {
-    id: "ld",
-    code: "LD",
-    name: "BKTL LD",
-    short: "Tool siêu cấp",
-    subtitle: "Có thể tính cùng lúc 10 bảng LD và hơn thế nữa",
-    file: "BKTL_LD.xlsm",
-    updated: "Cập nhật 12/11/2025, sửa lỗi một số máy không up được LKLS..",
-    icon: "💰",
-    color: "green",
-    guide: [
-      "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\"",
-      "Bước 2: Tải tất cả các LKGD và LKLS các LD về. <em>Lưu ý:</em> tool này đã cập nhật tất cả tải bằng HTML nhanh và tiện.",
-      "Bước 3: Up file vô đúng SHEET. <span style=\"color:red\"> Có thể up nhiều file cùng lúc</span>. (Trong LKLS có thể sửa lại lãi đối với thế chấp)",
-      "Bước 4: Bấm ROBOT nhập pass \"<span style=\"color:red\">baotg10</span>\"",
-      "Bước 5: Kiểm tra đúng gốc chưa, có giải ngân kĩ thuật không,...",
-      "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
-    ]
-  },
-  {
-  id: "the",
-  code: "TH",
-  name: "BKTL THẺ",
-  short: "TOOL tính thẻ",
-  subtitle: "Tính thẻ nhanh, bốc tách lãi hợp lý, tiết kiệm thời gian",
-  file: "BKTL_THE.xlsm",
-  updated: "12/11/2025 fix lỗi thiếu công thức dư nợ đầu kỳ",
-  icon: "💳",
-  color: "pink",
-  guide: [
-    "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\". Lưu ý: Chỗ \"<span style=\"color:red\">Nhập dư nợ gốc trên fin</span>\" nhập sao cho bên phần tự động hiện \"<span style=\"color:red\">REF</span>\" là ok! Đồng thời, tại mục \"<span style=\"color:red\">Nhập ngày bắt đầu sao kê</span>\": vào Way4 → Docs, tìm dòng có chữ \"<span style=\"color:red\">interest</span>\"; ví dụ nếu là 26/01/2025 thì nhập <strong>26</strong>.",
-    "Bước 2: Tải sao kê trên way4 về dạng \"<span style=\"color:red\">Excel</span>\"",
-    "Bước 3: Up file sao kê lên",
-    "Bước 4: Bấm vô robot và nhập pass",
-    "Bước 5: Ẩn dòng dư thừa. Lưu ý chỉ: <span style=\"color:red\">Ẩn</span>",
-    "Bước 6: Xem bên sheet THTT chỗ phần Tự động và làm theo hướng dẫn. Thêm bớt cho hợp lý",
-    "Bước 7: Sửa ngày cần tính chỗ dòng cuối cùng",
-    "Bước 8: Tính lãi tới kì hiện tại: <em>=Lãi kỳ trên / 30 * (ngày cần tính - <span style=\"color:red\">ngày bắt đầu sao kê của kì đó</span> + 1)</em>",
-    "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
-  ]
-  },
-  {
-    id: "pd",
-    code: "PD",
-    name: "BKTL THẤU CHI (đang phát triển)",
-    short: "tính nhanh thấu chi",
-    subtitle: "Đang phát triển",
-    file: "hihi",
-    updated: "Dự kiến tháng 12",
-    icon: "🎯",
-    color: "orange",
-    guide: [
-      "🛠️ Tính năng đang được phát triển...",
-      "Dự kiến ra mắt vào tháng 12/2024",
-      "Theo dõi để cập nhật phiên bản mới nhất!"
-    ]
-  }
-];
-    // ==================== KẾT THÚC CODE TỪ ADMIN ====================
+      {
+        id: "ld",
+        code: "LD",
+        name: "BKTL LD",
+        short: "Tool siêu cấp",
+        subtitle: "Có thể tính cùng lúc 10 bảng LD và hơn thế nữa",
+        file: "BKTL_LD.xlsm",
+        updated: "Cập nhật 12/11/2025, sửa lỗi một số máy không up được LKLS..",
+        icon: "💰",
+        color: "green",
+        guide: [
+          "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\"",
+          "Bước 2: Tải tất cả các LKGD và LKLS các LD về. <em>Lưu ý:</em> tool này đã cập nhật tất cả tải bằng HTML nhanh và tiện.",
+          "Bước 3: Up file vô đúng SHEET. <span style=\"color:red\"> Có thể up nhiều file cùng lúc</span>. (Trong LKLS có thể sửa lại lãi đối với thế chấp)",
+          "Bước 4: Bấm ROBOT nhập pass \"<span style=\"color:red\">baotg10</span>\"",
+          "Bước 5: Kiểm tra đúng gốc chưa, có giải ngân kĩ thuật không,...",
+          "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
+        ]
+      },
+      {
+        id: "the",
+        code: "TH",
+        name: "BKTL THẺ",
+        short: "TOOL tính thẻ",
+        subtitle: "Tính thẻ nhanh, bốc tách lãi hợp lý, tiết kiệm thời gian",
+        file: "BKTL_THE.xlsm",
+        updated: "12/11/2025 fix lỗi thiếu công thức dư nợ đầu kỳ",
+        icon: "💳",
+        color: "pink",
+        guide: [
+          "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\". Lưu ý: Chỗ \"<span style=\"color:red\">Nhập dư nợ gốc trên fin</span>\" nhập sao cho bên phần tự động hiện \"<span style=\"color:red\">REF</span>\" là ok! Đồng thời, tại mục \"<span style=\"color:red\">Nhập ngày bắt đầu sao kê</span>\": vào Way4 → Docs, tìm dòng có chữ \"<span style=\"color:red\">interest</span>\"; ví dụ nếu là 26/01/2025 thì nhập <strong>26</strong>.",
+          "Bước 2: Tải sao kê trên way4 về dạng \"<span style=\"color:red\">Excel</span>\"",
+          "Bước 3: Up file sao kê lên",
+          "Bước 4: Bấm vô robot và nhập pass",
+          "Bước 5: Ẩn dòng dư thừa. Lưu ý chỉ: <span style=\"color:red\">Ẩn</span>",
+          "Bước 6: Xem bên sheet THTT chỗ phần Tự động và làm theo hướng dẫn. Thêm bớt cho hợp lý",
+          "Bước 7: Sửa ngày cần tính chỗ dòng cuối cùng",
+          "Bước 8: Tính lãi tới kì hiện tại: <em>=Lãi kỳ trên / 30 * (ngày cần tính - <span style=\"color:red\">ngày bắt đầu sao kê của kì đó</span> + 1)</em>",
+          "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
+        ]
+      },
+      {
+        id: "pd",
+        code: "PD",
+        name: "BKTL THẤU CHI (đang phát triển)",
+        short: "tính nhanh thấu chi",
+        subtitle: "Đang phát triển",
+        file: "hihi",
+        updated: "Dự kiến tháng 12",
+        icon: "🎯",
+        color: "orange",
+        guide: [
+          "🛠️ Tính năng đang được phát triển...",
+          "Dự kiến ra mắt vào tháng 12/2024",
+          "Theo dõi để cập nhật phiên bản mới nhất!"
+        ]
+      }
+    ];
 
-    // Màu sắc cho icon (phải khớp với admin)
     const colorSchemes = {
       green: 'linear-gradient(135deg, #22c55e, #16a34a)',
       blue: 'linear-gradient(135deg, #3b82f6, #2563eb)',
@@ -1448,81 +1331,69 @@
       cyan: 'linear-gradient(135deg, #06b6d4, #0891b2)'
     };
 
-   // Hàm phóng to/thu nhỏ ảnh
-   function toggleZoom(imageContainer) {
-     const isZoomed = imageContainer.classList.contains('zoomed');
-     
-     if (!isZoomed) {
-       // Phóng to
-       imageContainer.classList.add('zoomed');
-       document.getElementById('imageOverlay').classList.add('active');
-       document.body.style.overflow = 'hidden';
-     } else {
-       // Thu nhỏ
-       closeAllZoom();
-     }
-   }
+    function toggleZoom(imageContainer) {
+      const isZoomed = imageContainer.classList.contains('zoomed');
+      if (!isZoomed) {
+        imageContainer.classList.add('zoomed');
+        document.getElementById('imageOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        closeAllZoom();
+      }
+    }
 
-   // Hàm phóng to QR code
-   function zoomQR(qrImage) {
-     const qrContainer = qrImage.parentElement;
-     qrContainer.style.transform = 'scale(1.2)';
-     qrContainer.style.transition = 'transform 0.3s ease';
-     
-     setTimeout(() => {
-       qrContainer.style.transform = 'scale(1)';
-     }, 2000);
-   }
+    function zoomQR(qrImage) {
+      const qrContainer = qrImage.parentElement;
+      qrContainer.style.transform = 'scale(1.2)';
+      qrContainer.style.transition = 'transform 0.3s ease';
+      setTimeout(() => {
+        qrContainer.style.transform = 'scale(1)';
+      }, 2000);
+    }
 
-   // Hàm đóng tất cả ảnh phóng to
-   function closeAllZoom() {
-     document.querySelectorAll('.setup-image.zoomed').forEach(img => {
-       img.classList.remove('zoomed');
-     });
-     document.getElementById('imageOverlay').classList.remove('active');
-     document.body.style.overflow = 'auto';
-   }
+    function closeAllZoom() {
+      document.querySelectorAll('.setup-image.zoomed').forEach(img => {
+        img.classList.remove('zoomed');
+      });
+      document.getElementById('imageOverlay').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
 
-   // Đóng ảnh phóng to khi nhấn ESC
-   document.addEventListener('keydown', function(e) {
-     if (e.key === 'Escape') {
-       closeAllZoom();
-     }
-   });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeAllZoom();
+      }
+    });
 
-   // Hàm tạo hiệu ứng particles
-   function createParticles() {
-     const particlesContainer = document.getElementById('particles');
-     const particleCount = 20;
-     
-     for (let i = 0; i < particleCount; i++) {
-       const particle = document.createElement('div');
-       particle.className = 'particle';
-       
-       // Kích thước ngẫu nhiên
-       const size = Math.random() * 5 + 2;
-       particle.style.width = `${size}px`;
-       particle.style.height = `${size}px`;
-       
-       // Vị trí ngẫu nhiên
-       particle.style.left = `${Math.random() * 100}%`;
-       particle.style.top = `${Math.random() * 100}%`;
-       
-       // Thời gian animation ngẫu nhiên
-       const duration = Math.random() * 20 + 10;
-       particle.style.animationDuration = `${duration}s`;
-       
-       // Độ trễ ngẫu nhiên
-       const delay = Math.random() * 5;
-       particle.style.animationDelay = `${delay}s`;
-       
-       particlesContainer.appendChild(particle);
-     }
-   }
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 20;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+
+        const duration = Math.random() * 20 + 10;
+        particle.style.animationDuration = `${duration}s`;
+
+        const delay = Math.random() * 5;
+        particle.style.animationDelay = `${delay}s`;
+
+        particlesContainer.appendChild(particle);
+      }
+    }
 
     function renderList() {
       const listEl = document.getElementById('list');
       listEl.innerHTML = '';
+
       BANG_KE_LIST.forEach(item => {
         const wrap = document.createElement('div');
         wrap.className = 'item';
@@ -1531,7 +1402,6 @@
         const header = document.createElement('div');
         header.className = 'item-header';
 
-        // Icon với màu sắc từ admin
         const icon = document.createElement('div');
         icon.className = 'icon';
         icon.style.background = colorSchemes[item.color] || colorSchemes.blue;
@@ -1542,24 +1412,30 @@
 
         const nameRow = document.createElement('div');
         nameRow.className = 'name-row';
+
         const name = document.createElement('div');
         name.className = 'name';
         name.textContent = item.name || '';
+
         const chevron = document.createElement('div');
         chevron.className = 'chevron';
         chevron.textContent = '▾';
+
         nameRow.appendChild(name);
         nameRow.appendChild(chevron);
         textBox.appendChild(nameRow);
 
         const chips = document.createElement('div');
         chips.className = 'chips';
+
         const chip1 = document.createElement('div');
         chip1.className = 'chip-pill';
         chip1.innerHTML = '<span class="chip-color"></span><span>Excel</span>';
+
         const chip2 = document.createElement('div');
         chip2.className = 'chip-pill';
         chip2.textContent = item.short || '';
+
         chips.appendChild(chip1);
         chips.appendChild(chip2);
         textBox.appendChild(chips);
@@ -1567,8 +1443,7 @@
         if (item.updated) {
           const up = document.createElement('div');
           up.className = 'chip-update';
-          up.innerHTML = '<span class="chip-update-icon">🕒</span><span>Cập nhật: ' +
-            item.updated + '</span>';
+          up.innerHTML = '<span class="chip-update-icon">🕒</span><span>Cập nhật: ' + item.updated + '</span>';
           textBox.appendChild(up);
         }
 
@@ -1606,12 +1481,15 @@
 
         const gHeader = document.createElement('div');
         gHeader.className = 'guide-header';
+
         const gIcon = document.createElement('div');
         gIcon.className = 'guide-header-icon';
         gIcon.textContent = '💡';
+
         const gTitle = document.createElement('div');
         gTitle.className = 'guide-header-title';
         gTitle.textContent = 'Hướng dẫn chi tiết';
+
         gHeader.appendChild(gIcon);
         gHeader.appendChild(gTitle);
         guideBox.appendChild(gHeader);
@@ -1670,14 +1548,9 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       let saved = null;
-      try {
-        saved = localStorage.getItem('bangke-theme');
-      } catch (e) {}
-      if (saved === 'light' || saved === 'dark') {
-        applyTheme(saved);
-      } else {
-        applyTheme('dark');
-      }
+      try { saved = localStorage.getItem('bangke-theme'); } catch (e) {}
+      if (saved === 'light' || saved === 'dark') applyTheme(saved);
+      else applyTheme('dark');
 
       renderList();
       createParticles();
@@ -1687,7 +1560,6 @@
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
 
-      // Xử lý mở/đóng hướng dẫn cài đặt
       const setupGuide = document.getElementById('setupGuide');
       if (setupGuide) {
         setupGuide.querySelector('.setup-header').addEventListener('click', function() {
@@ -1700,12 +1572,8 @@
       const donateClose = document.getElementById('donateClose');
 
       if (donateBtn && donateModal && donateClose) {
-        donateBtn.addEventListener('click', () => {
-          donateModal.classList.add('visible');
-        });
-        donateClose.addEventListener('click', () => {
-          donateModal.classList.remove('visible');
-        });
+        donateBtn.addEventListener('click', () => donateModal.classList.add('visible'));
+        donateClose.addEventListener('click', () => donateModal.classList.remove('visible'));
         donateModal.addEventListener('click', (e) => {
           if (e.target === donateModal) donateModal.classList.remove('visible');
         });
