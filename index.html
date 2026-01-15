@@ -32,6 +32,7 @@
       --text-muted: #9ca3af;
       --primary: #3b82f6;
       --accent: #f43f5e;
+      --warning: #f59e0b;
       --glow: 0 0 20px rgba(59, 130, 246, 0.3);
       --shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.7);
       --btn-bg: rgba(255, 255, 255, 0.1);
@@ -50,6 +51,7 @@
       --text-muted: #64748b;
       --primary: #2563eb;
       --accent: #e11d48;
+      --warning: #d97706;
       --glow: 0 0 20px rgba(37, 99, 235, 0.15);
       --shadow: 0 20px 50px -12px rgba(100, 116, 139, 0.15);
       --btn-bg: #ffffff;
@@ -403,7 +405,7 @@
         </div>
 
         <div class="header-content">
-          <h1>TRUNG TÂM TÍNH LÃI</h1>
+          <h1>BẢNG KÊ TÍNH LÃI</h1>
           <p class="subtitle">Hệ thống bảng kê tự động hóa. Cập nhật liên tục. Độ chính xác cao.</p>
           
           <div class="controls-row">
@@ -460,7 +462,7 @@
           </div>
 
           <div class="step-card">
-            <div style="font-weight: 700; color: var(--accent); margin-bottom: 10px;">2. Cài đặt Excel (Quan trọng)</div>
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 10px;">2. Cài đặt Excel (Dấu chấm phẩy)</div>
             <div class="step-row">
               <div class="step-num">1</div>
               <div class="step-text">Mở Excel → <strong>File → Options → Advanced</strong>.</div>
@@ -472,6 +474,31 @@
                 Thousands separator (Dấu hàng ngàn): để là <strong>.</strong> (chấm)<br>
                 <em>(Hoặc ngược lại tùy nhu cầu, miễn là đồng nhất)</em>
                 <div class="setup-image" onclick="zoomImg(this)"><img src="media/image4.png" alt="Excel Setting" onerror="this.style.display='none'"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div style="font-weight: 700; color: var(--warning); margin-bottom: 10px;">3. Bật Macro & Tắt Protect (Bắt buộc)</div>
+            
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-text">
+                Vào <strong>File → Options → Trust Center → Trust Center Settings...</strong>
+              </div>
+            </div>
+
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-text">
+                Tab <strong>Macro Settings</strong>: Chọn dòng cuối <strong>Enable VBA macros...</strong> (và tích chọn "Trust access to the VBA project model" nếu cần).
+              </div>
+            </div>
+
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div class="step-text">
+                Tab <strong>Protected View</strong>: <strong>Bỏ chọn (Uncheck)</strong> tất cả 3 ô để tắt chế độ bảo vệ khi tải file từ mạng về (tránh lỗi file bị khóa).
               </div>
             </div>
           </div>
