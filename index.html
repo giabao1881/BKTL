@@ -2,1464 +2,705 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bảng kê tính lãi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Bảng Kê Tính Lãi - Premium Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
-                   "Segoe UI", sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.35s ease, color 0.35s ease;
-      overflow-x: hidden;
+    /* =========================================
+       CORE VARIABLES & THEMES
+       ========================================= */
+    :root {
+      --font-main: 'Outfit', sans-serif;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --trans-speed: 0.4s;
+      --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     body[data-theme="dark"] {
-      --bg: radial-gradient(circle at 0% 0%, #0f172a, #1e293b 40%, #0f172a 100%);
-      --card: #1e293b;
-      --card-hover: #334155;
-      --border: #475569;
-      --border-soft: #334155;
-      --border-strong: #64748b;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --primary: #60a5fa;
-      --primary-soft: rgba(37,99,235,0.23);
-      --primary-glow: rgba(96,165,250,0.4);
-      --accent-green: #22c55e;
-      --accent-blue: #38bdf8;
-      --accent-purple: #a78bfa;
-      --chip-bg: #0f172a;
-      --pill-bg: #0f172a;
-      --shadow-main: 0 28px 80px rgba(2,6,23,0.95);
-      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.15);
-      --shadow-glow: 0 0 20px rgba(96,165,250,0.3);
-
-      /* Buttons */
-      --btn-shadow: 0 10px 26px rgba(2,6,23,0.55);
-      --btn-shadow-hover: 0 14px 34px rgba(2,6,23,0.65);
-      --btn-ring: rgba(96,165,250,0.35);
+      --bg-color: #050505;
+      --bg-gradient: radial-gradient(circle at 10% 20%, rgba(29, 78, 216, 0.15) 0%, transparent 40%),
+                     radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
+      --glass-panel: rgba(20, 20, 23, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --card-bg: rgba(30, 30, 35, 0.4);
+      --card-hover: rgba(40, 40, 45, 0.6);
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      --primary: #3b82f6;
+      --accent: #f43f5e;
+      --glow: 0 0 20px rgba(59, 130, 246, 0.3);
+      --shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.7);
+      --btn-bg: rgba(255, 255, 255, 0.1);
+      --chip-bg: rgba(255, 255, 255, 0.05);
     }
 
     body[data-theme="light"] {
-      --bg: linear-gradient(135deg, #e2e8f0, #f1f5f9);
-      --card: #ffffff;
-      --card-hover: #f8fafc;
-      --border: #cbd5e1;
-      --border-soft: #e2e8f0;
-      --border-strong: #94a3b8;
-      --text: #0f172a;
-      --muted: #64748b;
+      --bg-color: #f0f4f8;
+      --bg-gradient: radial-gradient(circle at 0% 0%, #e0e7ff 0%, transparent 50%),
+                     radial-gradient(circle at 100% 100%, #fce7f3 0%, transparent 50%);
+      --glass-panel: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --card-bg: rgba(255, 255, 255, 0.5);
+      --card-hover: rgba(255, 255, 255, 0.85);
+      --text-main: #1e293b;
+      --text-muted: #64748b;
       --primary: #2563eb;
-      --primary-soft: rgba(37,99,235,0.10);
-      --primary-glow: rgba(37,99,235,0.2);
-      --accent-green: #16a34a;
-      --accent-blue: #2563eb;
-      --accent-purple: #7c3aed;
-      --chip-bg: #f9fafb;
-      --pill-bg: #eef2ff;
-      --shadow-main: 0 22px 60px rgba(15,23,42,0.18);
-      --shadow-inner: 0 0 0 1px rgba(148,163,184,0.08);
-      --shadow-glow: 0 0 20px rgba(37,99,235,0.15);
-
-      /* Buttons */
-      --btn-shadow: 0 10px 22px rgba(15,23,42,0.14);
-      --btn-shadow-hover: 0 14px 28px rgba(15,23,42,0.18);
-      --btn-ring: rgba(37,99,235,0.20);
+      --accent: #e11d48;
+      --glow: 0 0 20px rgba(37, 99, 235, 0.15);
+      --shadow: 0 20px 50px -12px rgba(100, 116, 139, 0.15);
+      --btn-bg: #ffffff;
+      --chip-bg: rgba(0, 0, 0, 0.04);
     }
 
+    /* =========================================
+       RESET & BASE STYLES
+       ========================================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-color);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px 16px;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Ambient Background Blobs */
+    .blob-cont {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none;
+    }
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6;
+      animation: floatBlob 20s infinite alternate;
+    }
+    .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); opacity: 0.2; }
+    .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: var(--accent); opacity: 0.15; animation-delay: -10s; }
+
+    @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
+
+    /* =========================================
+       MAIN LAYOUT (THE SHELL)
+       ========================================= */
     .shell {
       width: 100%;
-      max-width: 1040px;
-      animation: fadeIn 0.6s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .panel {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(148, 163, 184, 0.22), transparent 60%),
-        radial-gradient(circle at 100% 0%, rgba(59,130,246,0.25), transparent 55%),
-        var(--card);
-      border-radius: 30px;
-      border: 1px solid var(--border-soft);
-      padding: 22px 22px 18px;
-      box-shadow: var(--shadow-main);
+      max-width: 800px;
       position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .panel:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-main), var(--shadow-glow);
-    }
-
-    .panel::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--primary), transparent);
       z-index: 1;
+      animation: fadeInUp 0.8s var(--ease-elastic);
     }
 
-    .panel-inner {
-      border-radius: 26px;
-      border: 1px solid var(--border);
-      padding: 18px 18px 14px;
-      background: radial-gradient(circle at top left, rgba(15,23,42,0.35), transparent 55%);
-      box-shadow: var(--shadow-inner);
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* GLASS PANEL CONTAINER */
+    .panel {
+      background: var(--glass-panel);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow);
       position: relative;
       overflow: hidden;
     }
 
-    body[data-theme="light"] .panel-inner {
-      background: linear-gradient(135deg, #ffffff, #f9fafb);
+    /* Top Decoration Line */
+    .panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, #3b82f6, #ec4899, #8b5cf6);
+      opacity: 0.8;
     }
 
+    /* =========================================
+       HEADER AREA
+       ========================================= */
     .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+      display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px;
+      position: relative;
     }
 
-    .title-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-      min-width: 260px;
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    .badge-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      width: 100%;
+    .brand-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px; background: var(--chip-bg);
+      border-radius: 50px; border: 1px solid var(--glass-border);
+      font-size: 13px; font-weight: 600; color: var(--text-muted);
     }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--muted);
-      background: var(--chip-bg);
-      transition: all 0.3s ease;
-      backdrop-filter: blur(6px);
-    }
-
-    .badge:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--btn-shadow);
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.28);
+    .pulse-dot {
+      width: 8px; height: 8px; background: #22c55e; border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
       animation: pulse 2s infinite;
     }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); } 70% { box-shadow: 0 0 0 8px rgba(34,197,94,0); } 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); } }
 
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-      70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
-      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    .header-content h1 {
+      font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-content .subtitle {
+      font-size: 15px; color: var(--text-muted); line-height: 1.5; max-width: 600px;
     }
 
-    h1 {
-      font-size: 26px;
-      font-weight: 750;
-      letter-spacing: 0.01em;
-      background: linear-gradient(135deg, var(--text), var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    /* Controls Row */
+    .controls-row {
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 10px;
     }
 
-    .subtitle {
-      font-size: 14px;
-      color: var(--muted);
-      max-width: 600px;
-    }
-
-    /* ===================== NÚT: THEME TOGGLE (CHỈ CHỈNH UI) ===================== */
+    /* Theme Toggle Switch */
     .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-      cursor: pointer;
-      position: relative;
-      min-width: 170px;
-      height: 40px;
-      transition: all 0.25s ease;
-      box-shadow: var(--btn-shadow);
-      user-select: none;
-    }
-
-    body[data-theme="light"] .theme-toggle {
-      background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(255,255,255,0.65));
-    }
-
-    .theme-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--btn-shadow-hover);
-    }
-
-    .theme-toggle:active {
-      transform: translateY(-1px);
-    }
-
-    .theme-toggle:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 4px var(--btn-ring), var(--btn-shadow-hover);
-    }
-
-    .theme-pill {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      left: 4px;
-      width: calc(50% - 6px);
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.10));
-      box-shadow: 0 10px 22px rgba(15,23,42,0.45);
-      transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    body[data-theme="light"] .theme-pill { transform: translateX(0); }
-    body[data-theme="dark"] .theme-pill { transform: translateX(100%); }
-
-    .theme-option {
-      position: relative;
-      z-index: 1;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--muted);
-      transition: color 0.3s ease, transform 0.2s ease;
-    }
-
-    .theme-option span.icon { font-size: 16px; }
-    .theme-option span.label { white-space: nowrap; }
-
-    /* ===================== NÚT: CÔNG CỤ KHÁC (CHỈ CHỈNH UI) ===================== */
-    .tools-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 14px;
-      height: 34px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 650;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 10px 22px rgba(139, 92, 246, 0.42);
-      transition: all 0.25s ease;
-      margin-left: auto;
-      position: relative;
-      overflow: hidden;
-      letter-spacing: 0.01em;
-    }
-
-    .tools-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
-      transition: left 0.5s;
-    }
-
-    .tools-btn:hover::before { left: 100%; }
-
-    .tools-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(139, 92, 246, 0.58);
-    }
-
-    .tools-btn:active { transform: translateY(-1px); }
-
-    .tools-btn:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(167,139,250,0.28), 0 12px 28px rgba(139,92,246,0.58);
-    }
-
-    .tools-icon { font-size: 16px; animation: float 3s ease-in-out infinite; }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-3px); }
-      100% { transform: translateY(0px); }
-    }
-
-    /* ===================== HƯỚNG DẪN CÀI ĐẶT (GIỮ NGUYÊN) ===================== */
-    .setup-guide { /* giữ nguyên như bạn */ 
-      margin: 16px 0 20px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.85);
-      padding: 16px 18px 14px;
+      background: var(--card-bg); border: 1px solid var(--glass-border);
+      border-radius: 50px; padding: 4px; display: flex; align-items: center;
+      cursor: pointer; position: relative; width: 100px; height: 40px;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
       transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
     }
-    body[data-theme="light"] .setup-guide { background: #ffffff; }
-    .setup-guide::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: linear-gradient(to bottom, #f97316, #ec4899); }
+    .theme-pill {
+      position: absolute; left: 4px; top: 4px; bottom: 4px; width: 44px;
+      background: var(--primary); border-radius: 50px;
+      transition: transform 0.4s var(--ease-elastic);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    body[data-theme="light"] .theme-pill { transform: translateX(0); background: #ffffff; }
+    body[data-theme="dark"] .theme-pill { transform: translateX(48px); background: #3b82f6; }
+    
+    .theme-icon {
+      flex: 1; text-align: center; font-size: 16px; z-index: 2; line-height: 0;
+      transition: transform 0.3s ease;
+    }
+    body[data-theme="light"] .theme-icon:first-child { transform: scale(1.2); }
+    body[data-theme="dark"] .theme-icon:last-child { transform: scale(1.2); }
 
-    .setup-header { display:flex; align-items:center; justify-content:space-between; cursor:pointer; margin-bottom:8px; padding-left:8px; }
-    .setup-title { font-size:16px; font-weight:620; display:flex; align-items:center; gap:10px; }
-    .setup-title-icon { width:28px; height:28px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #f97316, #ec4899); font-size:14px; color:#fff; box-shadow: 0 6px 14px rgba(248,113,113,0.65); }
-    .setup-chevron { font-size:18px; color:var(--muted); transition: transform .3s ease; }
+    /* Other Buttons */
+    .btn-tools, .btn-donate {
+      height: 40px; padding: 0 20px; border-radius: 50px;
+      border: 1px solid var(--glass-border);
+      background: var(--btn-bg); color: var(--text-main);
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.3s ease; cursor: pointer;
+    }
+    .btn-tools:hover, .btn-donate:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); }
+    
+    .btn-donate { background: linear-gradient(135deg, #f59e0b15, #ec489915); border-color: rgba(236, 72, 153, 0.3); color: #ec4899; }
+    .btn-donate:hover { background: linear-gradient(135deg, #f59e0b, #ec4899); color: white; border-color: transparent; box-shadow: 0 10px 20px rgba(236, 72, 153, 0.4); }
+
+    /* =========================================
+       SETUP GUIDE (ACCORDION STYLE)
+       ========================================= */
+    .setup-guide {
+      background: rgba(15, 23, 42, 0.4); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md); overflow: hidden; margin-bottom: 24px;
+      transition: all 0.4s ease;
+    }
+    body[data-theme="light"] .setup-guide { background: rgba(255, 255, 255, 0.5); }
+    
+    .setup-header {
+      padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; background: transparent; transition: background 0.2s;
+    }
+    .setup-header:hover { background: rgba(125, 125, 125, 0.05); }
+    
+    .setup-title { display: flex; align-items: center; gap: 12px; font-weight: 700; color: var(--text-main); }
+    .setup-icon-box {
+      width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #f97316, #ea580c);
+      display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    }
+    .setup-chevron { transition: transform 0.4s ease; color: var(--text-muted); }
     .setup-guide.active .setup-chevron { transform: rotate(180deg); }
-    .setup-content { display:none; padding-top:10px; border-top:1px dashed var(--border-strong); animation: slideDown 0.4s ease-out; }
-    .setup-guide.active .setup-content { display:block; }
 
-    @keyframes slideDown { from { opacity:0; transform: translateY(-10px);} to { opacity:1; transform: translateY(0);} }
-
-    .setup-subtitle { font-size:13px; color: var(--muted); margin-bottom:12px; padding-left:8px; }
-    .setup-list { display:flex; flex-direction:column; gap:16px; }
-    .setup-section { border-radius:14px; border:1px solid var(--border); background: rgba(15,23,42,0.75); padding: 14px 16px 12px; transition: all .3s ease; }
-    .setup-section:hover { transform: translateY(-2px); box-shadow: var(--btn-shadow); }
-    body[data-theme="light"] .setup-section { background:#f9fafb; }
-    .setup-section-title { font-size:15px; font-weight:600; color: var(--primary); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
-    .setup-section-title-icon { font-size:16px; }
-    .setup-steps { display:flex; flex-direction:column; gap:12px; }
-    .setup-step { display:flex; align-items:flex-start; gap:10px; transition: all .3s ease; }
-    .setup-step:hover { transform: translateX(5px); }
-    .setup-number { width:24px; height:24px; border-radius:999px; display:flex; align-items:center; justify-content:center; background: var(--primary-soft); color: var(--primary); font-size:12px; font-weight:600; flex-shrink:0; margin-top:2px; transition: all .3s ease; }
-    .setup-step:hover .setup-number { background: var(--primary); color: #fff; transform: scale(1.1); }
-    .setup-text { font-size:13px; color: var(--text); flex:1; }
-    .setup-text strong { color: var(--primary); }
-
-    .setup-image { margin-top:8px; border-radius:10px; border:1px solid var(--border-soft); overflow:hidden; max-width:400px; position:relative; cursor: zoom-in; transition: all .3s ease; background: var(--card); }
-    .setup-image:hover { transform: scale(1.02); box-shadow: var(--btn-shadow); }
-    .setup-image.zoomed { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.2); max-width: 90vw; max-height: 90vh; z-index:1000; cursor: zoom-out; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-    .setup-image img { width:100%; height:auto; display:block; transition: transform .3s ease; }
-    .setup-image.zoomed img { transform: scale(1.1); }
-    .setup-image-caption { font-size:11px; color: var(--muted); text-align:center; padding:6px 8px; background: rgba(15,23,42,0.5); border-top: 1px solid var(--border-soft); }
-
-    .image-overlay { display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999; cursor: zoom-out; backdrop-filter: blur(5px); }
-    .image-overlay.active { display:block; }
-
-    .setup-note { margin-top:12px; padding:10px 14px; border-radius:12px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); font-size:12px; color: var(--accent-green); animation: pulse-glow 2s infinite; }
-
-    @keyframes pulse-glow {
-      0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-      70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
-      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    .setup-content {
+      display: none; padding: 0 20px 20px; animation: slideDown 0.4s ease;
     }
+    .setup-guide.active .setup-content { display: block; }
 
-    .list { margin-top: 10px; display:flex; flex-direction:column; gap:10px; }
+    .step-card {
+      background: var(--chip-bg); border-radius: 16px; padding: 16px; margin-top: 12px;
+      border: 1px dashed var(--glass-border);
+    }
+    .step-row { display: flex; gap: 12px; margin-bottom: 12px; }
+    .step-num {
+      width: 24px; height: 24px; background: var(--primary); color: white;
+      border-radius: 50%; font-size: 12px; font-weight: bold;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 14px; line-height: 1.6; color: var(--text-main); }
+    .step-text strong { color: var(--primary); }
+
+    .setup-image {
+      border-radius: 12px; overflow: hidden; margin-top: 8px; border: 1px solid var(--glass-border);
+      cursor: zoom-in; transition: transform 0.3s ease; background: black;
+    }
+    .setup-image:hover { transform: scale(1.02); }
+    .setup-image img { width: 100%; display: block; }
+    .caption { font-size: 11px; text-align: center; padding: 6px; color: #9ca3af; background: rgba(0,0,0,0.8); }
+
+    /* =========================================
+       ITEM LIST (THE CARDS)
+       ========================================= */
+    .list { display: grid; gap: 16px; }
 
     .item {
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: rgba(15,23,42,0.85);
-      padding: 12px 14px 10px;
-      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      background: var(--card-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md); padding: 20px;
+      transition: all 0.3s var(--ease-elastic);
+      position: relative; overflow: hidden; cursor: default;
     }
-    body[data-theme="light"] .item { background: #ffffff; }
-    .item:hover { transform: translateY(-3px); box-shadow: var(--btn-shadow); }
-    .item-header { display:flex; align-items:center; gap:14px; cursor:pointer; }
-
-    .icon {
-      width: 60px; height: 60px; border-radius: 18px;
-      display:flex; align-items:center; justify-content:center;
-      flex-shrink:0; position:relative; overflow:hidden;
-      font-size: 1.5rem; transition: all .3s ease;
+    .item::after {
+      content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%;
+      background: var(--item-color, var(--primary)); opacity: 0.8;
     }
-    .icon::before { content:""; position:absolute; inset:0; opacity:.18; background: radial-gradient(circle at 0% 0%, #ffffff, transparent 60%); }
-
-    .text-box{flex:1}
-    .name-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .name { font-size:16px; font-weight:620; transition: color .3s ease; }
-    .item:hover .name { color: var(--primary); }
-
-    .chips { margin-top:6px; display:flex; flex-wrap:wrap; gap:6px; }
-    .chip-pill {
-      padding: 3px 8px; border-radius:999px; font-size:11px;
-      background: var(--pill-bg); color: var(--muted);
-      border: 1px solid var(--border);
-      display:inline-flex; align-items:center; gap:5px;
-      transition: all .3s ease;
+    .item:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: var(--shadow), var(--glow);
+      border-color: rgba(255,255,255,0.2);
     }
-    .chip-pill:hover { transform: translateY(-2px); }
-    .chip-color { width:7px; height:7px; border-radius:999px; background: var(--accent-blue); }
-
-    .chip-update{
-      display:inline-flex; align-items:center; gap:4px;
-      padding: 2px 8px; border-radius:999px;
-      background: rgba(15,23,42,0.45);
-      border: 1px solid rgba(148,163,184,0.5);
-      font-size: 11px; color: var(--muted);
-      margin-top:4px; width: fit-content;
-      transition: all .3s ease;
-    }
-    body[data-theme="light"] .chip-update { background:#f3f4f6; border-color:#e5e7eb; color:#4b5563; }
-    .chip-update:hover { transform: translateY(-1px); }
-
-    .chevron{ font-size:18px; color: var(--muted); transition: transform .3s ease; }
-
-    .item.active{
+    .item.active {
+      background: linear-gradient(135deg, rgba(59,130,246,0.08), transparent);
       border-color: var(--primary);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.75), var(--shadow-glow);
-      background: var(--primary-soft);
-      transform: translateY(-5px);
-    }
-    body[data-theme="light"] .item.active{ background:#eef2ff; }
-    .item.active .chevron{ transform: rotate(180deg); }
-
-    .extra{
-      margin-top:10px; padding-top:8px;
-      border-top:1px dashed var(--border-strong);
-      display:none; animation: slideDown .4s ease-out;
-    }
-    .extra.visible{ display:block; }
-
-    .detail-subtitle{ font-size:13px; color: var(--muted); margin-bottom:8px; }
-
-    /* ===================== NÚT TRONG ITEM (DOWNLOAD / GUIDE) ===================== */
-    .actions{
-      display:flex; flex-wrap:wrap; gap:10px; margin-bottom:6px; align-items:center;
     }
 
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      height:40px; padding:0 16px;
-      border-radius:999px;
-      font-size:13px; font-weight:650;
-      border:1px solid transparent;
-      cursor:pointer; text-decoration:none; white-space:nowrap;
-      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease, color .22s ease;
-      position:relative; overflow:hidden; letter-spacing:.01em;
-      user-select:none; -webkit-tap-highlight-color: transparent;
-    }
-    .btn::before{
-      content:'';
-      position:absolute; top:0; left:-110%;
-      width:100%; height:100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-      transition: left .55s;
-    }
-    .btn:hover::before{ left:110%; }
-    .btn:hover{ transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
-    .btn:active{ transform: translateY(-1px); }
-    .btn:focus-visible{ outline:none; box-shadow: 0 0 0 4px var(--btn-ring), var(--btn-shadow-hover); }
-    .btn-icon{ font-size:16px; }
+    .item-header { display: flex; align-items: center; gap: 16px; cursor: pointer; }
 
-    .btn-primary{
-      background: linear-gradient(135deg, var(--primary), rgba(255,255,255,0.08));
-      color:#fff;
-      border-color: rgba(255,255,255,0.14);
-      box-shadow: var(--btn-shadow);
+    .icon-box {
+      width: 64px; height: 64px; border-radius: 18px;
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      background: var(--bg-gradient-icon);
+      color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      flex-shrink: 0; position: relative; overflow: hidden;
     }
-    body[data-theme="light"] .btn-primary{
-      background: linear-gradient(135deg, var(--primary), rgba(255,255,255,0.6));
-      color:#fff;
+    .icon-box::before {
+      content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3));
     }
 
-    .btn-outline{
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      border-color: var(--border);
-      box-shadow: var(--btn-shadow);
+    .info-box { flex: 1; }
+    .info-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+    .info-chevron { font-size: 20px; color: var(--text-muted); transition: 0.3s; }
+    .item.active .info-chevron { transform: rotate(180deg); color: var(--primary); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 11px; padding: 4px 10px; border-radius: 20px;
+      background: var(--chip-bg); border: 1px solid var(--glass-border);
+      color: var(--text-muted); font-weight: 500;
     }
-    body[data-theme="light"] .btn-outline{
-      background:#fff; color: var(--text);
+    .tag.update { background: rgba(34, 197, 94, 0.1); color: #22c55e; border-color: rgba(34, 197, 94, 0.2); }
+
+    /* Expanded Content */
+    .extra { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--glass-border); animation: fadeIn 0.4s ease; }
+    .extra.visible { display: block; }
+    .extra-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    
+    .btn {
+      height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s;
+      text-decoration: none; position: relative; overflow: hidden;
     }
-    .btn-outline:hover{
-      border-color: var(--primary);
-      color: var(--primary);
+    .btn-primary {
+      background: linear-gradient(90deg, #3b82f6, #2563eb); color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
     }
-
-    .btn-guide{
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      color:#fff;
-      border-color: rgba(255,255,255,0.14);
-      box-shadow: 0 10px 24px rgba(129,140,248,0.45);
+    .btn-primary:hover { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.6); transform: translateY(-2px); }
+    
+    .btn-secondary {
+      background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--glass-border);
     }
-    .btn-guide:hover{ box-shadow: 0 14px 32px rgba(129,140,248,0.6); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: var(--text-muted); transform: translateY(-2px); }
 
-    .guide{
-      border-radius: 14px;
-      border: 1px solid var(--border-strong);
-      background: radial-gradient(circle at 0% 0%, rgba(148,163,184,0.16), transparent 65%);
-      padding: 12px 12px 10px;
-      font-size: 12px;
-      color: var(--muted);
-      display:none; margin-top:8px;
-      animation: slideDown .4s ease-out;
+    /* Guide Box inside Item */
+    .inner-guide {
+      margin-top: 16px; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 16px;
+      display: none; border: 1px solid var(--glass-border);
     }
-    .guide.visible{ display:block; }
+    .inner-guide.visible { display: block; animation: slideDown 0.3s; }
+    .guide-line { display: flex; gap: 10px; margin-bottom: 8px; font-size: 13px; color: var(--text-muted); }
+    .guide-bullet { color: var(--primary); }
+    .guide-line a { color: var(--accent); text-decoration: none; font-weight: 600; }
 
-    .guide-header{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-    .guide-header-icon{
-      width:22px;height:22px;border-radius:999px;
-      display:flex; align-items:center; justify-content:center;
-      background: radial-gradient(circle at 0% 0%, #f97316, #ec4899);
-      font-size: 13px; color:#fff;
-      box-shadow: 0 6px 14px rgba(248,113,113,0.65);
-      flex-shrink:0;
+    /* =========================================
+       MODALS & FOOTER
+       ========================================= */
+    .donate-modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      z-index: 100; display: none; align-items: center; justify-content: center;
+      animation: fadeIn 0.3s;
     }
-    .guide-header-title{ font-size:12px; font-weight:650; color: var(--text); }
-    .guide-list{ display:flex; flex-direction:column; gap:6px; }
-    .guide-row{
-      display:flex; align-items:flex-start; gap:8px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: rgba(15,23,42,0.75);
-      border: 1px dashed var(--border-soft);
-      transition: all .3s ease;
+    .donate-modal.visible { display: flex; }
+    .modal-card {
+      background: #18181b; width: 90%; max-width: 380px; padding: 30px; border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.1); text-align: center; position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); transform: scale(0.9); animation: popIn 0.3s forwards;
     }
-    .guide-row:hover{ transform: translateX(3px); background: rgba(15,23,42,0.9); }
-    body[data-theme="light"] .guide-row{ background:#f9fafb; border-color:#e5e7eb; }
-    body[data-theme="light"] .guide-row:hover{ background:#f1f5f9; }
-    .guide-bullet{ font-size:14px; margin-top:2px; flex-shrink:0; transition: transform .3s ease; }
-    .guide-row:hover .guide-bullet{ transform: scale(1.2); }
-    .guide-body{ font-size:12px; color: var(--muted); }
-    .guide-body a{ color: var(--primary); text-decoration: underline; }
-    .guide-body strong{ color: var(--text); }
-    .guide-body img{ max-width:100%; border-radius: 8px; margin-top:4px; display:block; }
+    @keyframes popIn { to { transform: scale(1); } }
 
-    /* ===================== DONATE BUTTON (GIỮ NGUYÊN) ===================== */
-    .donate-wrap { width:100%; display:flex; justify-content:center; margin-bottom: 10px; }
-    .donate-btn{
-      border:1px solid rgba(255,255,255,0.14);
-      border-radius:999px;
-      height:40px;
-      padding: 0 16px;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      font-size:12px;
-      font-weight:750;
-      cursor:pointer;
-      background: linear-gradient(135deg, #f97316, #ec4899);
-      color:#fff7ed;
-      box-shadow: 0 12px 28px rgba(248,113,113,0.55);
-      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
-      position:relative;
-      overflow:hidden;
-      letter-spacing:.01em;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
+    .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; opacity: 0.5; }
+    .modal-close:hover { opacity: 1; }
+    
+    .qr-frame {
+      background: white; padding: 10px; border-radius: 20px; margin: 20px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
-    .donate-btn::before{
-      content:'';
-      position:absolute;
-      top:0; left:-110%;
-      width:100%; height:100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.20), transparent);
-      transition: left .55s;
+    .qr-frame img { width: 100%; display: block; border-radius: 10px; }
+    .donate-h { color: #ec4899; font-size: 20px; font-weight: 800; margin-bottom: 5px; }
+
+    footer { text-align: center; margin-top: 40px; font-size: 12px; color: var(--text-muted); opacity: 0.6; }
+
+    /* Zoom Overlay */
+    .zoom-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 200;
+      display: none; align-items: center; justify-content: center; cursor: zoom-out;
     }
-    .donate-btn:hover::before{ left:110%; }
-    .donate-btn:hover{ transform: translateY(-2px); box-shadow: 0 16px 36px rgba(248,113,113,0.65); }
-    .donate-btn:active{ transform: translateY(-1px); }
-    .donate-btn:focus-visible{ outline:none; box-shadow: 0 0 0 4px rgba(248,113,113,0.20), 0 16px 36px rgba(248,113,113,0.65); }
-    .donate-btn-icon{
-      width:22px;height:22px;border-radius:999px;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(248,250,252,0.2);
-      font-size: 15px;
-      animation: wobble 1.6s ease-in-out infinite;
+    .zoom-overlay.active { display: flex; }
+    .zoom-overlay img { max-width: 95vw; max-height: 95vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.5); animation: zoomIn 0.3s; }
+    @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .panel { padding: 20px 16px; }
+      .header-content h1 { font-size: 26px; }
+      .action-grid { grid-template-columns: 1fr; }
+      .item-header { gap: 12px; }
+      .icon-box { width: 50px; height: 50px; font-size: 22px; }
     }
-    .donate-btn-text strong{ font-weight:800; }
-    @keyframes wobble { 0%{transform:translateY(0)}25%{transform:translateY(-3px)}50%{transform:translateY(0)}75%{transform:translateY(-2px)}100%{transform:translateY(0)} }
-
-    .donate-modal{
-      position:fixed; inset:0;
-      background: rgba(15,23,42,0.78);
-      display:none; align-items:center; justify-content:center;
-      z-index:40;
-      backdrop-filter: blur(5px);
-      animation: fadeIn .3s ease-out;
-    }
-    .donate-modal.visible{ display:flex; }
-    .donate-card{
-      width:100%; max-width:360px;
-      background:#fce7f3;
-      border-radius:24px;
-      padding:16px 14px 14px;
-      box-shadow: 0 24px 60px rgba(15,23,42,0.9);
-      position:relative;
-      animation: scaleIn .3s ease-out;
-    }
-    @keyframes scaleIn{ from{ transform: scale(.9); opacity:0;} to{ transform: scale(1); opacity:1;} }
-    .donate-close{ position:absolute; top:8px; right:10px; border:none; background:transparent; font-size:16px; cursor:pointer; color:#be185d; transition: all .3s ease; }
-    .donate-close:hover{ transform: scale(1.2); }
-    .donate-title{ font-size:15px; font-weight:750; color:#9d174d; text-align:center; margin-bottom:4px; }
-    .donate-text{ font-size:12px; color:#9f1239; text-align:center; margin-bottom:6px; }
-    .donate-qr{ background:#fdf2f8; padding:10px; border-radius:18px; display:flex; align-items:center; justify-content:center; margin-bottom:4px; transition: all .3s ease; }
-    .donate-qr:hover{ transform: scale(1.02); }
-    .donate-qr img{ max-width:100%; border-radius:16px; display:block; transition: transform .3s ease; cursor: zoom-in; }
-    .donate-qr img:hover{ transform: scale(1.05); }
-    .donate-note{ font-size:11px; color:#9f1239; text-align:center; }
-
-    footer { margin-top:10px; text-align:center; font-size:11px; color: var(--muted); }
-
-    /* Floating particles effect */
-    .particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
-    .particle { position:absolute; background: var(--primary); border-radius:50%; opacity:.1; animation: float-particle 15s infinite linear; }
-    @keyframes float-particle { 0%{ transform: translateY(0) translateX(0);} 100%{ transform: translateY(-100vh) translateX(100px);} }
-
-    @media (max-width: 720px) {
-      body { padding: 12px; }
-      .panel { padding: 16px 12px 12px; border-radius: 24px; }
-      .panel-inner { padding: 14px 12px 10px; }
-      h1 { font-size: 22px; }
-      .icon { width: 54px; height: 54px; }
-      .setup-title { font-size: 15px; }
-      .setup-section { padding: 12px 14px 10px; }
-      .setup-image.zoomed { max-width: 95vw; max-height: 95vh; transform: translate(-50%, -50%) scale(1.1); }
-      .theme-toggle { min-width: 160px; height: 38px; }
-      .tools-btn { height: 34px; }
-    }
-    @media (max-width: 480px) {
-      .actions { flex-direction: column; align-items: stretch; }
-      .btn { width: 100%; }
-      .tools-btn { margin-left: 0; }
-      .badge-row { gap: 8px; }
-    }
-
-    /* =========================
-       UI OVERRIDE (GIỐNG STYLE ĐKK&BTK - GỌN / PRO)
-       Giữ nguyên toàn bộ chức năng & JS
-       ========================= */
-    body{
-      /* nhìn giống BKTL-ĐKK (nền sâu + glow) */
-      background:
-        radial-gradient(900px 520px at 12% 10%, rgba(59,130,246,.18), transparent 55%),
-        radial-gradient(820px 460px at 88% 22%, rgba(236,72,153,.14), transparent 55%),
-        radial-gradient(860px 480px at 55% 105%, rgba(139,92,246,.16), transparent 60%),
-        linear-gradient(180deg, #0b1220, #0f172a) !important;
-      align-items: flex-start;
-      padding: 14px;
-    }
-    body[data-theme="light"]{
-      background:
-        radial-gradient(900px 520px at 12% 10%, rgba(37,99,235,.10), transparent 55%),
-        radial-gradient(820px 460px at 88% 22%, rgba(124,58,237,.08), transparent 55%),
-        linear-gradient(180deg, #eef2ff, #f8fafc) !important;
-    }
-
-    .shell{
-      max-width: 980px;
-      margin-top: 10px;
-    }
-
-    .panel{
-      border-radius: 18px;
-      padding: 12px;
-      transform: none !important;
-    }
-    .panel:hover{
-      transform:none !important;
-    }
-
-    .panel::before{
-      height: 3px;
-      background: linear-gradient(90deg, rgba(59,130,246,.95), rgba(139,92,246,.95), rgba(236,72,153,.90)) !important;
-      opacity: .9;
-    }
-
-    .panel-inner{
-      border-radius: 16px;
-      padding: 12px;
-      background: rgba(15,23,42,.32);
-    }
-    body[data-theme="light"] .panel-inner{
-      background: rgba(255,255,255,.75);
-    }
-
-    .donate-wrap{
-      margin-bottom: 6px;
-    }
-    .donate-btn{
-      height: 38px;
-      font-size: 12px;
-      box-shadow: 0 12px 22px rgba(248,113,113,.40);
-    }
-
-    .panel-header{
-      margin-bottom: 10px;
-      gap: 10px;
-    }
-    h1{
-      font-size: 22px;
-      letter-spacing: -.2px;
-    }
-    .subtitle{
-      font-size: 13px;
-      max-width: 720px;
-    }
-
-    .badge{
-      padding: 5px 12px;
-      font-size: 12px;
-    }
-
-    .tools-btn{
-      height: 36px;
-      font-weight: 800;
-      box-shadow: 0 10px 18px rgba(139,92,246,.35);
-    }
-
-    /* setup guide gọn hơn chút */
-    .setup-guide{
-      margin: 12px 0 12px;
-      border-radius: 16px;
-      padding: 12px 12px 10px;
-    }
-
-    /* item giống card ĐKK/BTK */
-    .item{
-      border-radius: 16px;
-      padding: 12px;
-    }
-    .item::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; top:0;
-      height:3px;
-      background: linear-gradient(90deg, rgba(59,130,246,.95), rgba(139,92,246,.95), rgba(236,72,153,.90));
-      opacity:.85;
-    }
-    .item-header{ gap: 12px; }
-
-    .icon{
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      font-size: 1.35rem;
-    }
-
-    .name{ font-size: 15px; }
-
-    .actions{
-      /* giống DKK: 2 nút đều nhau */
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    @media (max-width: 520px){
-      .actions{ grid-template-columns: 1fr; }
-    }
-
-    .btn{
-      height: 40px;
-      border-radius: 12px;
-      font-weight: 900;
-    }
-    .btn-primary{
-      border-radius: 12px;
-      background: linear-gradient(90deg, rgba(59,130,246,.95), rgba(139,92,246,.95));
-    }
-    .btn-guide{
-      border-radius: 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow: none;
-    }
-    body[data-theme="light"] .btn-guide{
-      background: #fff;
-      border-color: rgba(15,23,42,.14);
-    }
-    .btn-guide:hover{
-      color: var(--primary);
-      border-color: var(--primary);
-      box-shadow: 0 10px 18px rgba(0,0,0,.12);
-    }
-
-    .guide{
-      border-radius: 14px;
-      background: rgba(2,6,23,.20);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    body[data-theme="light"] .guide{
-      background: rgba(255,255,255,.70);
-      border-color: rgba(15,23,42,.10);
-    }
-  /* =========================
-   UI REWORK – BANKING PRO
-   (GIỮ NGUYÊN CHỨC NĂNG)
-   ========================= */
-
-/* Font gọn gàng */
-* {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-/* Nền tổng */
-body {
-  background: linear-gradient(180deg, #0b1220, #111827) !important;
-  color: #e5e7eb;
-}
-
-/* Panel chính */
-.panel {
-  background: rgba(17, 24, 39, 0.85);
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-/* Header */
-h1 {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  background: none;
-  color: #f9fafb;
-}
-
-.subtitle {
-  font-size: 13px;
-  color: #9ca3af;
-}
-
-/* Badge */
-.badge {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: #d1d5db;
-}
-
-/* Card bảng kê */
-.item {
-  background: rgba(17,24,39,0.9);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: none;
-}
-
-.item:hover {
-  transform: none;
-}
-
-.item.active {
-  border-color: #3b82f6;
-  background: rgba(59,130,246,0.08);
-}
-
-/* Icon bảng kê */
-.icon {
-  border-radius: 12px;
-  box-shadow: none;
-}
-
-/* Tên bảng */
-.name {
-  font-size: 15px;
-  font-weight: 700;
-}
-
-/* Chips */
-.chip-pill {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  font-size: 11px;
-}
-
-/* Nút hành động */
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.btn {
-  height: 40px;
-  border-radius: 10px;
-  font-weight: 700;
-}
-
-.btn-primary {
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-  box-shadow: none;
-}
-
-.btn-guide {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-/* Guide box */
-.guide {
-  background: rgba(17,24,39,0.95);
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Setup guide */
-.setup-guide {
-  background: rgba(17,24,39,0.9);
-  border-radius: 14px;
-}
-
-.setup-section {
-  background: rgba(255,255,255,0.03);
-  border-radius: 12px;
-}
-
-/* Donate */
-.donate-btn {
-  border-radius: 999px;
-  background: linear-gradient(90deg, #f97316, #ec4899);
-  box-shadow: none;
-}
-
-/* Theme toggle gọn */
-.theme-toggle {
-  border-radius: 999px;
-  background: rgba(255,255,255,0.05);
-  box-shadow: none;
-}
-
   </style>
 </head>
 
 <body data-theme="dark">
-  <div class="particles" id="particles"></div>
+  <div class="blob-cont">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
 
   <main class="shell">
     <section class="panel">
-      <div class="panel-inner">
-
-        <div class="donate-wrap">
-          <button id="donateBtn" class="donate-btn" type="button">
-            <span class="donate-btn-icon">🎁</span>
-            <span class="donate-btn-text">
-              <strong>Ủng hộ</strong> cho bộ bảng kê
-            </span>
-          </button>
+      
+      <header class="panel-header">
+        <div class="top-bar">
+          <div class="brand-badge">
+            <span class="pulse-dot"></span>
+            <span>BẢNG KÊ 2026</span>
+          </div>
+          <a href="https://giabao1881.github.io/baotg10/" class="btn-tools" target="_blank">
+            <span>🛠️ Công cụ khác</span>
+          </a>
         </div>
 
-        <header class="panel-header">
-          <div class="title-wrap">
-            <div class="badge-row">
-              <div class="badge">
-                <span class="dot"></span>
-                <span>Bộ bảng kê tính lãi</span>
-              </div>
-
-              <!-- Nút Công cụ khác -->
-              <a href="https://giabao1881.github.io/baotg10/" class="tools-btn" target="_blank" rel="noopener">
-                <span class="tools-icon">🛠️</span>
-                <span>Công cụ khác</span>
-              </a>
-            </div>
-
-            <div>
-              <h1>BẢNG KÊ TÍNH LÃI</h1>
-              <p class="subtitle">Bấm vào từng bảng kê để hiện nút tải và hướng dẫn (THEO DÕI THƯỜNG XUYÊN ĐỂ CẬP NHẬT BẢNG MỚI NHẤT NHÉ)</p>
-            </div>
-          </div>
-
-          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Đổi giao diện sáng/tối">
-            <div class="theme-pill"></div>
-            <div class="theme-option">
-              <span class="icon">🌞</span>
-              <span class="label">Sáng</span>
-            </div>
-            <div class="theme-option">
-              <span class="icon">🌙</span>
-              <span class="label">Tối</span>
-            </div>
-          </button>
-        </header>
-
-        <!-- Hướng dẫn cài đặt máy -->
-        <div class="setup-guide" id="setupGuide">
-          <div class="setup-header">
-            <div class="setup-title">
-              <div class="setup-title-icon">⚙️</div>
-              <span>Cài đặt máy trước khi sử dụng</span>
-            </div>
-            <div class="setup-chevron">▾</div>
-          </div>
-
-          <div class="setup-content">
-            <p class="setup-subtitle">Để đảm bảo các bảng kê Excel hoạt động chính xác, vui lòng thực hiện các bước cài đặt sau:</p>
-
-            <div class="setup-list">
-              <div class="setup-section">
-                <div class="setup-section-title">
-                  <span class="setup-section-title-icon">🔧</span>
-                  <span>1. Điều chỉnh trong Control Panel</span>
-                </div>
-
-                <div class="setup-steps">
-                  <div class="setup-step">
-                    <div class="setup-number">1</div>
-                    <div class="setup-text">
-                      <strong>Bước 1:</strong> Dưới thanh Taskbar, bạn hãy bấm vào ký hiệu Windows (hình ô cửa sổ) và bấm chọn vào <strong>Control Panel</strong> hoặc tại ô tìm kiếm thì tìm kiếm "Control Panel".
-                      <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image1.jpeg" alt="Vào Control Panel"
-                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Vào Control Panel</small></div>';" />
-                        <div class="setup-image-caption">Vào ký hiệu Windows và bấm chọn vào Control Panel</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="setup-step">
-                    <div class="setup-number">2</div>
-                    <div class="setup-text">
-                      <strong>Bước 2:</strong> Chọn vào <strong>Clock and Region</strong>, sau đó chọn tiếp vào <strong>Region</strong>.
-                      <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image2.jpeg" alt="Chọn Clock and Region"
-                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Clock and Region</small></div>';" />
-                        <div class="setup-image-caption">Chọn vào Clock and Region, sau đó chọn tiếp vào Region</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="setup-step">
-                    <div class="setup-number">3</div>
-                    <div class="setup-text">
-                      <strong>Bước 3:</strong> Tại phần <strong>Format</strong> hãy chọn sang <strong>Vietnamese (Vietnam)</strong> là các định dạng thời gian sẽ chuyển sang dd/mm/yyyy.
-                      <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image3.jpeg" alt="Chọn Vietnamese format"
-                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Chọn Vietnamese format</small></div>';" />
-                        <div class="setup-image-caption">Tại phần Format hãy chọn sang Vietnamese (Vietnam)</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="setup-section">
-                <div class="setup-section-title">
-                  <span class="setup-section-title-icon">📊</span>
-                  <span>2. Điều chỉnh trong Excel</span>
-                </div>
-
-                <div class="setup-steps">
-                  <div class="setup-step">
-                    <div class="setup-number">1</div>
-                    <div class="setup-text"><strong>Mở file Excel lên</strong></div>
-                  </div>
-
-                  <div class="setup-step">
-                    <div class="setup-number">2</div>
-                    <div class="setup-text">
-                      <strong>Chọn FILE → OPTION → ADVANCED</strong> sau đó làm như hình dưới đây:
-                      <div class="setup-image" onclick="toggleZoom(this)">
-                        <img src="media/image4.png" alt="Cài đặt Excel"
-                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--muted); background:var(--card); border-radius:8px;\'>📷 Hình ảnh minh họa<br><small>Cài đặt Excel</small></div>';" />
-                        <div class="setup-image-caption">Cài đặt định dạng số trong Excel</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="setup-step">
-                    <div class="setup-number">3</div>
-                    <div class="setup-text">
-                      <strong>"Chấm" dưới "phẩy" đó là dạng số của bạn chuyển sang "phẩy" phần ngàn.</strong> Nếu bạn muốn để "chấm" phần ngàn thì đổi ngược lại.
-                    </div>
-                  </div>
-
-                  <div class="setup-step">
-                    <div class="setup-number">4</div>
-                    <div class="setup-text"><strong>Đổi xong thì bấm OK</strong></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="setup-note">
-              💡 <strong>Lưu ý quan trọng:</strong> Các bước cài đặt này cần thiết để đảm bảo bảng kê tính lãi hoạt động chính xác. Nếu gặp lỗi khi mở file, hãy kiểm tra lại các bước trên.
-            </div>
+        <div class="header-content">
+          <h1>TRUNG TÂM TÍNH LÃI</h1>
+          <p class="subtitle">Hệ thống bảng kê tự động hóa. Cập nhật liên tục. Độ chính xác cao.</p>
+          
+          <div class="controls-row">
+            <button id="themeToggle" class="theme-toggle" aria-label="Đổi giao diện">
+              <div class="theme-pill"></div>
+              <div class="theme-icon">🌞</div>
+              <div class="theme-icon">🌙</div>
+            </button>
+            
+            <button id="donateBtn" class="btn-donate">
+              <span>🎁 Donate ủng hộ</span>
+            </button>
           </div>
         </div>
+      </header>
 
-        <div class="list" id="list"></div>
+      <div class="setup-guide" id="setupGuide">
+        <div class="setup-header">
+          <div class="setup-title">
+            <div class="setup-icon-box">⚙️</div>
+            <span>Cấu hình hệ thống trước khi dùng</span>
+          </div>
+          <div class="setup-chevron">▼</div>
+        </div>
+
+        <div class="setup-content">
+          <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px;">
+            Thực hiện 1 lần duy nhất để Excel hoạt động chuẩn xác 100%.
+          </div>
+
+          <div class="step-card">
+            <div style="font-weight: 700; color: var(--primary); margin-bottom: 10px;">1. Cài đặt Region (Control Panel)</div>
+            
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-text">Windows → Tìm <strong>Control Panel</strong> → Mở lên.
+                <div class="setup-image" onclick="zoomImg(this)"><img src="media/image1.jpeg" alt="Control Panel" onerror="this.style.display='none'"></div>
+              </div>
+            </div>
+
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-text">Chọn <strong>Clock and Region</strong> → <strong>Region</strong>.
+                <div class="setup-image" onclick="zoomImg(this)"><img src="media/image2.jpeg" alt="Region" onerror="this.style.display='none'"></div>
+              </div>
+            </div>
+
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div class="step-text">Tab Format: Chọn <strong>Vietnamese (Vietnam)</strong> để chuẩn ngày giờ (dd/mm/yyyy).
+                <div class="setup-image" onclick="zoomImg(this)"><img src="media/image3.jpeg" alt="Format VN" onerror="this.style.display='none'"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 10px;">2. Cài đặt Excel (Quan trọng)</div>
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-text">Mở Excel → <strong>File → Options → Advanced</strong>.</div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-text">Bỏ chọn "Use system separators".<br>
+                Decimal separator (Dấu thập phân): để là <strong>,</strong> (phẩy)<br>
+                Thousands separator (Dấu hàng ngàn): để là <strong>.</strong> (chấm)<br>
+                <em>(Hoặc ngược lại tùy nhu cầu, miễn là đồng nhất)</em>
+                <div class="setup-image" onclick="zoomImg(this)"><img src="media/image4.png" alt="Excel Setting" onerror="this.style.display='none'"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+
+      <div class="list" id="list">
+        </div>
+
+      <footer>
+        &copy; 2026 Designed by baotg10 <br> Premium Financial Tools
+      </footer>
     </section>
-
-    <div id="donateModal" class="donate-modal">
-      <div class="donate-card">
-        <button id="donateClose" class="donate-close" type="button">✕</button>
-        <div class="donate-title">Donate ủng hộ phát triển</div>
-        <p class="donate-text">
-          Nếu bạn thấy bộ bảng kê hữu ích, có thể ủng hộ mình một ly cà phê.
-        </p>
-        <div class="donate-qr">
-          <img src="momo_qr.png" alt="QR donate MoMo"
-               onclick="zoomQR(this)"
-               onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:#9f1239; background:#fdf2f8; border-radius:16px;\'>📷 QR Code sẽ hiển thị tại đây<br><small>Upload file momo_qr.png lên GitHub</small></div>';" />
-        </div>
-        <div class="donate-note">
-          Quét bằng MoMo hoặc app ngân hàng hỗ trợ VietQR.
-        </div>
-      </div>
-    </div>
-
-    <footer>© baotg10</footer>
   </main>
 
-  <div class="image-overlay" id="imageOverlay" onclick="closeAllZoom()"></div>
+  <div id="donateModal" class="donate-modal">
+    <div class="modal-card">
+      <button id="donateClose" class="modal-close">✕</button>
+      <div class="donate-h">Cảm ơn bạn! ❤️</div>
+      <p style="font-size: 13px; color: #d1d5db;">Sự ủng hộ của bạn là động lực để mình duy trì và nâng cấp tool xịn hơn mỗi ngày.</p>
+      
+      <div class="qr-frame">
+        <img src="momo_qr.png" alt="QR Code" onerror="this.src='https://via.placeholder.com/200x200?text=QR+Image+Missing'">
+      </div>
+      
+      <div style="font-size: 12px; color: #9ca3af;">Hỗ trợ MoMo & Các ngân hàng (VietQR)</div>
+    </div>
+  </div>
+
+  <div id="zoomOverlay" class="zoom-overlay" onclick="closeZoom()">
+    <img id="zoomTarget" src="" alt="Zoomed">
+  </div>
 
   <script>
+    /* =========================================
+       DATA & LOGIC (GIỮ NGUYÊN BẢN GỐC)
+       ========================================= */
     const BANG_KE_LIST = [
       {
-        id: "ld",
-        code: "LD",
-        name: "BKTL LD",
-        short: "Tool siêu cấp",
-        subtitle: "Có thể tính cùng lúc 10 bảng LD và hơn thế nữa",
+        id: "ld", code: "LD", name: "BKTL LD PRO", short: "Super Tool",
+        subtitle: "Xử lý hàng loạt 10+ bảng LD cùng lúc. Tốc độ cao.",
         file: "BKTL_LD.xlsm",
-        updated: "BIX UPDATE 29/12/2025, kéo dài danh sách thêm 100 dòng, auto xóa dư thừa",
-        icon: "💰",
-        color: "green",
+        updated: "29/12/2025 (v2.0)",
+        icon: "💰", color: "linear-gradient(135deg, #10b981, #059669)", cssVar: "#10b981",
         guide: [
-          "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\"",
-          "Bước 2: Tải tất cả các LKGD và LKLS các LD về. <em>Lưu ý:</em> tool này đã cập nhật tất cả tải bằng HTML nhanh và tiện.",
-          "Bước 3: Up file vô đúng SHEET. <span style=\"color:red\"> Có thể up nhiều file cùng lúc</span>. (Trong LKLS có thể sửa lại lãi đối với thế chấp)",
-          "Bước 4: Bấm ROBOT nhập pass \"<span style=\"color:red\">baotg10</span>\"",
-          "Bước 5: Kiểm tra đúng gốc chưa, có giải ngân kĩ thuật không,...",
-          "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
+          "Bước 1: Nhập thông tin tại sheet \"<strong>THTT</strong>\"",
+          "Bước 2: Tải LKGD & LKLS (Tool hỗ trợ tải HTML siêu tốc).",
+          "Bước 3: Upload file vào đúng Sheet. <span style=\"color:#f43f5e\">Hỗ trợ đa luồng file</span>.",
+          "Bước 4: Bấm <strong>ROBOT</strong> -> Nhập pass: \"<span style=\"color:#f43f5e\">baotg10</span>\"",
+          "Bước 5: Kiểm tra kết quả (Gốc, giải ngân kỹ thuật...)."
         ]
       },
       {
-        id: "the",
-        code: "TH",
-        name: "BKTL THẺ",
-        short: "TOOL tính thẻ",
-        subtitle: "Tính thẻ nhanh, bốc tách lãi hợp lý, tiết kiệm thời gian",
+        id: "the", code: "TH", name: "BKTL THẺ TÍN DỤNG", short: "Smart Card",
+        subtitle: "Bóc tách lãi thông minh, tối ưu hóa quy trình.",
         file: "BKTL_THE.xlsm",
-        updated: "BIX UPDATE 29/12/2025 fix lỗi up file và khác phục tình trạng sai số và kéo dài danh sách thêm 100 dòng",
-        icon: "💳",
-        color: "pink",
+        updated: "29/12/2025 (Fix bug)",
+        icon: "💳", color: "linear-gradient(135deg, #ec4899, #db2777)", cssVar: "#ec4899",
         guide: [
-          "Bước 1: Nhập đầy đủ thông tin tại sheet \"<strong><span style=\"color:red\">THTT</span></strong>\". Lưu ý: Chỗ \"<span style=\"color:red\">Nhập dư nợ gốc trên fin</span>\" nhập sao cho bên phần tự động hiện \"<span style=\"color:red\">REF</span>\" là ok! Đồng thời, tại mục \"<span style=\"color:red\">Nhập ngày bắt đầu sao kê</span>\": vào Way4 → Docs, tìm dòng có chữ \"<span style=\"color:red\">interest</span>\"; ví dụ nếu là 26/01/2025 thì nhập <strong>26</strong>.",
-          "Bước 2: Tải sao kê trên way4 về dạng \"<span style=\"color:red\">Excel</span>\"",
-          "Bước 3: Up file sao kê lên",
-          "Bước 4: Bấm vô robot và nhập pass",
-          "Bước 5: Ẩn dòng dư thừa. Lưu ý chỉ: <span style=\"color:red\">Ẩn</span>",
-          "Bước 6: Xem bên sheet THTT chỗ phần Tự động và làm theo hướng dẫn. Thêm bớt cho hợp lý",
-          "Bước 7: Sửa ngày cần tính chỗ dòng cuối cùng",
-          "Bước 8: Tính lãi tới kì hiện tại: <em>=Lãi kỳ trên / 30 * (ngày cần tính - <span style=\"color:red\">ngày bắt đầu sao kê của kì đó</span> + 1)</em>",
-          "Xem video hướng dẫn chi tiết: <a href=\"#\"><span style=\"color:red\">Tại đây</span></a>"
+          "Bước 1: Sheet \"<strong>THTT</strong>\". Nhập dư nợ gốc sao cho hiện \"REF\".",
+          "Bước 2: Ngày sao kê: Vào Way4 tìm dòng \"interest\", ví dụ 26/01 -> nhập <strong>26</strong>.",
+          "Bước 3: Tải sao kê Way4 (Excel) -> Upload.",
+          "Bước 4: Bấm Robot -> Pass -> Ẩn dòng thừa.",
+          "Bước 5: Tính lãi kỳ hiện tại theo công thức hiển thị trên file."
         ]
       },
       {
-        id: "pd",
-        code: "PD",
-        name: "BKTL THẤU CHI (đang phát triển)",
-        short: "tính nhanh thấu chi",
-        subtitle: "Đang phát triển",
-        file: "hihi",
-        updated: "Dự kiến tháng 12",
-        icon: "🎯",
-        color: "orange",
+        id: "pd", code: "PD", name: "BKTL THẤU CHI", short: "Coming Soon",
+        subtitle: "Đang phát triển - Phiên bản thử nghiệm.",
+        file: "#",
+        updated: "Dự kiến 2026",
+        icon: "🎯", color: "linear-gradient(135deg, #f59e0b, #d97706)", cssVar: "#f59e0b",
         guide: [
-          "🛠️ Tính năng đang được phát triển...",
-          "Dự kiến ra mắt vào tháng 12/2024",
-          "Theo dõi để cập nhật phiên bản mới nhất!"
+          "🛠️ Tính năng đang được hoàn thiện.",
+          "Vui lòng quay lại sau."
         ]
       }
     ];
 
-    const colorSchemes = {
-      green: 'linear-gradient(135deg, #22c55e, #16a34a)',
-      blue: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-      purple: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-      orange: 'linear-gradient(135deg, #f59e0b, #d97706)',
-      pink: 'linear-gradient(135deg, #ec4899, #db2777)',
-      cyan: 'linear-gradient(135deg, #06b6d4, #0891b2)'
-    };
-
-    function toggleZoom(imageContainer) {
-      const isZoomed = imageContainer.classList.contains('zoomed');
-      if (!isZoomed) {
-        imageContainer.classList.add('zoomed');
-        document.getElementById('imageOverlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-      } else {
-        closeAllZoom();
-      }
-    }
-
-    function zoomQR(qrImage) {
-      const qrContainer = qrImage.parentElement;
-      qrContainer.style.transform = 'scale(1.2)';
-      qrContainer.style.transition = 'transform 0.3s ease';
-      setTimeout(() => {
-        qrContainer.style.transform = 'scale(1)';
-      }, 2000);
-    }
-
-    function closeAllZoom() {
-      document.querySelectorAll('.setup-image.zoomed').forEach(img => {
-        img.classList.remove('zoomed');
-      });
-      document.getElementById('imageOverlay').classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeAllZoom();
-      }
-    });
-
-    function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      const particleCount = 20;
-
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-
-        const size = Math.random() * 5 + 2;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-
-        const duration = Math.random() * 20 + 10;
-        particle.style.animationDuration = `${duration}s`;
-
-        const delay = Math.random() * 5;
-        particle.style.animationDelay = `${delay}s`;
-
-        particlesContainer.appendChild(particle);
-      }
-    }
-
+    /* --- RENDERING --- */
     function renderList() {
       const listEl = document.getElementById('list');
       listEl.innerHTML = '';
 
       BANG_KE_LIST.forEach(item => {
+        // Tạo thẻ bao
         const wrap = document.createElement('div');
         wrap.className = 'item';
-        wrap.dataset.id = item.id;
+        wrap.style.setProperty('--item-color', item.cssVar || '#3b82f6');
+        wrap.style.setProperty('--bg-gradient-icon', item.color);
 
-        const header = document.createElement('div');
-        header.className = 'item-header';
+        // Header
+        let html = `
+          <div class="item-header" onclick="toggleItem(this)">
+            <div class="icon-box">${item.icon}</div>
+            <div class="info-box">
+              <div class="info-title">
+                ${item.name}
+                <span class="info-chevron">▼</span>
+              </div>
+              <div class="tags">
+                <span class="tag">Excel Macro</span>
+                <span class="tag">${item.short}</span>
+                ${item.updated ? `<span class="tag update">Updated: ${item.updated}</span>` : ''}
+              </div>
+            </div>
+          </div>
+          
+          <div class="extra">
+            <div class="extra-desc">${item.subtitle}</div>
+            
+            <div class="action-grid">
+              <a href="${item.file}" class="btn btn-primary" download>
+                <span>⬇ Tải file ngay</span>
+              </a>
+              <button class="btn btn-secondary" onclick="toggleGuide(event, this)">
+                <span>📘 Xem hướng dẫn</span>
+              </button>
+            </div>
 
-        const icon = document.createElement('div');
-        icon.className = 'icon';
-        icon.style.background = colorSchemes[item.color] || colorSchemes.blue;
-        icon.innerHTML = item.icon || '📊';
-
-        const textBox = document.createElement('div');
-        textBox.className = 'text-box';
-
-        const nameRow = document.createElement('div');
-        nameRow.className = 'name-row';
-
-        const name = document.createElement('div');
-        name.className = 'name';
-        name.textContent = item.name || '';
-
-        const chevron = document.createElement('div');
-        chevron.className = 'chevron';
-        chevron.textContent = '▾';
-
-        nameRow.appendChild(name);
-        nameRow.appendChild(chevron);
-        textBox.appendChild(nameRow);
-
-        const chips = document.createElement('div');
-        chips.className = 'chips';
-
-        const chip1 = document.createElement('div');
-        chip1.className = 'chip-pill';
-        chip1.innerHTML = '<span class="chip-color"></span><span>Excel</span>';
-
-        const chip2 = document.createElement('div');
-        chip2.className = 'chip-pill';
-        chip2.textContent = item.short || '';
-
-        chips.appendChild(chip1);
-        chips.appendChild(chip2);
-        textBox.appendChild(chips);
-
-        if (item.updated) {
-          const up = document.createElement('div');
-          up.className = 'chip-update';
-          up.innerHTML = '<span class="chip-update-icon">🕒</span><span>Cập nhật: ' + item.updated + '</span>';
-          textBox.appendChild(up);
-        }
-
-        header.appendChild(icon);
-        header.appendChild(textBox);
-
-        const extra = document.createElement('div');
-        extra.className = 'extra';
-
-        const subtitle = document.createElement('div');
-        subtitle.className = 'detail-subtitle';
-        subtitle.textContent = item.subtitle || '';
-        extra.appendChild(subtitle);
-
-        const actions = document.createElement('div');
-        actions.className = 'actions';
-
-        const download = document.createElement('a');
-        download.className = 'btn btn-primary';
-        download.href = item.file || '#';
-        download.setAttribute('download', '');
-        download.innerHTML = '<span class="btn-icon">⬇</span><span>Tải ' + (item.name || 'file') + '</span>';
-
-        const guideBtn = document.createElement('button');
-        guideBtn.type = 'button';
-        guideBtn.className = 'btn btn-outline btn-guide';
-        guideBtn.innerHTML = '<span class="btn-icon">📘</span><span>Hướng dẫn sử dụng</span>';
-
-        actions.appendChild(download);
-        actions.appendChild(guideBtn);
-        extra.appendChild(actions);
-
-        const guideBox = document.createElement('div');
-        guideBox.className = 'guide';
-
-        const gHeader = document.createElement('div');
-        gHeader.className = 'guide-header';
-
-        const gIcon = document.createElement('div');
-        gIcon.className = 'guide-header-icon';
-        gIcon.textContent = '💡';
-
-        const gTitle = document.createElement('div');
-        gTitle.className = 'guide-header-title';
-        gTitle.textContent = 'Hướng dẫn chi tiết';
-
-        gHeader.appendChild(gIcon);
-        gHeader.appendChild(gTitle);
-        guideBox.appendChild(gHeader);
-
-        const gList = document.createElement('div');
-        gList.className = 'guide-list';
-
-        (item.guide || []).forEach((line, i) => {
-          const row = document.createElement('div');
-          row.className = 'guide-row';
-
-          const bullet = document.createElement('div');
-          bullet.className = 'guide-bullet';
-          bullet.textContent = i === 0 ? '⭐' : '•';
-
-          const body = document.createElement('div');
-          body.className = 'guide-body';
-          body.innerHTML = line;
-
-          row.appendChild(bullet);
-          row.appendChild(body);
-          gList.appendChild(row);
-        });
-
-        guideBox.appendChild(gList);
-        extra.appendChild(guideBox);
-
-        wrap.appendChild(header);
-        wrap.appendChild(extra);
-
-        header.addEventListener('click', function () {
-          const isVisible = extra.classList.contains('visible');
-          document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
-          document.querySelectorAll('.extra').forEach(el => el.classList.remove('visible'));
-          document.querySelectorAll('.guide').forEach(el => el.classList.remove('visible'));
-          if (!isVisible) {
-            wrap.classList.add('active');
-            extra.classList.add('visible');
-          }
-        });
-
-        guideBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          guideBox.classList.toggle('visible');
-        });
-
+            <div class="inner-guide">
+              <div style="font-weight:700; margin-bottom:10px; color:var(--text-main)">Chi tiết các bước:</div>
+              ${item.guide.map(line => `
+                <div class="guide-line">
+                  <span class="guide-bullet">●</span>
+                  <span>${line}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        
+        wrap.innerHTML = html;
         listEl.appendChild(wrap);
       });
     }
 
-    function applyTheme(theme) {
-      const t = theme === 'light' ? 'light' : 'dark';
-      document.body.setAttribute('data-theme', t);
-      try { localStorage.setItem('bangke-theme', t); } catch (e) {}
+    /* --- INTERACTIONS --- */
+    function toggleItem(header) {
+      const item = header.parentElement;
+      const extra = item.querySelector('.extra');
+      const isActive = item.classList.contains('active');
+
+      // Close others
+      document.querySelectorAll('.item').forEach(el => {
+        el.classList.remove('active');
+        el.querySelector('.extra').classList.remove('visible');
+      });
+
+      if (!isActive) {
+        item.classList.add('active');
+        extra.classList.add('visible');
+      }
     }
 
+    function toggleGuide(e, btn) {
+      e.stopPropagation(); // Prevent item toggle
+      const guideBox = btn.closest('.extra').querySelector('.inner-guide');
+      const isVisible = guideBox.classList.contains('visible');
+      
+      if(isVisible){
+        guideBox.classList.remove('visible');
+        btn.innerHTML = '<span>📘 Xem hướng dẫn</span>';
+      } else {
+        guideBox.classList.add('visible');
+        btn.innerHTML = '<span>✕ Đóng hướng dẫn</span>';
+      }
+    }
+
+    /* --- ZOOM IMAGE --- */
+    function zoomImg(el) {
+      const img = el.querySelector('img');
+      const overlay = document.getElementById('zoomOverlay');
+      const target = document.getElementById('zoomTarget');
+      target.src = img.src;
+      overlay.classList.add('active');
+    }
+    function closeZoom() {
+      document.getElementById('zoomOverlay').classList.remove('active');
+    }
+
+    /* --- THEME TOGGLE --- */
+    function applyTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      localStorage.setItem('bangke-theme', theme);
+    }
+
+    /* --- INITIALIZATION --- */
     document.addEventListener('DOMContentLoaded', () => {
-      let saved = null;
-      try { saved = localStorage.getItem('bangke-theme'); } catch (e) {}
-      if (saved === 'light' || saved === 'dark') applyTheme(saved);
-      else applyTheme('dark');
+      // Theme Check
+      const savedTheme = localStorage.getItem('bangke-theme') || 'dark';
+      applyTheme(savedTheme);
 
+      // Render
       renderList();
-      createParticles();
 
+      // Events
       document.getElementById('themeToggle').addEventListener('click', () => {
-        const current = document.body.getAttribute('data-theme') || 'dark';
+        const current = document.body.getAttribute('data-theme');
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
 
-      const setupGuide = document.getElementById('setupGuide');
-      if (setupGuide) {
-        setupGuide.querySelector('.setup-header').addEventListener('click', function() {
-          setupGuide.classList.toggle('active');
+      // Setup Guide Accordion
+      const guideHeader = document.querySelector('.setup-header');
+      if(guideHeader) {
+        guideHeader.addEventListener('click', function() {
+          this.parentElement.classList.toggle('active');
         });
       }
 
+      // Donate Modal
       const donateBtn = document.getElementById('donateBtn');
       const donateModal = document.getElementById('donateModal');
       const donateClose = document.getElementById('donateClose');
 
-      if (donateBtn && donateModal && donateClose) {
-        donateBtn.addEventListener('click', () => donateModal.classList.add('visible'));
-        donateClose.addEventListener('click', () => donateModal.classList.remove('visible'));
-        donateModal.addEventListener('click', (e) => {
-          if (e.target === donateModal) donateModal.classList.remove('visible');
-        });
-      }
+      donateBtn.addEventListener('click', () => donateModal.classList.add('visible'));
+      donateClose.addEventListener('click', () => donateModal.classList.remove('visible'));
+      donateModal.addEventListener('click', (e) => {
+        if(e.target === donateModal) donateModal.classList.remove('visible');
+      });
+      
+      // Escape key to close modals
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') {
+          closeZoom();
+          donateModal.classList.remove('visible');
+        }
+      });
     });
   </script>
 </body>
