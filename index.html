@@ -823,6 +823,142 @@
       background: rgba(255,255,255,.70);
       border-color: rgba(15,23,42,.10);
     }
+  /* =========================
+   UI REWORK – BANKING PRO
+   (GIỮ NGUYÊN CHỨC NĂNG)
+   ========================= */
+
+/* Font gọn gàng */
+* {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Nền tổng */
+body {
+  background: linear-gradient(180deg, #0b1220, #111827) !important;
+  color: #e5e7eb;
+}
+
+/* Panel chính */
+.panel {
+  background: rgba(17, 24, 39, 0.85);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Header */
+h1 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  background: none;
+  color: #f9fafb;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* Badge */
+.badge {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #d1d5db;
+}
+
+/* Card bảng kê */
+.item {
+  background: rgba(17,24,39,0.9);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: none;
+}
+
+.item:hover {
+  transform: none;
+}
+
+.item.active {
+  border-color: #3b82f6;
+  background: rgba(59,130,246,0.08);
+}
+
+/* Icon bảng kê */
+.icon {
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+/* Tên bảng */
+.name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Chips */
+.chip-pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 11px;
+}
+
+/* Nút hành động */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.btn {
+  height: 40px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  box-shadow: none;
+}
+
+.btn-guide {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Guide box */
+.guide {
+  background: rgba(17,24,39,0.95);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Setup guide */
+.setup-guide {
+  background: rgba(17,24,39,0.9);
+  border-radius: 14px;
+}
+
+.setup-section {
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+}
+
+/* Donate */
+.donate-btn {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f97316, #ec4899);
+  box-shadow: none;
+}
+
+/* Theme toggle gọn */
+.theme-toggle {
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  box-shadow: none;
+}
+
   </style>
 </head>
 
