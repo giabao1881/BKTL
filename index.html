@@ -127,8 +127,7 @@
        HEADER AREA
        ========================================= */
     .panel-header {
-      display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px;
-      position: relative;
+      display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; position: relative;
     }
 
     .top-bar {
@@ -219,7 +218,8 @@
     
     .setup-title { display: flex; align-items: center; gap: 12px; font-weight: 700; color: var(--text-main); }
     .setup-icon-box {
-      width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, #f97316, #ea580c);
+      width: 32px; height: 32px; border-radius: 10px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
       display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;
       box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
     }
@@ -287,7 +287,8 @@
       flex-shrink: 0; position: relative; overflow: hidden;
     }
     .icon-box::before {
-      content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3));
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3));
     }
 
     .info-box { flex: 1; }
@@ -311,7 +312,8 @@
     .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     
     .btn {
-      height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+      height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s;
       text-decoration: none; position: relative; overflow: hidden;
     }
@@ -322,7 +324,8 @@
     .btn-primary:hover { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.6); transform: translateY(-2px); }
     
     .btn-secondary {
-      background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.05); color: var(--text-main);
+      border: 1px solid var(--glass-border);
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: var(--text-muted); transform: translateY(-2px); }
 
@@ -373,6 +376,66 @@
     .zoom-overlay img { max-width: 95vw; max-height: 95vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.5); animation: zoomIn 0.3s; }
     @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
+    /* =========================================
+       THÔNG BÁO MỚI (NEW ALERT STYLE)
+       ========================================= */
+    .news-alert {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 340px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--accent); /* Viền màu đỏ/hồng để nổi bật */
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(244, 63, 94, 0.2);
+      z-index: 999;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all 0.5s var(--ease-elastic);
+    }
+    .news-alert.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .news-header {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .news-content {
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+    .news-content strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    .news-close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 24px; height: 24px;
+      background: var(--chip-bg);
+      border: none;
+      border-radius: 50%;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: 0.2s;
+    }
+    .news-close-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       .panel { padding: 20px 16px; }
@@ -380,6 +443,18 @@
       .action-grid { grid-template-columns: 1fr; }
       .item-header { gap: 12px; }
       .icon-box { width: 50px; height: 50px; font-size: 22px; }
+      
+      /* Mobile Alert Position */
+      .news-alert {
+        left: 50%;
+        transform: translate(-50%, 120%); /* Bắt đầu ở dưới màn hình */
+        right: auto;
+        bottom: 20px;
+        width: 90%;
+      }
+      .news-alert.show {
+        transform: translate(-50%, 0);
+      }
     }
   </style>
 </head>
@@ -433,7 +508,7 @@
 
         <div class="setup-content">
           <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px;">
-            Thực hiện 1 lần duy nhất để Excel hoạt động chuẩn xác 100%.
+             Thực hiện 1 lần duy nhất để Excel hoạt động chuẩn xác 100%.
           </div>
 
           <div class="step-card">
@@ -533,6 +608,18 @@
     <img id="zoomTarget" src="" alt="Zoomed">
   </div>
 
+  <div id="newsAlert" class="news-alert">
+    <button class="news-close-btn" onclick="closeNews()">✕</button>
+    <div class="news-header">🔔 THÔNG BÁO MỚI NHẤT</div>
+    <div class="news-content">
+      <strong>UPDATE BẢNG KÊ TÍNH LÃI THẺ (27/01/2026)</strong>
+      <div style="margin-top: 6px; padding-left: 10px; border-left: 2px solid var(--accent);">
+        • THÊM TÍNH NĂNG TỰ ĐỘNG XÓA DÒNG DƯ THỪA.<br>
+        • TỰ ĐỘNG ĐẶT NGÀY CẦN TÍNH VÀO DÒNG CUỐI CÙNG.
+      </div>
+    </div>
+  </div>
+
   <script>
     /* =========================================
        DATA & LOGIC (UPDATED BKTL LD)
@@ -557,7 +644,7 @@
         id: "the", code: "TH", name: "BKTL THẺ TÍN DỤNG", short: "Smart Card",
         subtitle: "Bóc tách lãi thông minh, tối ưu hóa quy trình.",
         file: "BKTL_THE.xlsm",
-        updated: "27/01/2026 (thêm auto xóa dòng dư thừa)",
+        updated: "27/01/2026",
         icon: "💳", color: "linear-gradient(135deg, #ec4899, #db2777)", cssVar: "#ec4899",
         guide: [
           "Bước 1: Sheet \"<strong>THTT</strong>\". Nhập dư nợ gốc sao cho hiện \"REF\".",
@@ -632,7 +719,6 @@
             </div>
           </div>
         `;
-        
         wrap.innerHTML = html;
         listEl.appendChild(wrap);
       });
@@ -649,7 +735,6 @@
         el.classList.remove('active');
         el.querySelector('.extra').classList.remove('visible');
       });
-
       if (!isActive) {
         item.classList.add('active');
         extra.classList.add('visible');
@@ -657,10 +742,10 @@
     }
 
     function toggleGuide(e, btn) {
-      e.stopPropagation(); // Prevent item toggle
+      e.stopPropagation();
+      // Prevent item toggle
       const guideBox = btn.closest('.extra').querySelector('.inner-guide');
       const isVisible = guideBox.classList.contains('visible');
-      
       if(isVisible){
         guideBox.classList.remove('visible');
         btn.innerHTML = '<span>📘 Xem hướng dẫn</span>';
@@ -688,6 +773,19 @@
       localStorage.setItem('bangke-theme', theme);
     }
 
+    /* --- NEWS ALERT LOGIC --- */
+    function showNews() {
+      // Có thể thêm logic kiểm tra localStorage nếu muốn chỉ hiện 1 lần
+      // Hiện tại set mặc định luôn hiện khi tải lại trang
+      setTimeout(() => {
+        document.getElementById('newsAlert').classList.add('show');
+      }, 1500); // Delay 1.5s mới hiện lên cho đẹp
+    }
+    
+    function closeNews() {
+      document.getElementById('newsAlert').classList.remove('show');
+    }
+
     /* --- INITIALIZATION --- */
     document.addEventListener('DOMContentLoaded', () => {
       // Theme Check
@@ -696,6 +794,9 @@
 
       // Render
       renderList();
+      
+      // Trigger Notification
+      showNews();
 
       // Events
       document.getElementById('themeToggle').addEventListener('click', () => {
@@ -721,12 +822,12 @@
       donateModal.addEventListener('click', (e) => {
         if(e.target === donateModal) donateModal.classList.remove('visible');
       });
-      
       // Escape key to close modals
       document.addEventListener('keydown', (e) => {
         if(e.key === 'Escape') {
           closeZoom();
           donateModal.classList.remove('visible');
+          closeNews();
         }
       });
     });
