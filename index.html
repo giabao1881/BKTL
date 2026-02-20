@@ -6,7 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; padding: 20px; color: #333; }
-        .container { background-color: white; max-width: 800px; margin: auto; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .container { background-color: white; max-width: 850px; margin: auto; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         h1 { text-align: center; color: #005a3c; margin-bottom: 5px; }
         
         /* Hộp thông báo Update */
@@ -27,6 +27,13 @@
         .input-group { margin-bottom: 15px; display: flex; align-items: center; }
         .input-group label { width: 180px; font-weight: bold; color: #555; }
         .input-group input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .input-hint { font-size: 12px; color: #888; margin-left: 10px; }
+        
+        /* Grid cho Thẻ (C2, D2, E2, F2) */
+        .grid-2col { display: flex; gap: 15px; margin-bottom: 15px; }
+        .grid-item { flex: 1; }
+        .grid-item label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; width: auto; }
+        .grid-item input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         
         .btn-run { background-color: #005a3c; color: white; padding: 15px; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 20px; transition: 0.3s; }
         .btn-run:hover { background-color: #003d29; }
@@ -41,8 +48,8 @@
     <h1>HỆ THỐNG BẢNG KÊ TÍNH LÃI</h1>
     
     <div class="update-box">
-        <strong>🔔 THÔNG BÁO MỚI NHẤT:</strong><br>
-        • Cập nhật Bảng Kê Tính Lãi Thẻ: Tự động xóa dòng dư thừa & Tự động đặt ngày vào dòng cuối.<br>
+        <strong>🔔 THÔNG BÁO MỚI NHẤT (UPDATE 27/01/2026):</strong><br>
+        • Cập nhật Bảng Kê Tính Lãi Thẻ: TỰ ĐỘNG XÓA DÒNG DƯ THỪA & TỰ ĐỘNG ĐẶT NGÀY VÀO DÒNG CUỐI.<br>
         • Hệ thống nay đã chạy trực tiếp trên nền Web, an toàn 100%, không cần bật Macro!
     </div>
 
@@ -52,7 +59,38 @@
     </div>
 
     <div id="tabThe" class="tab-content active">
-        <h3 style="color: #005a3c; margin-top: 0;">CẤU HÌNH TÍNH LÃI THẺ</h3>
+        <h3 style="color: #005a3c; margin-top: 0;">1. THÔNG TIN CƠ BẢN (THAY THẾ SHEET THTT)</h3>
+        
+        <div class="input-group">
+            <label>Tên Khách Hàng (B2):</label>
+            <input type="text" id="tenSheetThe" placeholder="Tên để xuất sheet mới...">
+        </div>
+        
+        <div class="grid-2col">
+            <div class="grid-item">
+                <label>Dữ liệu C2:</label>
+                <input type="text" id="o_C2" placeholder="Nhập C2...">
+            </div>
+            <div class="grid-item">
+                <label>Dữ liệu D2:</label>
+                <input type="text" id="o_D2" placeholder="Nhập D2...">
+            </div>
+        </div>
+        
+        <div class="grid-2col">
+            <div class="grid-item">
+                <label>Dữ liệu E2:</label>
+                <input type="text" id="o_E2" placeholder="Nhập E2...">
+            </div>
+            <div class="grid-item">
+                <label>Dữ liệu F2:</label>
+                <input type="text" id="o_F2" placeholder="Nhập F2...">
+            </div>
+        </div>
+        
+        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+        <h3 style="color: #005a3c; margin-top: 0;">2. NẠP DỮ LIỆU & CHẠY ROBOT</h3>
         <div class="input-group">
             <label>Ngày Bắt Đầu Sao Kê:</label>
             <input type="number" id="ngaySaoKe" min="1" max="31" placeholder="Nhập ngày (1-31)...">
@@ -60,26 +98,31 @@
         <div class="input-group">
             <label>File Sao Kê Thẻ:</label>
             <input type="file" id="fileSaoKe" accept=".xlsx, .xls">
+            <span class="input-hint">(Nạp file chứa dữ liệu thô thay vì dán vào sheet saokethe)</span>
         </div>
         <div class="input-group">
             <label>Mật Khẩu Hệ Thống:</label>
             <input type="password" id="passThe" placeholder="Nhập mật khẩu...">
         </div>
+        
         <button class="btn-run" onclick="runThe()">🚀 CHẠY BẢNG KÊ THẺ</button>
     </div>
 
     <div id="tabLD" class="tab-content">
-        <h3 style="color: #005a3c; margin-top: 0;">CẤU HÌNH ROBOT LD PRO</h3>
+        <h3 style="color: #005a3c; margin-top: 0;">1. THÔNG TIN CƠ BẢN (THTT)</h3>
         
         <div class="input-group">
             <label>Tên Khách Hàng:</label>
-            <input type="text" id="tenKH" placeholder="Nhập tên khách hàng...">
+            <input type="text" id="tenKHLD" placeholder="Nhập tên khách hàng...">
         </div>
         <div class="input-group">
             <label>Số Hợp Đồng:</label>
-            <input type="text" id="soHD" placeholder="Nhập số hợp đồng...">
+            <input type="text" id="soHDLD" placeholder="Nhập số hợp đồng...">
         </div>
+        
         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+        
+        <h3 style="color: #005a3c; margin-top: 0;">2. NẠP DỮ LIỆU LỊCH KHÁCH</h3>
         <div class="input-group">
             <label>File Giải Ngân (LKGD):</label>
             <input type="file" id="fileLKGD" accept=".xlsx, .xls">
@@ -88,7 +131,10 @@
             <label>File Lãi Suất (LKLS):</label>
             <input type="file" id="fileLKLS" accept=".xlsx, .xls">
         </div>
+        
         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+        
+        <h3 style="color: #005a3c; margin-top: 0;">3. CẤU HÌNH & CHẠY ROBOT</h3>
         <div class="input-group">
             <label>Ngày Cần Tính (Chốt sổ):</label>
             <input type="date" id="ngayTinhLD">
@@ -144,22 +190,38 @@
         let ngaySK = document.getElementById('ngaySaoKe').value;
         if (!ngaySK || ngaySK < 1 || ngaySK > 31) { alert("Vui lòng nhập Ngày bắt đầu sao kê hợp lệ (1-31)!"); return; }
 
+        let tenSheet = document.getElementById('tenSheetThe').value || "BKTL";
+        let c2 = document.getElementById('o_C2').value;
+        let d2 = document.getElementById('o_D2').value;
+        let e2 = document.getElementById('o_E2').value;
+        let f2 = document.getElementById('o_F2').value;
+
         let fileSK = document.getElementById('fileSaoKe').files[0];
         if (!fileSK) { alert("Vui lòng tải lên File Sao Kê Thẻ!"); return; }
 
         try {
-            alert("Đang xử lý Bảng Kê Thẻ...");
+            alert("Đang xử lý Bảng Kê Thẻ, vui lòng chờ...");
             let dataSK = await readExcelFile(fileSK);
             
-            // ---> CHỖ NÀY ĐỂ GẮN CÔNG THỨC THẺ CỦA BẠN VÀO <---
+            // ---> [KHU VỰC THUẬT TOÁN BẢNG KÊ THẺ] <---
+            // Dịch code VBA 'CapNhatToanBo' vào đây. 
+            // Dữ liệu thô đang nằm trong biến 'dataSK' (mảng 2 chiều).
             
-            let ketQuaData = [["KẾT QUẢ BẢNG KÊ THẺ"], ["Ngày chốt:", ngaySK]];
+            // Xây dựng bảng kết quả (Demo)
+            let ketQuaData = [];
+            ketQuaData.push(["KẾT QUẢ BẢNG KÊ THẺ"]);
+            ketQuaData.push(["Tên KH:", tenSheet]);
+            ketQuaData.push(["C2:", c2, "D2:", d2, "E2:", e2, "F2:", f2]);
+            ketQuaData.push(["Ngày bắt đầu sao kê:", ngaySK]);
+            
             let newWs = XLSX.utils.aoa_to_sheet(ketQuaData);
             let newWb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(newWb, newWs, "BKTL");
-            XLSX.writeFile(newWb, "BangKeThe_HoanThanh.xlsx");
+            
+            // Đặt tên sheet theo ô B2 người dùng nhập
+            XLSX.utils.book_append_sheet(newWb, newWs, tenSheet); 
+            XLSX.writeFile(newWb, `BangKeThe_${tenSheet}.xlsx`);
 
-        } catch (error) { alert("Lỗi đọc file!"); console.error(error); }
+        } catch (error) { alert("Lỗi đọc file Excel!"); console.error(error); }
     }
 
     // ==========================================
@@ -169,7 +231,8 @@
         let pass = document.getElementById('passLD').value;
         if (pass !== "baotg10") { alert("Sai mật khẩu hệ thống!"); return; }
 
-        let tenKH = document.getElementById('tenKH').value;
+        let tenKH = document.getElementById('tenKHLD').value;
+        let soHD = document.getElementById('soHDLD').value;
         let ngayTinh = document.getElementById('ngayTinhLD').value;
         if (!ngayTinh) { alert("Vui lòng chọn Ngày Cần Tính!"); return; }
 
@@ -182,16 +245,24 @@
             let dataLKGD = await readExcelFile(fileLKGD);
             let dataLKLS = await readExcelFile(fileLKLS);
 
-            // ---> CHỖ NÀY ĐỂ GẮN CÔNG THỨC LD PRO CỦA BẠN VÀO <---
-            // Lưu ý: Thêm logic tự động kiểm tra biến "ngayTinh" để xóa dòng ngày chưa tới.
+            // ---> [KHU VỰC THUẬT TOÁN LD PRO] <---
+            // Dịch code VBA LD PRO vào đây.
+            // Dữ liệu giải ngân nằm trong 'dataLKGD', lãi suất nằm trong 'dataLKLS'.
+            // Kiểm tra và xóa dòng rác dựa trên 'ngayTinh'.
 
-            let ketQuaData = [["KẾT QUẢ BẢNG KÊ LD PRO"], ["Khách hàng:", tenKH], ["Ngày tính:", ngayTinh]];
+            // Xây dựng bảng kết quả (Demo)
+            let ketQuaData = [];
+            ketQuaData.push(["KẾT QUẢ BẢNG KÊ LD PRO"]);
+            ketQuaData.push(["Khách hàng:", tenKH, "Số HĐ:", soHD]);
+            ketQuaData.push(["Ngày chốt tính lãi:", ngayTinh]);
+            
             let newWs = XLSX.utils.aoa_to_sheet(ketQuaData);
             let newWb = XLSX.utils.book_new();
+            
             XLSX.utils.book_append_sheet(newWb, newWs, "BKTL_LD");
             XLSX.writeFile(newWb, `LD_PRO_${tenKH || 'Result'}.xlsx`);
 
-        } catch (error) { alert("Lỗi đọc file!"); console.error(error); }
+        } catch (error) { alert("Lỗi đọc file Excel!"); console.error(error); }
     }
 </script>
 
