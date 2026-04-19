@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Bảng Kê Tính Lãi - Premium Edition</title>
+  <title>Bảng Kê Tính Lãi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -175,6 +175,24 @@
       color: var(--text-muted);
       max-width: 600px;
       margin: 0 auto;
+    }
+
+
+    .setup-required {
+      background: linear-gradient(135deg, rgba(99,102,241,0.16), rgba(15,23,42,0.95));
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin: 0 0 24px;
+      box-shadow: var(--shadow-lg);
+    }
+    .setup-required h2 { font-size: 28px; margin-bottom: 8px; }
+    .setup-required p { color: var(--text-muted); margin-bottom: 16px; max-width: 720px; }
+    .required-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: 999px; margin-bottom: 14px;
+      background: rgba(225,29,72,.14); color: #fff; border: 1px solid rgba(225,29,72,.35);
+      font-size: 12px; font-weight: 800; letter-spacing: .04em;
     }
 
     /* Setup Guide (Redesigned as Timeline) */
@@ -408,7 +426,7 @@
   <nav class="navbar">
     <a href="#" class="nav-brand">
       <div class="status-indicator"></div>
-      <div>BẢNG KÊ <span class="highlight">2026</span></div>
+      <div>BẢNG KÊ <span class="highlight">TÍNH LÃI</span></div>
     </a>
     <div class="nav-actions">
       <a href="https://giabao1881.github.io/baotg10/" class="btn btn-outline" target="_blank">
@@ -422,14 +440,18 @@
   <main class="container">
     
     <section class="hero">
-      <h1>Hệ Thống Tính Lãi Tự Động</h1>
-      <p>Bảng kê tự động hóa với độ chính xác cao. Cập nhật liên tục. Được phát triển và tối ưu hóa bởi baotg10.</p>
-      <div style="margin-top: 24px;">
-        <button id="donateBtn" class="btn btn-donate">🎁 Donate ủng hộ tác giả</button>
-      </div>
+      <h1>Bảng Kê Tính Lãi</h1>
+      <p>Vui lòng cài đặt cấu hình hệ thống bắt buộc trước khi sử dụng file.</p>
     </section>
 
-    <section class="setup-section" id="setupGuide">
+    <section class="setup-required">
+      <div class="required-badge">BẮT BUỘC TRƯỚC KHI SỬ DỤNG</div>
+      <h2>Hướng dẫn cài đặt bắt buộc</h2>
+      <p>File Excel Macro sẽ dễ lỗi hoặc chạy không đúng nếu chưa cài Region, Excel separator, Macro và Protected View.</p>
+      <button class="btn btn-primary" type="button" onclick="openSetupGuide()">Mở hướng dẫn cài đặt</button>
+    </section>
+
+    <section class="setup-section active" id="setupGuide">
       <div class="setup-header" onclick="this.parentElement.classList.toggle('active')">
         <div class="setup-title">
           <div class="setup-icon">⚙️</div>
@@ -486,157 +508,23 @@
       </div>
     </section>
 
-    <section class="tools-grid" id="list"></section>
-
   </main>
 
   <footer>
-    &copy; 2026 Designed by baotg10 <br> Premium Financial Dashboard
+    &copy; 2026 baotg10
   </footer>
-
-  <div id="donateModal" class="modal-overlay">
-    <div class="modal-content">
-      <button class="btn-close" onclick="closeModal('donateModal')">✕</button>
-      <h2 style="color: var(--accent); margin-bottom: 8px;">Cảm ơn bạn! ❤️</h2>
-      <p style="font-size: 14px; color: var(--text-muted);">Sự ủng hộ của bạn là động lực để mình duy trì và nâng cấp tool xịn hơn mỗi ngày.</p>
-      
-      <div class="qr-container">
-        <img src="momo_qr.png" alt="QR Code" onerror="this.src='https://via.placeholder.com/200x200?text=QR+Image+Missing'">
-      </div>
-      <p style="font-size: 13px; font-weight: 600;">Hỗ trợ MoMo & Các ngân hàng (VietQR)</p>
-    </div>
-  </div>
 
   <div id="zoomOverlay" class="modal-overlay" onclick="closeModal('zoomOverlay')">
     <img id="zoomTarget" src="" alt="Zoomed">
   </div>
 
-  <div id="newsAlert" class="alert-box">
-    <div class="alert-header">
-      <span>🔔 THÔNG BÁO MỚI NHẤT</span>
-      <span style="cursor:pointer;" onclick="closeNews()">✕</span>
-    </div>
-    <div class="alert-content">
-      <strong>UPDATE HỆ THỐNG BẢNG KÊ (13/03/2026)</strong>
-      <div style="border-left: 2px solid var(--primary); padding-left: 10px; margin-top: 8px;">
-        • THAY ĐỔI GIAO DIỆN BKTL LD VÀ BKTL THẺ.<br>
-        • FIX MỘT SỐ LỖI NHỎ.<br>
-        • TỐI ƯU NHẸ HƠN, MƯỢT HƠN KHI SỬ DỤNG.
-      </div>
-    </div>
-  </div>
-
   <script>
-    // GIỮ NGUYÊN DỮ LIỆU CỦA BẠN
-    const BANG_KE_LIST = [
-      {
-        id: "ld", code: "LD", name: "BKTL LD PRO", short: "Super Tool",
-        subtitle: "Xử lý hàng loạt 10+ bảng LD cùng lúc. Tốc độ cao.",
-        file: "BKTL_LD.xlsm",
-        updated: "13/03/2026 (v2.1.0)",
-        icon: "💰", cssVar: "#10b981",
-        guide: [
-          "Bước 1: Nhập thông tin tại sheet \"<strong>THTT</strong>\"",
-          "Bước 2: Tải LKGD & LKLS (Tool hỗ trợ tải HTML siêu tốc).",
-          "Bước 3: Upload file vào đúng Sheet. <span style=\"color:var(--accent)\">Hỗ trợ đa luồng file</span>.",
-          "Bước 4: Bấm <strong>ROBOT</strong> -> Nhập pass: \"<span style=\"color:var(--accent)\">baotg10</span>\"",
-          "Bước 5: Kiểm tra kết quả (Gốc, giải ngân kỹ thuật...).",
-          "⚠️ <strong>Lưu ý nếu lãi hoặc gốc ra thấp hơn fin:</strong> Kiểm tra lại \"Ngày cần tính\" dưới đáy bảng. Có thể bạn đang tính lùi ngày nên sai -> Hãy sửa ngày cho hợp lý và <span style=\"color:var(--accent)\">xóa hẳn dòng chứa ngày chưa đến</span> đi (tự sửa tay nhé)."
-        ]
-      },
-      {
-        id: "the", code: "TH", name: "BKTL THẺ TÍN DỤNG", short: "Smart Card",
-        subtitle: "Bóc tách lãi thông minh, tối ưu hóa quy trình.",
-        file: "BKTL_THE.xlsm",
-        updated: "13/03/2026 (v9.1.0)",
-        icon: "💳", cssVar: "#ec4899",
-        guide: [
-          "Bước 1: Sheet \"<strong>THTT</strong>\". Nhập dư nợ gốc sao cho hiện \"REF\".",
-          "Bước 2: Ngày sao kê: Vào Way4 tìm dòng \"interest\", ví dụ 26/01 -> nhập <strong>26</strong>.",
-          "Bước 3: Tải sao kê Way4 (Excel) -> Upload.",
-          "Bước 4: Bấm Robot -> Pass -> Ẩn dòng thừa.",
-          "Bước 5: Tính lãi kỳ hiện tại theo công thức hiển thị trên file."
-        ]
-      },
-      {
-        id: "pd", code: "PD", name: "BKTL THẤU CHI", short: "Coming Soon",
-        subtitle: "Đang phát triển - Phiên bản thử nghiệm.",
-        file: "#",
-        updated: "Dự kiến 2026",
-        icon: "🎯", cssVar: "#f59e0b",
-        guide: [
-          "🛠️ Tính năng đang được hoàn thiện.",
-          "Vui lòng quay lại sau."
-        ]
-      }
-    ];
-
-    function renderList() {
-      const listEl = document.getElementById('list');
-      listEl.innerHTML = '';
-
-      BANG_KE_LIST.forEach(item => {
-        const wrap = document.createElement('div');
-        wrap.className = `tool-card`;
-        wrap.style.setProperty('--tool-color', item.cssVar);
-
-        const isComingSoon = item.file === '#';
-
-        let html = `
-          <div class="tool-header">
-            <div class="tool-info">
-              <div class="tool-icon">${item.icon}</div>
-              <div class="tool-title">
-                <h2>${item.name}</h2>
-                <div class="tool-subtitle">${item.subtitle}</div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tool-tags">
-            <span class="tag">Excel Macro</span>
-            <span class="tag">${item.short}</span>
-            ${item.updated ? `<span class="tag tag-update">Updated: ${item.updated}</span>` : ''}
-          </div>
-
-          <div class="tool-actions">
-            ${isComingSoon
-              ? `<button class="btn btn-outline" type="button" onclick="alert('Tính năng đang phát triển, vui lòng quay lại sau.');">
-                  ⏳ Chưa phát hành
-                 </button>`
-              : `<a href="${item.file}" class="btn btn-primary" download>
-                  ⬇ Tải file ngay
-                 </a>`}
-            <button class="btn btn-outline" type="button" onclick="toggleGuide(this)">
-              📘 Xem hướng dẫn
-            </button>
-          </div>
-
-          <div class="tool-guide">
-            <h4 style="margin-bottom: 12px;">Chi tiết các bước thực hiện:</h4>
-            ${item.guide.map(line => `
-              <div class="guide-item">
-                <span class="guide-dot">●</span>
-                <div>${line}</div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-        wrap.innerHTML = html;
-        listEl.appendChild(wrap);
-      });
-    }
-
     function toggleGuide(btn) {
-      const guideBox = btn.closest('.tool-card').querySelector('.tool-guide');
+      const guideBox = btn.closest('.tool-card')?.querySelector('.tool-guide');
+      if (!guideBox) return;
       const isVisible = guideBox.classList.contains('visible');
-      if (isVisible) {
-        guideBox.classList.remove('visible');
-        btn.innerHTML = '📘 Xem hướng dẫn';
-      } else {
-        guideBox.classList.add('visible');
-        btn.innerHTML = '✕ Đóng hướng dẫn';
-      }
+      if (isVisible) { guideBox.classList.remove('visible'); btn.innerHTML = '📘 Xem hướng dẫn'; }
+      else { guideBox.classList.add('visible'); btn.innerHTML = '✕ Đóng hướng dẫn'; }
     }
 
     // Modal & Interactions
@@ -651,24 +539,17 @@
       document.getElementById(id).classList.remove('active');
     }
 
+    function openSetupGuide() {
+      const guide = document.getElementById('setupGuide');
+      guide.classList.add('active');
+      guide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     function applyTheme(theme) {
       document.body.setAttribute('data-theme', theme);
       localStorage.setItem('bangke-theme', theme);
       const icon = theme === 'dark' ? '🌞' : '🌙';
       document.getElementById('themeToggle').innerHTML = icon;
-    }
-
-    function showNews() {
-      const dismissed = sessionStorage.getItem('bangke-news-dismissed');
-      if (dismissed === '1') return;
-      setTimeout(() => {
-        document.getElementById('newsAlert').classList.add('show');
-      }, 1000);
-    }
-
-    function closeNews() {
-      document.getElementById('newsAlert').classList.remove('show');
-      sessionStorage.setItem('bangke-news-dismissed', '1');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -681,21 +562,16 @@
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
 
-      // Render Content
-      renderList();
-      showNews();
+      if (!sessionStorage.getItem('setup-guide-seen')) {
+        openSetupGuide();
+        sessionStorage.setItem('setup-guide-seen', '1');
+      }
 
-      // Donate Button
-      document.getElementById('donateBtn').addEventListener('click', () => {
-        document.getElementById('donateModal').classList.add('active');
-      });
 
       // Esc key to close modals
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeModal('zoomOverlay');
-          closeModal('donateModal');
-          closeNews();
         }
       });
     });
