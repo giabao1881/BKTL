@@ -644,7 +644,7 @@
     }
   </style>
 </head>
-<body data-theme="light">
+<body data-theme="dark">
 
   <nav class="navbar">
     <a href="#" class="nav-brand">
@@ -1020,7 +1020,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('bangke-theme') || 'light';
+      const savedTheme = localStorage.getItem('bangke-theme') || 'dark';
       applyTheme(savedTheme);
 
       document.getElementById('themeToggle').addEventListener('click', () => {
