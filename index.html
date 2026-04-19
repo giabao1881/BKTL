@@ -16,7 +16,6 @@
       --trans-default: 0.3s ease;
     }
 
-    /* THEME: LIGHT */
     body[data-theme="light"] {
       --bg-body: #f1f5f9;
       --bg-surface: #ffffff;
@@ -31,6 +30,7 @@
       --accent: #e11d48;
       --success: #059669;
       --warning: #d97706;
+      --info: #0284c7;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -38,7 +38,6 @@
       --timeline-line: #cbd5e1;
     }
 
-    /* THEME: DARK */
     body[data-theme="dark"] {
       --bg-body: #0f172a;
       --bg-surface: #1e293b;
@@ -53,6 +52,7 @@
       --accent: #f43f5e;
       --success: #10b981;
       --warning: #f59e0b;
+      --info: #38bdf8;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
       --shadow-lg: 0 10px 25px -3px rgba(0,0,0, 0.5);
@@ -68,11 +68,10 @@
       color: var(--text-main);
       line-height: 1.6;
       transition: background-color var(--trans-default), color var(--trans-default);
-      padding-top: 80px; 
+      padding-top: 80px;
       padding-bottom: 40px;
     }
 
-    /* Fixed Top Navbar */
     .navbar {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -98,6 +97,7 @@
       text-decoration: none;
     }
     .nav-brand span.highlight { color: var(--primary); }
+
     .status-indicator {
       width: 10px; height: 10px;
       background-color: var(--success);
@@ -107,7 +107,6 @@
 
     .nav-actions { display: flex; align-items: center; gap: 16px; }
 
-    /* Buttons */
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
       gap: 8px; padding: 10px 20px;
@@ -123,7 +122,7 @@
       color: var(--text-main);
     }
     .btn-outline:hover { background: var(--bg-surface-hover); border-color: var(--primary); color: var(--primary); }
-    
+
     .btn-donate {
       background: rgba(225, 29, 72, 0.1);
       color: var(--accent);
@@ -138,7 +137,16 @@
     }
     .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 
-    /* Theme Toggle */
+    .btn-soft {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: transparent;
+    }
+    .btn-soft:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+    }
+
     .theme-toggle {
       background: var(--chip-bg);
       border: 1px solid var(--border-color);
@@ -150,15 +158,80 @@
     }
     .theme-toggle:hover { background: var(--border-color); }
 
-    /* Main Container */
-    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
 
-    /* Hero Section */
-    .hero { text-align: center; padding: 40px 0; }
+    .hero { text-align: center; padding: 40px 0 28px; }
     .hero h1 { font-size: 42px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
-    .hero p { font-size: 16px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+    .hero p { font-size: 16px; color: var(--text-muted); max-width: 650px; margin: 0 auto; }
 
-    /* Setup Guide (Timeline Layout) */
+    .update-board {
+      background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-hover));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .update-board::before {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      background: linear-gradient(180deg, var(--primary), var(--accent));
+    }
+    .update-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .update-title-wrap h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .update-title-wrap p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .update-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(16,185,129,.12);
+      color: var(--success);
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .update-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .update-item {
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .update-item h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+    .update-item p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
     .setup-section {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
@@ -195,7 +268,7 @@
       animation: fadeIn 0.3s ease;
     }
     .setup-section.active .setup-content { display: block; }
-    
+
     .timeline { position: relative; padding-left: 24px; }
     .timeline::before {
       content: ''; position: absolute;
@@ -223,8 +296,7 @@
     .timeline-content h3 { font-size: 16px; margin-bottom: 12px; color: var(--text-main); }
     .timeline-content p { font-size: 14px; margin-bottom: 8px; }
     .timeline-content strong { color: var(--primary); }
-    
-    /* Setup Images */
+
     .setup-img-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px; margin-top: 12px;
@@ -238,7 +310,6 @@
     .setup-img-wrap img { width: 100%; display: block; transition: 0.3s opacity; }
     .setup-img-wrap:hover img { opacity: 0.8; }
 
-    /* --- HIỆU ỨNG GÂY CHÚ Ý CHO PHẦN CẤU HÌNH --- */
     @keyframes pulseWarning {
       0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); border-color: var(--accent); }
       70% { box-shadow: 0 0 0 15px rgba(225, 29, 72, 0); border-color: var(--border-color); }
@@ -259,8 +330,8 @@
       animation: shakeIcon 0.5s ease-in-out infinite alternate;
     }
 
-    /* Tools Grid */
     .tools-grid { display: grid; gap: 24px; }
+
     .tool-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
@@ -273,44 +344,159 @@
     }
     .tool-card:hover { box-shadow: var(--shadow-lg); border-color: var(--primary); transform: translateY(-2px); }
     .tool-card::before {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 4px;
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 5px;
       background: var(--tool-color, var(--primary));
     }
 
-    .tool-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-    .tool-info { display: flex; gap: 16px; align-items: center; }
-    .tool-icon {
-      font-size: 32px; width: 60px; height: 60px;
-      background: var(--chip-bg); border-radius: var(--radius-md);
-      display: flex; align-items: center; justify-content: center;
+    .tool-card.featured {
+      border-width: 2px;
+      box-shadow: var(--shadow-md);
     }
-    .tool-title h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+
+    .tool-ribbon {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(79, 70, 229, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-right: 78px;
+    }
+    .tool-info {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .tool-icon {
+      font-size: 32px;
+      width: 60px; height: 60px;
+      background: var(--chip-bg);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tool-title h2 { font-size: 21px; font-weight: 800; margin-bottom: 4px; }
     .tool-subtitle { font-size: 14px; color: var(--text-muted); }
 
-    .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
     .tag {
-      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px;
-      background: var(--chip-bg); color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--chip-bg);
+      color: var(--text-muted);
     }
     .tag-update { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+    .tag-hot { background: rgba(225, 29, 72, 0.1); color: var(--accent); }
+
+    .tool-highlight {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .highlight-box {
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+    .highlight-box .label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
+    .highlight-box .value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .quick-steps {
+      background: linear-gradient(180deg, var(--chip-bg), transparent);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .quick-steps h4 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+    .quick-step-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .quick-step {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .quick-step span {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--tool-color, var(--primary));
+      color: white;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-top: 1px;
+    }
 
     .tool-actions {
       display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
       padding-top: 20px; border-top: 1px solid var(--border-color);
     }
 
-    /* Guide Box inside tool */
     .tool-guide {
-      margin-top: 20px; background: var(--chip-bg); border-radius: var(--radius-md);
-      padding: 20px; display: none; border: 1px solid var(--border-color); animation: fadeIn 0.3s;
+      margin-top: 20px;
+      background: var(--chip-bg);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: none;
+      border: 1px solid var(--border-color);
+      animation: fadeIn 0.3s;
     }
     .tool-guide.visible { display: block; }
     .guide-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; }
     .guide-item:last-child { margin-bottom: 0; }
     .guide-dot { color: var(--tool-color, var(--primary)); font-weight: bold; }
 
-    /* Modals (Donate & Zoom & Setup & News) */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px);
       z-index: 100; display: none; align-items: center; justify-content: center; animation: fadeIn 0.2s;
@@ -335,19 +521,17 @@
 
     #zoomOverlay img { max-width: 90vw; max-height: 90vh; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); }
 
-    /* Alerts */
     .alert-box {
       position: fixed; bottom: 30px; right: 30px; background: var(--bg-surface);
       border-left: 4px solid var(--primary); padding: 20px; border-radius: var(--radius-md);
       box-shadow: var(--shadow-lg); z-index: 99; transform: translateY(100px); opacity: 0;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-width: 380px; width: calc(100% - 40px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-width: 390px; width: calc(100% - 40px);
     }
     .alert-box.show { transform: translateY(0); opacity: 1; }
     .alert-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; color: var(--primary); }
     .alert-content { font-size: 14px; line-height: 1.5; color: var(--text-main); }
     .alert-content strong { display: block; margin-bottom: 4px; }
 
-    /* Footer */
     footer { text-align: center; margin-top: 60px; padding: 20px; font-size: 13px; color: var(--text-muted); }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -355,9 +539,16 @@
     @media (max-width: 768px) {
       .navbar { padding: 0 20px; }
       .nav-brand span.hide-mobile { display: none; }
-      .tool-actions { grid-template-columns: 1fr; }
+      .tool-actions,
+      .quick-step-list,
+      .tool-highlight,
+      .update-grid {
+        grid-template-columns: 1fr;
+      }
       .hero h1 { font-size: 32px; }
       .alert-box { bottom: 20px; right: 20px; }
+      .tool-header { padding-right: 0; }
+      .tool-ribbon { position: static; display: inline-flex; margin-bottom: 14px; }
     }
   </style>
 </head>
@@ -378,12 +569,38 @@
   </nav>
 
   <main class="container">
-    
+
     <section class="hero">
       <h1>Hệ Thống Tính Lãi Tự Động</h1>
       <p>Bảng kê tự động hóa với độ chính xác cao. Cập nhật liên tục. Được phát triển và tối ưu hóa bởi baotg10.</p>
       <div style="margin-top: 24px;">
         <button id="donateBtn" class="btn btn-donate">🎁 Donate ủng hộ tác giả</button>
+      </div>
+    </section>
+
+    <!-- BẢNG THÔNG BÁO MỚI -->
+    <section class="update-board">
+      <div class="update-top">
+        <div class="update-title-wrap">
+          <h2>📢 BẢNG THÔNG BÁO CẬP NHẬT</h2>
+          <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
+        </div>
+        <div class="update-badge">✅ Cập nhật ngày 20/04/2026</div>
+      </div>
+
+      <div class="update-grid">
+        <div class="update-item">
+          <h3>Giao diện LD mới</h3>
+          <p>Sắp xếp lại bố cục trực quan hơn, dễ nhìn hơn và thao tác nhanh hơn khi xử lý nhiều bảng cùng lúc.</p>
+        </div>
+        <div class="update-item">
+          <h3>Giao diện THẺ mới</h3>
+          <p>Tối ưu khu vực hướng dẫn nhập liệu và quy trình xử lý để giảm nhầm thao tác khi bóc tách lãi.</p>
+        </div>
+        <div class="update-item">
+          <h3>Nâng cấp trải nghiệm</h3>
+          <p>Bổ sung bảng thông báo, làm rõ các nút chức năng và tối ưu hiển thị trên giao diện sáng/tối.</p>
+        </div>
       </div>
     </section>
 
@@ -395,10 +612,10 @@
         </div>
         <div class="toggle-icon">▼</div>
       </div>
-      
+
       <div class="setup-content">
         <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Thực hiện 1 lần duy nhất để Excel hoạt động chuẩn xác 100%.</p>
-        
+
         <div class="timeline">
           <div class="timeline-item">
             <div class="timeline-dot"></div>
@@ -472,7 +689,7 @@
       <button class="btn-close" onclick="closeModal('donateModal')">✕</button>
       <h2 style="color: var(--accent); margin-bottom: 8px;">Cảm ơn bạn! ❤️</h2>
       <p style="font-size: 14px; color: var(--text-muted);">Sự ủng hộ của bạn là động lực để mình duy trì và nâng cấp tool xịn hơn mỗi ngày.</p>
-      
+
       <div class="qr-container">
         <img src="momo_qr.png" alt="QR Code" onerror="this.src='https://via.placeholder.com/200x200?text=QR+Image+Missing'">
       </div>
@@ -490,11 +707,12 @@
       <span style="cursor:pointer;" onclick="closeNews()">✕</span>
     </div>
     <div class="alert-content">
-      <strong>UPDATE HỆ THỐNG BẢNG KÊ (13/03/2026)</strong>
+      <strong>UPDATE HỆ THỐNG BẢNG KÊ (20/04/2026)</strong>
       <div style="border-left: 2px solid var(--primary); padding-left: 10px; margin-top: 8px;">
-        • THAY ĐỔI GIAO DIỆN BKTL LD VÀ BKTL THẺ.<br>
-        • FIX MỘT SỐ LỖI NHỎ.<br>
-        • TỐI ƯU NHẸ HƠN, MƯỢT HƠN KHI SỬ DỤNG.
+        • ĐÃ CẬP NHẬT BẢNG THÔNG BÁO MỚI.<br>
+        • ĐÃ CHỈNH LẠI GIAO DIỆN BKTL LD DỄ DÙNG HƠN.<br>
+        • ĐÃ CHỈNH LẠI GIAO DIỆN BKTL THẺ RÕ THAO TÁC HƠN.<br>
+        • TỐI ƯU HIỂN THỊ, MƯỢT HƠN KHI SỬ DỤNG.
       </div>
     </div>
   </div>
@@ -502,40 +720,94 @@
   <script>
     const BANG_KE_LIST = [
       {
-        id: "ld", code: "LD", name: "BKTL LD PRO", short: "Super Tool",
-        subtitle: "Xử lý hàng loạt 10+ bảng LD cùng lúc. Tốc độ cao.",
+        id: "ld",
+        code: "LD",
+        name: "BKTL LD PRO",
+        short: "Super Tool",
+        subtitle: "Xử lý hàng loạt 10+ bảng LD cùng lúc. Giao diện mới dễ theo dõi, dễ thao tác.",
         file: "BKTL_LD.xlsm",
-        updated: "13/03/2026 (v2.1.0)",
-        icon: "💰", cssVar: "#10b981",
+        updated: "20/04/2026 (v2.2.0)",
+        ribbon: "LD MỚI",
+        hot: true,
+        featured: true,
+        icon: "💰",
+        cssVar: "#10b981",
+        highlights: [
+          { label: "Phù hợp", value: "Xử lý nhiều bảng LD cùng lúc" },
+          { label: "Điểm mới", value: "Bố cục rõ hơn, thao tác nhanh hơn" },
+          { label: "Khuyên dùng", value: "Dùng khi cần tốc độ và hạn chế sót bước" }
+        ],
+        quickSteps: [
+          "Nhập dữ liệu tại sheet THTT",
+          "Tải LKGD & LKLS",
+          "Upload đúng sheet",
+          "Bấm ROBOT và nhập pass"
+        ],
         guide: [
-          "Bước 1: Nhập thông tin tại sheet \"<strong>THTT</strong>\"",
+          "Bước 1: Nhập thông tin tại sheet \"<strong>THTT</strong>\".",
           "Bước 2: Tải LKGD & LKLS (Tool hỗ trợ tải HTML siêu tốc).",
           "Bước 3: Upload file vào đúng Sheet. <span style=\"color:var(--accent)\">Hỗ trợ đa luồng file</span>.",
-          "Bước 4: Bấm <strong>ROBOT</strong> -> Nhập pass: \"<span style=\"color:var(--accent)\">baotg10</span>\"",
+          "Bước 4: Bấm <strong>ROBOT</strong> → Nhập pass: \"<span style=\"color:var(--accent)\">baotg10</span>\".",
           "Bước 5: Kiểm tra kết quả (Gốc, giải ngân kỹ thuật...).",
-          "⚠️ <strong>Lưu ý nếu lãi hoặc gốc ra thấp hơn fin:</strong> Kiểm tra lại \"Ngày cần tính\" dưới đáy bảng. Có thể bạn đang tính lùi ngày nên sai -> Hãy sửa ngày cho hợp lý và <span style=\"color:var(--accent)\">xóa hẳn dòng chứa ngày chưa đến</span> đi (tự sửa tay nhé)."
+          "⚠️ <strong>Lưu ý nếu lãi hoặc gốc ra thấp hơn fin:</strong> Kiểm tra lại \"Ngày cần tính\" dưới đáy bảng. Có thể bạn đang tính lùi ngày nên sai → Hãy sửa ngày cho hợp lý và <span style=\"color:var(--accent)\">xóa hẳn dòng chứa ngày chưa đến</span> đi."
         ]
       },
       {
-        id: "the", code: "TH", name: "BKTL THẺ TÍN DỤNG", short: "Smart Card",
-        subtitle: "Bóc tách lãi thông minh, tối ưu hóa quy trình.",
+        id: "the",
+        code: "TH",
+        name: "BKTL THẺ TÍN DỤNG",
+        short: "Smart Card",
+        subtitle: "Bóc tách lãi thông minh với giao diện mới, dễ hiểu hơn cho quy trình nhập liệu và chạy robot.",
         file: "BKTL_THE.xlsm",
-        updated: "13/03/2026 (v9.1.0)",
-        icon: "💳", cssVar: "#ec4899",
+        updated: "20/04/2026 (v9.2.0)",
+        ribbon: "THẺ MỚI",
+        hot: true,
+        featured: true,
+        icon: "💳",
+        cssVar: "#ec4899",
+        highlights: [
+          { label: "Phù hợp", value: "Bóc tách lãi thẻ tín dụng" },
+          { label: "Điểm mới", value: "Hướng dẫn nhập rõ ràng, dễ nhìn hơn" },
+          { label: "Khuyên dùng", value: "Giảm nhầm ngày sao kê và thao tác ẩn dòng" }
+        ],
+        quickSteps: [
+          "Nhập dư nợ gốc tại THTT",
+          "Xác định ngày sao kê từ Way4",
+          "Upload file sao kê Excel",
+          "Bấm Robot, nhập pass, ẩn dòng"
+        ],
         guide: [
           "Bước 1: Sheet \"<strong>THTT</strong>\". Nhập dư nợ gốc sao cho hiện \"REF\".",
-          "Bước 2: Ngày sao kê: Vào Way4 tìm dòng \"interest\", ví dụ 26/01 -> nhập <strong>26</strong>.",
-          "Bước 3: Tải sao kê Way4 (Excel) -> Upload.",
-          "Bước 4: Bấm Robot -> Pass -> Ẩn dòng thừa.",
+          "Bước 2: Ngày sao kê: Vào Way4 tìm dòng \"interest\", ví dụ 26/01 → nhập <strong>26</strong>.",
+          "Bước 3: Tải sao kê Way4 (Excel) → Upload.",
+          "Bước 4: Bấm Robot → Pass → Ẩn dòng thừa.",
           "Bước 5: Tính lãi kỳ hiện tại theo công thức hiển thị trên file."
         ]
       },
       {
-        id: "pd", code: "PD", name: "BKTL THẤU CHI", short: "Coming Soon",
+        id: "pd",
+        code: "PD",
+        name: "BKTL THẤU CHI",
+        short: "Coming Soon",
         subtitle: "Đang phát triển - Phiên bản thử nghiệm.",
         file: "#",
         updated: "Dự kiến 2026",
-        icon: "🎯", cssVar: "#f59e0b",
+        ribbon: "SẮP RA MẮT",
+        hot: false,
+        featured: false,
+        icon: "🎯",
+        cssVar: "#f59e0b",
+        highlights: [
+          { label: "Trạng thái", value: "Đang phát triển" },
+          { label: "Tiến độ", value: "Hoàn thiện dần tính năng" },
+          { label: "Ghi chú", value: "Vui lòng quay lại sau" }
+        ],
+        quickSteps: [
+          "Chờ phát hành",
+          "Theo dõi thông báo mới",
+          "Cập nhật phiên bản sau",
+          "Trải nghiệm khi mở bán"
+        ],
         guide: [
           "🛠️ Tính năng đang được hoàn thiện.",
           "Vui lòng quay lại sau."
@@ -549,12 +821,14 @@
 
       BANG_KE_LIST.forEach(item => {
         const wrap = document.createElement('div');
-        wrap.className = `tool-card`;
+        wrap.className = `tool-card ${item.featured ? 'featured' : ''}`;
         wrap.style.setProperty('--tool-color', item.cssVar);
 
         const isComingSoon = item.file === '#';
 
         let html = `
+          ${item.ribbon ? `<div class="tool-ribbon">${item.ribbon}</div>` : ''}
+
           <div class="tool-header">
             <div class="tool-info">
               <div class="tool-icon">${item.icon}</div>
@@ -564,11 +838,33 @@
               </div>
             </div>
           </div>
-          
+
           <div class="tool-tags">
             <span class="tag">Excel Macro</span>
             <span class="tag">${item.short}</span>
+            ${item.hot ? `<span class="tag tag-hot">Dễ dùng hơn</span>` : ''}
             ${item.updated ? `<span class="tag tag-update">Updated: ${item.updated}</span>` : ''}
+          </div>
+
+          <div class="tool-highlight">
+            ${item.highlights.map(info => `
+              <div class="highlight-box">
+                <div class="label">${info.label}</div>
+                <div class="value">${info.value}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="quick-steps">
+            <h4>⚡ Quy trình nhanh</h4>
+            <div class="quick-step-list">
+              ${item.quickSteps.map((step, index) => `
+                <div class="quick-step">
+                  <span>${index + 1}</span>
+                  <div>${step}</div>
+                </div>
+              `).join('')}
+            </div>
           </div>
 
           <div class="tool-actions">
@@ -579,8 +875,8 @@
               : `<button class="btn btn-primary" type="button" onclick="checkSetupAndDownload('${item.file}')">
                   ⬇ Tải file ngay
                  </button>`}
-            <button class="btn btn-outline" type="button" onclick="toggleGuide(this)">
-              📘 Xem hướng dẫn
+            <button class="btn btn-soft" type="button" onclick="toggleGuide(this)">
+              📘 Xem hướng dẫn chi tiết
             </button>
           </div>
 
@@ -594,6 +890,7 @@
             `).join('')}
           </div>
         `;
+
         wrap.innerHTML = html;
         listEl.appendChild(wrap);
       });
@@ -604,23 +901,20 @@
       const isVisible = guideBox.classList.contains('visible');
       if (isVisible) {
         guideBox.classList.remove('visible');
-        btn.innerHTML = '📘 Xem hướng dẫn';
+        btn.innerHTML = '📘 Xem hướng dẫn chi tiết';
       } else {
         guideBox.classList.add('visible');
         btn.innerHTML = '✕ Đóng hướng dẫn';
       }
     }
 
-    // --- LOGIC ÉP CẤU HÌNH TRƯỚC KHI TẢI ---
     let pendingDownloadUrl = '';
 
     function checkSetupAndDownload(url) {
       const isSetup = localStorage.getItem('bangke-setup-done');
       if (isSetup === '1') {
-        // Nếu đã xác nhận cấu hình rồi thì tải luôn
         triggerDownload(url);
       } else {
-        // Chưa xác nhận -> Hiện thông báo chặn lại
         pendingDownloadUrl = url;
         document.getElementById('setupWarningModal').classList.add('active');
       }
@@ -636,12 +930,10 @@
     }
 
     function confirmSetup() {
-      // Lưu lại vào trình duyệt để lần sau không hỏi nữa
       localStorage.setItem('bangke-setup-done', '1');
       document.getElementById('setupWarningModal').classList.remove('active');
-      document.getElementById('setupGuide').classList.remove('needs-attention'); // Tắt hiệu ứng chớp đỏ
-      
-      // Tiến hành tải file đang bị nghẽn
+      document.getElementById('setupGuide').classList.remove('needs-attention');
+
       if (pendingDownloadUrl) {
         triggerDownload(pendingDownloadUrl);
         pendingDownloadUrl = '';
@@ -649,21 +941,17 @@
     }
 
     function reviewSetup() {
-      // Đóng modal cảnh báo
       document.getElementById('setupWarningModal').classList.remove('active');
-      
-      // Cuộn lên phần Cấu hình và tự động mở nó ra
+
       const setupSection = document.getElementById('setupGuide');
-      setupSection.classList.add('active'); 
+      setupSection.classList.add('active');
       setupSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      
-      // Highlight nhấp nháy vài cái để user thấy
+
       setupSection.style.transition = 'transform 0.2s';
       setupSection.style.transform = 'scale(1.02)';
       setTimeout(() => setupSection.style.transform = 'scale(1)', 200);
     }
 
-    // Modal & Interactions
     function zoomImg(el) {
       const img = el.querySelector('img');
       if (!img || !img.src) return;
@@ -696,30 +984,25 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Setup Theme
       const savedTheme = localStorage.getItem('bangke-theme') || 'light';
       applyTheme(savedTheme);
-      
+
       document.getElementById('themeToggle').addEventListener('click', () => {
         const current = document.body.getAttribute('data-theme');
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
 
-      // Render Content
       renderList();
       showNews();
 
-      // Bật hiệu ứng chớp đỏ nếu user chưa xác nhận cấu hình
       if (localStorage.getItem('bangke-setup-done') !== '1') {
         document.getElementById('setupGuide').classList.add('needs-attention');
       }
 
-      // Donate Button
       document.getElementById('donateBtn').addEventListener('click', () => {
         document.getElementById('donateModal').classList.add('active');
       });
 
-      // Esc key to close modals
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeModal('zoomOverlay');
