@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --font-main: 'Plus Jakarta Sans', sans-serif;
@@ -40,25 +41,34 @@
     body[data-theme="dark"] {
       --bg-body: #0f172a;
       --bg-surface: #1e293b;
-      --bg-surface-hover: #2dd4bf0a;
-      --bg-header: rgba(30, 41, 59, 0.9);
+      --bg-surface-hover: #243247;
+      --bg-header: rgba(15, 23, 42, 0.85);
       --border-color: #334155;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --primary: #6366f1;
       --primary-hover: #818cf8;
-      --primary-light: #3730a3;
+      --primary-light: #312e81;
       --accent: #f43f5e;
       --success: #10b981;
       --warning: #f59e0b;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 10px 25px -3px rgba(0,0,0, 0.5);
-      --chip-bg: #334155;
+      --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.55);
+      --chip-bg: #243247;
       --timeline-line: #475569;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: var(--font-main);
@@ -66,14 +76,16 @@
       color: var(--text-main);
       line-height: 1.6;
       transition: background-color var(--trans-default), color var(--trans-default);
-      padding-top: 80px;
+      padding-top: 82px;
       padding-bottom: 40px;
     }
 
     .navbar {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 70px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
       background: var(--bg-header);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -82,7 +94,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 5%;
-      z-index: 50;
+      z-index: 80;
     }
 
     .nav-brand {
@@ -95,25 +107,39 @@
       text-decoration: none;
     }
 
-    .nav-brand span.highlight { color: var(--primary); }
+    .nav-brand .highlight {
+      color: var(--primary);
+    }
 
     .status-indicator {
-      width: 10px; height: 10px;
+      width: 10px;
+      height: 10px;
       background-color: var(--success);
       border-radius: 50%;
       box-shadow: 0 0 0 3px var(--primary-light);
+      flex-shrink: 0;
     }
 
-    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
     .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 8px; padding: 10px 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
       border-radius: var(--radius-sm);
-      font-weight: 600; font-size: 14px;
-      cursor: pointer; text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
       transition: all 0.2s ease;
       border: 1px solid transparent;
+      font-family: inherit;
     }
 
     .btn-outline {
@@ -129,12 +155,15 @@
     }
 
     .btn-donate {
-      background: rgba(225, 29, 72, 0.1);
+      background: rgba(244, 63, 94, 0.1);
       color: var(--accent);
-      border-color: rgba(225, 29, 72, 0.2);
+      border-color: rgba(244, 63, 94, 0.2);
     }
 
-    .btn-donate:hover { background: var(--accent); color: #fff; }
+    .btn-donate:hover {
+      background: var(--accent);
+      color: #fff;
+    }
 
     .btn-primary {
       background: var(--primary);
@@ -149,13 +178,13 @@
     }
 
     .btn-soft {
-      background: var(--primary-light);
-      color: var(--primary);
+      background: rgba(99, 102, 241, 0.14);
+      color: #c7d2fe;
       border-color: transparent;
     }
 
     .btn-soft:hover {
-      filter: brightness(1.03);
+      filter: brightness(1.08);
       transform: translateY(-1px);
     }
 
@@ -163,30 +192,49 @@
       background: var(--chip-bg);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      width: 40px; height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 16px;
     }
 
-    .theme-toggle:hover { background: var(--border-color); }
+    .theme-toggle:hover {
+      background: var(--border-color);
+    }
 
-    .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-    .hero { text-align: center; padding: 40px 0 28px; }
+    .hero {
+      text-align: center;
+      padding: 42px 0 30px;
+    }
 
     .hero h1 {
-      font-size: 42px;
+      font-size: 56px;
       font-weight: 800;
-      letter-spacing: -1px;
+      letter-spacing: -1.6px;
       margin-bottom: 16px;
+      line-height: 1.1;
     }
 
     .hero p {
       font-size: 16px;
       color: var(--text-muted);
-      max-width: 650px;
+      max-width: 720px;
       margin: 0 auto;
+    }
+
+    .hero-actions {
+      margin-top: 24px;
     }
 
     .setup-section {
@@ -194,28 +242,39 @@
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
       padding: 24px;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
       box-shadow: var(--shadow-md);
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .setup-header {
-      display: flex; justify-content: space-between; align-items: center;
-      cursor: pointer; user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
     }
 
     .setup-title {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 18px; font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 800;
     }
 
     .setup-icon {
-      width: 36px; height: 36px;
-      background: var(--primary-light); color: var(--primary);
+      width: 40px;
+      height: 40px;
+      background: var(--primary-light);
+      color: var(--primary);
       border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 18px;
       transition: background 0.3s, color 0.3s;
+      flex-shrink: 0;
     }
 
     .toggle-icon {
@@ -224,34 +283,52 @@
       transition: transform 0.3s ease;
     }
 
-    .setup-section.active .toggle-icon { transform: rotate(180deg); }
+    .setup-section.active .toggle-icon {
+      transform: rotate(180deg);
+    }
 
     .setup-content {
       display: none;
       margin-top: 24px;
       border-top: 1px solid var(--border-color);
       padding-top: 24px;
-      animation: fadeIn 0.3s ease;
+      animation: fadeIn 0.25s ease;
     }
 
-    .setup-section.active .setup-content { display: block; }
+    .setup-section.active .setup-content {
+      display: block;
+    }
 
-    .timeline { position: relative; padding-left: 24px; }
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
 
     .timeline::before {
       content: '';
       position: absolute;
-      left: 7px; top: 0; bottom: 0; width: 2px;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
       background: var(--timeline-line);
     }
 
-    .timeline-item { position: relative; margin-bottom: 30px; }
-    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
 
     .timeline-dot {
       position: absolute;
-      left: -24px; top: 2px;
-      width: 16px; height: 16px;
+      left: -24px;
+      top: 2px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: var(--primary);
       border: 3px solid var(--bg-surface);
@@ -266,13 +343,27 @@
       padding: 20px;
     }
 
-    .timeline-content h3 { font-size: 16px; margin-bottom: 12px; color: var(--text-main); }
-    .timeline-content p { font-size: 14px; margin-bottom: 8px; }
-    .timeline-content strong { color: var(--primary); }
+    .timeline-content h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .timeline-content p {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .timeline-content strong {
+      color: var(--primary);
+    }
 
     .setup-img-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px; margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
     }
 
     .setup-img-wrap {
@@ -283,13 +374,29 @@
       background: #000;
     }
 
-    .setup-img-wrap img { width: 100%; display: block; transition: 0.3s opacity; }
-    .setup-img-wrap:hover img { opacity: 0.8; }
+    .setup-img-wrap img {
+      width: 100%;
+      display: block;
+      transition: 0.3s opacity;
+    }
+
+    .setup-img-wrap:hover img {
+      opacity: 0.82;
+    }
 
     @keyframes pulseWarning {
-      0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); border-color: var(--accent); }
-      70% { box-shadow: 0 0 0 15px rgba(225, 29, 72, 0); border-color: var(--border-color); }
-      100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); border-color: var(--border-color); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.34);
+        border-color: var(--accent);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(244, 63, 94, 0);
+        border-color: var(--border-color);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(244, 63, 94, 0);
+        border-color: var(--border-color);
+      }
     }
 
     @keyframes shakeIcon {
@@ -305,11 +412,14 @@
 
     .setup-section.needs-attention .setup-icon {
       background: var(--accent);
-      color: white;
+      color: #fff;
       animation: shakeIcon 0.5s ease-in-out infinite alternate;
     }
 
-    .tools-grid { display: grid; gap: 24px; }
+    .tools-grid {
+      display: grid;
+      gap: 24px;
+    }
 
     .tool-card {
       background: var(--bg-surface);
@@ -331,7 +441,10 @@
     .tool-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; height: 5px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
       background: var(--tool-color, var(--primary));
     }
 
@@ -344,9 +457,9 @@
       position: absolute;
       top: 14px;
       right: 14px;
-      background: rgba(79, 70, 229, 0.1);
-      color: var(--primary);
-      border: 1px solid rgba(79, 70, 229, 0.2);
+      background: rgba(99, 102, 241, 0.12);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.18);
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 12px;
@@ -370,17 +483,21 @@
 
     .tool-icon {
       font-size: 32px;
-      width: 60px; height: 60px;
+      width: 62px;
+      height: 62px;
       background: var(--chip-bg);
       border-radius: var(--radius-md);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
 
     .tool-title h2 {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: 800;
       margin-bottom: 4px;
+      line-height: 1.2;
     }
 
     .tool-subtitle {
@@ -404,8 +521,15 @@
       color: var(--text-muted);
     }
 
-    .tag-update { background: rgba(16, 185, 129, 0.1); color: var(--success); }
-    .tag-hot { background: rgba(225, 29, 72, 0.1); color: var(--accent); }
+    .tag-update {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+    }
+
+    .tag-hot {
+      background: rgba(244, 63, 94, 0.12);
+      color: #fb7185;
+    }
 
     .tool-actions {
       display: grid;
@@ -422,10 +546,12 @@
       padding: 20px;
       display: none;
       border: 1px solid var(--border-color);
-      animation: fadeIn 0.3s;
+      animation: fadeIn 0.25s ease;
     }
 
-    .tool-guide.visible { display: block; }
+    .tool-guide.visible {
+      display: block;
+    }
 
     .guide-item {
       display: flex;
@@ -434,20 +560,23 @@
       font-size: 14px;
     }
 
-    .guide-item:last-child { margin-bottom: 0; }
+    .guide-item:last-child {
+      margin-bottom: 0;
+    }
 
     .guide-dot {
       color: var(--tool-color, var(--primary));
-      font-weight: bold;
+      font-weight: 700;
+      flex-shrink: 0;
     }
 
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 100;
+      background: rgba(2, 6, 23, 0.74);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 120;
       display: none;
       align-items: center;
       justify-content: center;
@@ -455,23 +584,27 @@
       padding: 20px;
     }
 
-    .modal-overlay.active { display: flex; }
+    .modal-overlay.active {
+      display: flex;
+    }
 
     .modal-content {
       background: var(--bg-surface);
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
       padding: 32px;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-color);
       text-align: center;
       position: relative;
       box-shadow: var(--shadow-lg);
-      transform: scale(0.95);
+      transform: scale(0.96);
       transition: transform 0.2s;
     }
 
-    .modal-overlay.active .modal-content { transform: scale(1); }
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
 
     .btn-close {
       position: absolute;
@@ -479,23 +612,24 @@
       right: 16px;
       background: var(--chip-bg);
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       color: var(--text-muted);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 18px;
     }
 
     .btn-close:hover {
       background: var(--accent);
-      color: white;
+      color: #fff;
     }
 
     .qr-container {
-      background: white;
+      background: #fff;
       padding: 16px;
       border-radius: var(--radius-md);
       margin: 20px 0;
@@ -516,7 +650,7 @@
     }
 
     .news-modal-content {
-      max-width: 720px;
+      max-width: 760px;
       width: 100%;
       text-align: left;
       padding: 28px;
@@ -558,8 +692,8 @@
       gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(16,185,129,.12);
-      color: var(--success);
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
       font-weight: 700;
       font-size: 13px;
       white-space: nowrap;
@@ -614,36 +748,55 @@
     }
 
     @media (max-width: 768px) {
-      .navbar { padding: 0 20px; }
-      .nav-brand span.hide-mobile { display: none; }
+      .navbar {
+        padding: 0 20px;
+      }
+
+      .nav-brand {
+        font-size: 18px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+        letter-spacing: -1px;
+      }
+
       .tool-actions,
       .news-grid {
         grid-template-columns: 1fr;
       }
-      .hero h1 { font-size: 32px; }
-      .tool-header { padding-right: 0; }
+
+      .tool-header {
+        padding-right: 0;
+      }
+
       .tool-ribbon {
         position: static;
         display: inline-flex;
         margin-bottom: 14px;
       }
+
       .news-modal-header {
         flex-direction: column;
         align-items: flex-start;
         padding-right: 0;
       }
+
       .news-modal-title h2 {
         font-size: 24px;
       }
+
       .news-actions {
         justify-content: stretch;
       }
+
       .news-actions .btn {
         width: 100%;
       }
     }
   </style>
 </head>
+
 <body data-theme="dark">
 
   <nav class="navbar">
@@ -651,12 +804,12 @@
       <div class="status-indicator"></div>
       <div>BẢNG KÊ TÍNH LÃI <span class="highlight">VPBANK</span></div>
     </a>
+
     <div class="nav-actions">
       <a href="https://giabao1881.github.io/baotg10/" class="btn btn-outline" target="_blank">
-        <span class="hide-mobile">🛠️ Công cụ khác</span>
-        <span class="show-mobile" style="display:none;">🛠️</span>
+        🛠️ Công cụ khác
       </a>
-      <button id="themeToggle" class="theme-toggle" aria-label="Đổi giao diện">🌙</button>
+      <button id="themeToggle" class="theme-toggle" aria-label="Đổi giao diện">🌞</button>
     </div>
   </nav>
 
@@ -665,7 +818,8 @@
     <section class="hero">
       <h1>Hệ Thống Tính Lãi Tự Động</h1>
       <p>Bảng kê tự động hóa với độ chính xác cao. Cập nhật liên tục. Được phát triển và tối ưu hóa bởi baotg10.</p>
-      <div style="margin-top: 24px;">
+
+      <div class="hero-actions">
         <button id="donateBtn" class="btn btn-donate">🎁 Donate ủng hộ tác giả</button>
       </div>
     </section>
@@ -680,7 +834,9 @@
       </div>
 
       <div class="setup-content">
-        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Thực hiện 1 lần duy nhất để Excel hoạt động chuẩn xác 100%.</p>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">
+          Thực hiện 1 lần duy nhất để Excel hoạt động chuẩn xác 100%.
+        </p>
 
         <div class="timeline">
           <div class="timeline-item">
@@ -690,10 +846,17 @@
               <p>1. Windows → Tìm <strong>Control Panel</strong> → Mở lên.</p>
               <p>2. Chọn <strong>Clock and Region</strong> → <strong>Region</strong>.</p>
               <p>3. Tab Format: Chọn <strong>Vietnamese (Vietnam)</strong> để chuẩn ngày giờ (dd/mm/yyyy).</p>
+
               <div class="setup-img-grid">
-                <div class="setup-img-wrap" onclick="zoomImg(this)"><img src="media/image1.jpeg" alt="Control Panel" onerror="this.style.display='none'"></div>
-                <div class="setup-img-wrap" onclick="zoomImg(this)"><img src="media/image2.jpeg" alt="Region" onerror="this.style.display='none'"></div>
-                <div class="setup-img-wrap" onclick="zoomImg(this)"><img src="media/image3.jpeg" alt="Format VN" onerror="this.style.display='none'"></div>
+                <div class="setup-img-wrap" onclick="zoomImg(this)">
+                  <img src="media/image1.jpeg" alt="Control Panel" onerror="this.style.display='none'">
+                </div>
+                <div class="setup-img-wrap" onclick="zoomImg(this)">
+                  <img src="media/image2.jpeg" alt="Region" onerror="this.style.display='none'">
+                </div>
+                <div class="setup-img-wrap" onclick="zoomImg(this)">
+                  <img src="media/image3.jpeg" alt="Format VN" onerror="this.style.display='none'">
+                </div>
               </div>
             </div>
           </div>
@@ -703,13 +866,17 @@
             <div class="timeline-content">
               <h3 style="color: var(--accent);">2. Cài đặt Excel (Dấu chấm phẩy)</h3>
               <p>1. Mở Excel → <strong>File → Options → Advanced</strong>.</p>
-              <p>2. Bỏ chọn "Use system separators".<br>
+              <p>
+                2. Bỏ chọn "Use system separators".<br>
                 Decimal separator: để là <strong>.</strong> (chấm)<br>
                 Thousands separator: để là <strong>,</strong> (phẩy)<br>
                 <em>(Trên chấm dưới phẩy)</em>
               </p>
+
               <div class="setup-img-grid">
-                <div class="setup-img-wrap" onclick="zoomImg(this)" style="max-width: 300px;"><img src="media/image4.png" alt="Excel Setting" onerror="this.style.display='none'"></div>
+                <div class="setup-img-wrap" onclick="zoomImg(this)" style="max-width: 300px;">
+                  <img src="media/image4.png" alt="Excel Setting" onerror="this.style.display='none'">
+                </div>
               </div>
             </div>
           </div>
@@ -732,17 +899,23 @@
   </main>
 
   <footer>
-    &copy; 2026 Designed by baotg10 <br> Premium Financial Dashboard
+    &copy; 2026 Designed by baotg10 <br>
+    Premium Financial Dashboard
   </footer>
 
+  <!-- Modal xác nhận cấu hình -->
   <div id="setupWarningModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 450px;">
+    <div class="modal-content" style="max-width: 560px;">
       <button class="btn-close" onclick="closeModal('setupWarningModal')">✕</button>
-      <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
-      <h2 style="color: var(--accent); margin-bottom: 12px;">Bắt Buộc Cấu Hình Máy Tính</h2>
-      <p style="font-size: 14px; margin-bottom: 24px; color: var(--text-main);">
-        Để tool Excel hoạt động <strong>chính xác 100%</strong> (tính lãi không bị sai ngày, không lỗi font), bạn bắt buộc phải thiết lập Region và Excel theo hướng dẫn.
+
+      <div style="font-size: 52px; margin-bottom: 10px;">⚠️</div>
+      <h2 style="color: var(--accent); margin-bottom: 12px; font-size: 22px;">Bắt Buộc Cấu Hình Máy Tính</h2>
+
+      <p style="font-size: 15px; margin-bottom: 24px; color: var(--text-main); line-height: 1.8;">
+        Để tool Excel hoạt động <strong>chính xác 100%</strong> (tính lãi không bị sai ngày, không lỗi font),
+        bạn bắt buộc phải thiết lập Region và Excel theo hướng dẫn.
       </p>
+
       <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
         <button class="btn btn-outline" onclick="reviewSetup()">👀 Xem hướng dẫn</button>
         <button class="btn btn-primary" onclick="confirmSetup()">✅ Tôi đã cấu hình, Tải file</button>
@@ -750,24 +923,29 @@
     </div>
   </div>
 
+  <!-- Modal donate -->
   <div id="donateModal" class="modal-overlay">
     <div class="modal-content">
       <button class="btn-close" onclick="closeModal('donateModal')">✕</button>
       <h2 style="color: var(--accent); margin-bottom: 8px;">Cảm ơn bạn! ❤️</h2>
-      <p style="font-size: 14px; color: var(--text-muted);">Sự ủng hộ của bạn là động lực để mình duy trì và nâng cấp tool xịn hơn mỗi ngày.</p>
+      <p style="font-size: 14px; color: var(--text-muted);">
+        Sự ủng hộ của bạn là động lực để mình duy trì và nâng cấp tool xịn hơn mỗi ngày.
+      </p>
 
       <div class="qr-container">
         <img src="momo_qr.png" alt="QR Code" onerror="this.src='https://via.placeholder.com/200x200?text=QR+Image+Missing'">
       </div>
+
       <p style="font-size: 13px; font-weight: 600;">Hỗ trợ MoMo & Các ngân hàng (VietQR)</p>
     </div>
   </div>
 
+  <!-- Zoom ảnh -->
   <div id="zoomOverlay" class="modal-overlay" onclick="closeModal('zoomOverlay')">
     <img id="zoomTarget" src="" alt="Zoomed">
   </div>
 
-  <!-- THÔNG BÁO MỚI Ở GIỮA -->
+  <!-- Thông báo cập nhật ở giữa -->
   <div id="newsModal" class="modal-overlay">
     <div class="modal-content news-modal-content">
       <button class="btn-close" onclick="closeNewsModal()">✕</button>
@@ -791,7 +969,7 @@
         </div>
         <div class="news-item">
           <h3>Nâng cấp trải nghiệm</h3>
-          <p>Bổ sung thông báo ở giữa màn hình, giao diện gọn hơn và tối ưu hiển thị trên chế độ sáng/tối.</p>
+          <p>Thông báo được chuyển vào popup giữa màn hình, giao diện thẻ được làm gọn hơn và dễ dùng hơn.</p>
         </div>
       </div>
 
@@ -821,9 +999,9 @@
           "Bước 1: Nhập thông tin tại sheet \"<strong>THTT</strong>\".",
           "Bước 2: Tải LKGD & LKLS (Tool hỗ trợ tải HTML siêu tốc).",
           "Bước 3: Upload file vào đúng Sheet.",
-          "Bước 4: Bấm <strong>ROBOT</strong> → Nhập pass: \"<span style=\"color:var(--accent)\">baotg10</span>\".",
+          "Bước 4: Bấm <strong>ROBOT</strong> → Nhập pass: \"<span style='color:var(--accent)'>baotg10</span>\".",
           "Bước 5: Kiểm tra kết quả (Gốc, giải ngân kỹ thuật...).",
-          "⚠️ <strong>Lưu ý nếu lãi hoặc gốc ra thấp hơn fin:</strong> Kiểm tra lại \"Ngày cần tính\" dưới đáy bảng. Có thể bạn đang tính lùi ngày nên sai → Hãy sửa ngày cho hợp lý và <span style=\"color:var(--accent)\">xóa hẳn dòng chứa ngày chưa đến</span> đi."
+          "⚠️ <strong>Lưu ý nếu lãi hoặc gốc ra thấp hơn fin:</strong> Kiểm tra lại \"Ngày cần tính\" dưới đáy bảng. Có thể bạn đang tính lùi ngày nên sai → Hãy sửa ngày cho hợp lý và <span style='color:var(--accent)'>xóa hẳn dòng chứa ngày chưa đến</span> đi."
         ]
       },
       {
@@ -867,6 +1045,8 @@
       }
     ];
 
+    let pendingDownloadUrl = '';
+
     function renderList() {
       const listEl = document.getElementById('list');
       listEl.innerHTML = '';
@@ -878,7 +1058,7 @@
 
         const isComingSoon = item.file === '#';
 
-        let html = `
+        wrap.innerHTML = `
           ${item.ribbon ? `<div class="tool-ribbon">${item.ribbon}</div>` : ''}
 
           <div class="tool-header">
@@ -900,15 +1080,10 @@
 
           <div class="tool-actions">
             ${isComingSoon
-              ? `<button class="btn btn-outline" type="button" onclick="alert('Tính năng đang phát triển, vui lòng quay lại sau.');">
-                  ⏳ Chưa phát hành
-                 </button>`
-              : `<button class="btn btn-primary" type="button" onclick="checkSetupAndDownload('${item.file}')">
-                  ⬇ Tải file ngay
-                 </button>`}
-            <button class="btn btn-soft" type="button" onclick="toggleGuide(this)">
-              📘 Xem hướng dẫn
-            </button>
+              ? `<button class="btn btn-outline" type="button" onclick="alert('Tính năng đang phát triển, vui lòng quay lại sau.');">⏳ Chưa phát hành</button>`
+              : `<button class="btn btn-primary" type="button" onclick="checkSetupAndDownload('${item.file}')">⬇ Tải file ngay</button>`
+            }
+            <button class="btn btn-soft" type="button" onclick="toggleGuide(this)">📘 Xem hướng dẫn</button>
           </div>
 
           <div class="tool-guide">
@@ -922,7 +1097,6 @@
           </div>
         `;
 
-        wrap.innerHTML = html;
         listEl.appendChild(wrap);
       });
     }
@@ -930,6 +1104,7 @@
     function toggleGuide(btn) {
       const guideBox = btn.closest('.tool-card').querySelector('.tool-guide');
       const isVisible = guideBox.classList.contains('visible');
+
       if (isVisible) {
         guideBox.classList.remove('visible');
         btn.innerHTML = '📘 Xem hướng dẫn';
@@ -939,16 +1114,9 @@
       }
     }
 
-    let pendingDownloadUrl = '';
-
     function checkSetupAndDownload(url) {
-      const isSetup = localStorage.getItem('bangke-setup-done');
-      if (isSetup === '1') {
-        triggerDownload(url);
-      } else {
-        pendingDownloadUrl = url;
-        document.getElementById('setupWarningModal').classList.add('active');
-      }
+      pendingDownloadUrl = url;
+      document.getElementById('setupWarningModal').classList.add('active');
     }
 
     function triggerDownload(url) {
@@ -961,9 +1129,7 @@
     }
 
     function confirmSetup() {
-      localStorage.setItem('bangke-setup-done', '1');
       document.getElementById('setupWarningModal').classList.remove('active');
-      document.getElementById('setupGuide').classList.remove('needs-attention');
 
       if (pendingDownloadUrl) {
         triggerDownload(pendingDownloadUrl);
@@ -980,7 +1146,9 @@
 
       setupSection.style.transition = 'transform 0.2s';
       setupSection.style.transform = 'scale(1.02)';
-      setTimeout(() => setupSection.style.transform = 'scale(1)', 200);
+      setTimeout(() => {
+        setupSection.style.transform = 'scale(1)';
+      }, 200);
     }
 
     function zoomImg(el) {
@@ -997,8 +1165,7 @@
     function applyTheme(theme) {
       document.body.setAttribute('data-theme', theme);
       localStorage.setItem('bangke-theme', theme);
-      const icon = theme === 'dark' ? '🌞' : '🌙';
-      document.getElementById('themeToggle').innerHTML = icon;
+      document.getElementById('themeToggle').innerHTML = theme === 'dark' ? '🌞' : '🌙';
     }
 
     function showNewsModal() {
@@ -1028,13 +1195,6 @@
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
 
-      renderList();
-      showNewsModal();
-
-      if (localStorage.getItem('bangke-setup-done') !== '1') {
-        document.getElementById('setupGuide').classList.add('needs-attention');
-      }
-
       document.getElementById('donateBtn').addEventListener('click', () => {
         document.getElementById('donateModal').classList.add('active');
       });
@@ -1044,6 +1204,11 @@
           closeNewsModal();
         }
       });
+
+      renderList();
+      showNewsModal();
+
+      document.getElementById('setupGuide').classList.add('needs-attention');
 
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
