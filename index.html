@@ -30,7 +30,6 @@
       --accent: #e11d48;
       --success: #059669;
       --warning: #d97706;
-      --info: #0284c7;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -52,7 +51,6 @@
       --accent: #f43f5e;
       --success: #10b981;
       --warning: #f59e0b;
-      --info: #38bdf8;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
       --shadow-lg: 0 10px 25px -3px rgba(0,0,0, 0.5);
@@ -96,6 +94,7 @@
       color: var(--text-main);
       text-decoration: none;
     }
+
     .nav-brand span.highlight { color: var(--primary); }
 
     .status-indicator {
@@ -116,18 +115,25 @@
       transition: all 0.2s ease;
       border: 1px solid transparent;
     }
+
     .btn-outline {
       background: transparent;
       border-color: var(--border-color);
       color: var(--text-main);
     }
-    .btn-outline:hover { background: var(--bg-surface-hover); border-color: var(--primary); color: var(--primary); }
+
+    .btn-outline:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
 
     .btn-donate {
       background: rgba(225, 29, 72, 0.1);
       color: var(--accent);
       border-color: rgba(225, 29, 72, 0.2);
     }
+
     .btn-donate:hover { background: var(--accent); color: #fff; }
 
     .btn-primary {
@@ -135,13 +141,19 @@
       color: #fff;
       box-shadow: var(--shadow-sm);
     }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
 
     .btn-soft {
       background: var(--primary-light);
       color: var(--primary);
       border-color: transparent;
     }
+
     .btn-soft:hover {
       filter: brightness(1.03);
       transform: translateY(-1px);
@@ -156,80 +168,25 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: 0.2s;
     }
+
     .theme-toggle:hover { background: var(--border-color); }
 
     .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
 
     .hero { text-align: center; padding: 40px 0 28px; }
-    .hero h1 { font-size: 42px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
-    .hero p { font-size: 16px; color: var(--text-muted); max-width: 650px; margin: 0 auto; }
 
-    .update-board {
-      background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-hover));
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 22px;
-      margin-bottom: 28px;
-      box-shadow: var(--shadow-md);
-      position: relative;
-      overflow: hidden;
-    }
-    .update-board::before {
-      content: '';
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 6px;
-      background: linear-gradient(180deg, var(--primary), var(--accent));
-    }
-    .update-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-      flex-wrap: wrap;
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
       margin-bottom: 16px;
     }
-    .update-title-wrap h2 {
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-    .update-title-wrap p {
+
+    .hero p {
+      font-size: 16px;
       color: var(--text-muted);
-      font-size: 14px;
-    }
-    .update-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(16,185,129,.12);
-      color: var(--success);
-      font-weight: 700;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    .update-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 16px;
-    }
-    .update-item {
-      background: var(--chip-bg);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 16px;
-    }
-    .update-item h3 {
-      font-size: 15px;
-      margin-bottom: 8px;
-      color: var(--text-main);
-    }
-    .update-item p {
-      font-size: 13px;
-      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
     }
 
     .setup-section {
@@ -241,14 +198,17 @@
       box-shadow: var(--shadow-md);
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
+
     .setup-header {
       display: flex; justify-content: space-between; align-items: center;
       cursor: pointer; user-select: none;
     }
+
     .setup-title {
       display: flex; align-items: center; gap: 12px;
       font-size: 18px; font-weight: 700;
     }
+
     .setup-icon {
       width: 36px; height: 36px;
       background: var(--primary-light); color: var(--primary);
@@ -257,7 +217,13 @@
       font-size: 18px;
       transition: background 0.3s, color 0.3s;
     }
-    .toggle-icon { font-size: 20px; color: var(--text-muted); transition: transform 0.3s ease; }
+
+    .toggle-icon {
+      font-size: 20px;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+    }
+
     .setup-section.active .toggle-icon { transform: rotate(180deg); }
 
     .setup-content {
@@ -267,16 +233,21 @@
       padding-top: 24px;
       animation: fadeIn 0.3s ease;
     }
+
     .setup-section.active .setup-content { display: block; }
 
     .timeline { position: relative; padding-left: 24px; }
+
     .timeline::before {
-      content: ''; position: absolute;
+      content: '';
+      position: absolute;
       left: 7px; top: 0; bottom: 0; width: 2px;
       background: var(--timeline-line);
     }
+
     .timeline-item { position: relative; margin-bottom: 30px; }
     .timeline-item:last-child { margin-bottom: 0; }
+
     .timeline-dot {
       position: absolute;
       left: -24px; top: 2px;
@@ -287,12 +258,14 @@
       box-sizing: content-box;
       transform: translateX(-50%);
     }
+
     .timeline-content {
       background: var(--chip-bg);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
       padding: 20px;
     }
+
     .timeline-content h3 { font-size: 16px; margin-bottom: 12px; color: var(--text-main); }
     .timeline-content p { font-size: 14px; margin-bottom: 8px; }
     .timeline-content strong { color: var(--primary); }
@@ -301,12 +274,15 @@
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px; margin-top: 12px;
     }
+
     .setup-img-wrap {
       border: 1px solid var(--border-color);
       border-radius: var(--radius-sm);
-      overflow: hidden; cursor: zoom-in;
+      overflow: hidden;
+      cursor: zoom-in;
       background: #000;
     }
+
     .setup-img-wrap img { width: 100%; display: block; transition: 0.3s opacity; }
     .setup-img-wrap:hover img { opacity: 0.8; }
 
@@ -315,15 +291,18 @@
       70% { box-shadow: 0 0 0 15px rgba(225, 29, 72, 0); border-color: var(--border-color); }
       100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); border-color: var(--border-color); }
     }
+
     @keyframes shakeIcon {
       0%, 100% { transform: rotate(0deg); }
       25% { transform: rotate(-15deg); }
       75% { transform: rotate(15deg); }
     }
+
     .setup-section.needs-attention {
       animation: pulseWarning 2s infinite;
       border: 1px solid var(--accent);
     }
+
     .setup-section.needs-attention .setup-icon {
       background: var(--accent);
       color: white;
@@ -342,7 +321,13 @@
       position: relative;
       overflow: hidden;
     }
-    .tool-card:hover { box-shadow: var(--shadow-lg); border-color: var(--primary); transform: translateY(-2px); }
+
+    .tool-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
     .tool-card::before {
       content: '';
       position: absolute;
@@ -376,11 +361,13 @@
       margin-bottom: 16px;
       padding-right: 78px;
     }
+
     .tool-info {
       display: flex;
       gap: 16px;
       align-items: flex-start;
     }
+
     .tool-icon {
       font-size: 32px;
       width: 60px; height: 60px;
@@ -389,8 +376,17 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .tool-title h2 { font-size: 21px; font-weight: 800; margin-bottom: 4px; }
-    .tool-subtitle { font-size: 14px; color: var(--text-muted); }
+
+    .tool-title h2 {
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .tool-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
 
     .tool-tags {
       display: flex;
@@ -398,6 +394,7 @@
       gap: 8px;
       margin-bottom: 18px;
     }
+
     .tag {
       font-size: 12px;
       font-weight: 700;
@@ -406,81 +403,16 @@
       background: var(--chip-bg);
       color: var(--text-muted);
     }
+
     .tag-update { background: rgba(16, 185, 129, 0.1); color: var(--success); }
     .tag-hot { background: rgba(225, 29, 72, 0.1); color: var(--accent); }
 
-    .tool-highlight {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .highlight-box {
-      background: var(--chip-bg);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 14px;
-    }
-    .highlight-box .label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: .3px;
-    }
-    .highlight-box .value {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.4;
-    }
-
-    .quick-steps {
-      background: linear-gradient(180deg, var(--chip-bg), transparent);
-      border: 1px dashed var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin-bottom: 18px;
-    }
-    .quick-steps h4 {
-      font-size: 14px;
-      margin-bottom: 12px;
-      color: var(--text-main);
-    }
-    .quick-step-list {
+    .tool-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .quick-step {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: 13px;
-      color: var(--text-muted);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
-    .quick-step span {
-      min-width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--tool-color, var(--primary));
-      color: white;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      margin-top: 1px;
-    }
-
-    .tool-actions {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-      padding-top: 20px; border-top: 1px solid var(--border-color);
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
     }
 
     .tool-guide {
@@ -492,63 +424,223 @@
       border: 1px solid var(--border-color);
       animation: fadeIn 0.3s;
     }
+
     .tool-guide.visible { display: block; }
-    .guide-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; }
+
+    .guide-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
     .guide-item:last-child { margin-bottom: 0; }
-    .guide-dot { color: var(--tool-color, var(--primary)); font-weight: bold; }
+
+    .guide-dot {
+      color: var(--tool-color, var(--primary));
+      font-weight: bold;
+    }
 
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px);
-      z-index: 100; display: none; align-items: center; justify-content: center; animation: fadeIn 0.2s;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s;
+      padding: 20px;
     }
+
     .modal-overlay.active { display: flex; }
+
     .modal-content {
-      background: var(--bg-surface); width: 90%; max-width: 400px;
-      padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);
-      text-align: center; position: relative; box-shadow: var(--shadow-lg);
-      transform: scale(0.95); transition: transform 0.2s;
+      background: var(--bg-surface);
+      width: 90%;
+      max-width: 400px;
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.95);
+      transition: transform 0.2s;
     }
+
     .modal-overlay.active .modal-content { transform: scale(1); }
+
     .btn-close {
-      position: absolute; top: 16px; right: 16px; background: var(--chip-bg); border: none;
-      width: 32px; height: 32px; border-radius: 50%; color: var(--text-muted); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--chip-bg);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .btn-close:hover { background: var(--accent); color: white; }
 
-    .qr-container { background: white; padding: 16px; border-radius: var(--radius-md); margin: 20px 0; border: 1px solid #e2e8f0; }
-    .qr-container img { width: 100%; border-radius: 8px; display: block; }
-
-    #zoomOverlay img { max-width: 90vw; max-height: 90vh; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); }
-
-    .alert-box {
-      position: fixed; bottom: 30px; right: 30px; background: var(--bg-surface);
-      border-left: 4px solid var(--primary); padding: 20px; border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg); z-index: 99; transform: translateY(100px); opacity: 0;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-width: 390px; width: calc(100% - 40px);
+    .btn-close:hover {
+      background: var(--accent);
+      color: white;
     }
-    .alert-box.show { transform: translateY(0); opacity: 1; }
-    .alert-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; color: var(--primary); }
-    .alert-content { font-size: 14px; line-height: 1.5; color: var(--text-main); }
-    .alert-content strong { display: block; margin-bottom: 4px; }
 
-    footer { text-align: center; margin-top: 60px; padding: 20px; font-size: 13px; color: var(--text-muted); }
+    .qr-container {
+      background: white;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      margin: 20px 0;
+      border: 1px solid #e2e8f0;
+    }
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .qr-container img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+    }
+
+    #zoomOverlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .news-modal-content {
+      max-width: 720px;
+      width: 100%;
+      text-align: left;
+      padding: 28px;
+      overflow: hidden;
+    }
+
+    .news-modal-content::before {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      background: linear-gradient(180deg, var(--primary), var(--accent));
+    }
+
+    .news-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding-right: 34px;
+    }
+
+    .news-modal-title h2 {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .news-modal-title p {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .news-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(16,185,129,.12);
+      color: var(--success);
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .news-item {
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .news-item h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .news-item p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .news-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
     @media (max-width: 768px) {
       .navbar { padding: 0 20px; }
       .nav-brand span.hide-mobile { display: none; }
       .tool-actions,
-      .quick-step-list,
-      .tool-highlight,
-      .update-grid {
+      .news-grid {
         grid-template-columns: 1fr;
       }
       .hero h1 { font-size: 32px; }
-      .alert-box { bottom: 20px; right: 20px; }
       .tool-header { padding-right: 0; }
-      .tool-ribbon { position: static; display: inline-flex; margin-bottom: 14px; }
+      .tool-ribbon {
+        position: static;
+        display: inline-flex;
+        margin-bottom: 14px;
+      }
+      .news-modal-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-right: 0;
+      }
+      .news-modal-title h2 {
+        font-size: 24px;
+      }
+      .news-actions {
+        justify-content: stretch;
+      }
+      .news-actions .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -575,32 +667,6 @@
       <p>Bảng kê tự động hóa với độ chính xác cao. Cập nhật liên tục. Được phát triển và tối ưu hóa bởi baotg10.</p>
       <div style="margin-top: 24px;">
         <button id="donateBtn" class="btn btn-donate">🎁 Donate ủng hộ tác giả</button>
-      </div>
-    </section>
-
-    <!-- BẢNG THÔNG BÁO MỚI -->
-    <section class="update-board">
-      <div class="update-top">
-        <div class="update-title-wrap">
-          <h2>📢 BẢNG THÔNG BÁO CẬP NHẬT</h2>
-          <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
-        </div>
-        <div class="update-badge">✅ Cập nhật ngày 20/04/2026</div>
-      </div>
-
-      <div class="update-grid">
-        <div class="update-item">
-          <h3>Giao diện LD mới</h3>
-          <p>Sắp xếp lại bố cục trực quan hơn, dễ nhìn hơn và thao tác nhanh hơn khi xử lý nhiều bảng cùng lúc.</p>
-        </div>
-        <div class="update-item">
-          <h3>Giao diện THẺ mới</h3>
-          <p>Tối ưu khu vực hướng dẫn nhập liệu và quy trình xử lý để giảm nhầm thao tác khi bóc tách lãi.</p>
-        </div>
-        <div class="update-item">
-          <h3>Nâng cấp trải nghiệm</h3>
-          <p>Bổ sung bảng thông báo, làm rõ các nút chức năng và tối ưu hiển thị trên giao diện sáng/tối.</p>
-        </div>
       </div>
     </section>
 
@@ -701,18 +767,37 @@
     <img id="zoomTarget" src="" alt="Zoomed">
   </div>
 
-  <div id="newsAlert" class="alert-box">
-    <div class="alert-header">
-      <span>🔔 THÔNG BÁO MỚI NHẤT</span>
-      <span style="cursor:pointer;" onclick="closeNews()">✕</span>
-    </div>
-    <div class="alert-content">
-      <strong>UPDATE HỆ THỐNG BẢNG KÊ (20/04/2026)</strong>
-      <div style="border-left: 2px solid var(--primary); padding-left: 10px; margin-top: 8px;">
-        • ĐÃ CẬP NHẬT BẢNG THÔNG BÁO MỚI.<br>
-        • ĐÃ CHỈNH LẠI GIAO DIỆN BKTL LD DỄ DÙNG HƠN.<br>
-        • ĐÃ CHỈNH LẠI GIAO DIỆN BKTL THẺ RÕ THAO TÁC HƠN.<br>
-        • TỐI ƯU HIỂN THỊ, MƯỢT HƠN KHI SỬ DỤNG.
+  <!-- THÔNG BÁO MỚI Ở GIỮA -->
+  <div id="newsModal" class="modal-overlay">
+    <div class="modal-content news-modal-content">
+      <button class="btn-close" onclick="closeNewsModal()">✕</button>
+
+      <div class="news-modal-header">
+        <div class="news-modal-title">
+          <h2>📢 BẢNG THÔNG BÁO CẬP NHẬT</h2>
+          <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
+        </div>
+        <div class="news-badge">✅ Cập nhật ngày 20/04/2026</div>
+      </div>
+
+      <div class="news-grid">
+        <div class="news-item">
+          <h3>Giao diện LD mới</h3>
+          <p>Sắp xếp lại bố cục trực quan hơn, dễ nhìn hơn và thao tác nhanh hơn khi xử lý nhiều bảng cùng lúc.</p>
+        </div>
+        <div class="news-item">
+          <h3>Giao diện THẺ mới</h3>
+          <p>Tối ưu khu vực hướng dẫn nhập liệu và quy trình xử lý để giảm nhầm thao tác khi bóc tách lãi.</p>
+        </div>
+        <div class="news-item">
+          <h3>Nâng cấp trải nghiệm</h3>
+          <p>Bổ sung thông báo ở giữa màn hình, giao diện gọn hơn và tối ưu hiển thị trên chế độ sáng/tối.</p>
+        </div>
+      </div>
+
+      <div class="news-actions">
+        <button class="btn btn-outline" onclick="closeNewsModal()">Đóng</button>
+        <button class="btn btn-primary" onclick="dismissNewsModal()">Đã hiểu</button>
       </div>
     </div>
   </div>
@@ -724,7 +809,7 @@
         code: "LD",
         name: "BKTL LD PRO",
         short: "Super Tool",
-        subtitle: "Xử lý hàng loạt 10+ bảng LD cùng lúc. Giao diện mới dễ theo dõi, dễ thao tác.",
+        subtitle: "Xử lý hàng loạt 10+ bảng LD cùng lúc. Giao diện gọn hơn, dễ thao tác hơn.",
         file: "BKTL_LD.xlsm",
         updated: "20/04/2026 (v2.2.0)",
         ribbon: "LD MỚI",
@@ -732,21 +817,10 @@
         featured: true,
         icon: "💰",
         cssVar: "#10b981",
-        highlights: [
-          { label: "Phù hợp", value: "Xử lý nhiều bảng LD cùng lúc" },
-          { label: "Điểm mới", value: "Bố cục rõ hơn, thao tác nhanh hơn" },
-          { label: "Khuyên dùng", value: "Dùng khi cần tốc độ và hạn chế sót bước" }
-        ],
-        quickSteps: [
-          "Nhập dữ liệu tại sheet THTT",
-          "Tải LKGD & LKLS",
-          "Upload đúng sheet",
-          "Bấm ROBOT và nhập pass"
-        ],
         guide: [
           "Bước 1: Nhập thông tin tại sheet \"<strong>THTT</strong>\".",
           "Bước 2: Tải LKGD & LKLS (Tool hỗ trợ tải HTML siêu tốc).",
-          "Bước 3: Upload file vào đúng Sheet. <span style=\"color:var(--accent)\">Hỗ trợ đa luồng file</span>.",
+          "Bước 3: Upload file vào đúng Sheet.",
           "Bước 4: Bấm <strong>ROBOT</strong> → Nhập pass: \"<span style=\"color:var(--accent)\">baotg10</span>\".",
           "Bước 5: Kiểm tra kết quả (Gốc, giải ngân kỹ thuật...).",
           "⚠️ <strong>Lưu ý nếu lãi hoặc gốc ra thấp hơn fin:</strong> Kiểm tra lại \"Ngày cần tính\" dưới đáy bảng. Có thể bạn đang tính lùi ngày nên sai → Hãy sửa ngày cho hợp lý và <span style=\"color:var(--accent)\">xóa hẳn dòng chứa ngày chưa đến</span> đi."
@@ -757,7 +831,7 @@
         code: "TH",
         name: "BKTL THẺ TÍN DỤNG",
         short: "Smart Card",
-        subtitle: "Bóc tách lãi thông minh với giao diện mới, dễ hiểu hơn cho quy trình nhập liệu và chạy robot.",
+        subtitle: "Bóc tách lãi thông minh với giao diện mới, gọn hơn và rõ thao tác hơn.",
         file: "BKTL_THE.xlsm",
         updated: "20/04/2026 (v9.2.0)",
         ribbon: "THẺ MỚI",
@@ -765,17 +839,6 @@
         featured: true,
         icon: "💳",
         cssVar: "#ec4899",
-        highlights: [
-          { label: "Phù hợp", value: "Bóc tách lãi thẻ tín dụng" },
-          { label: "Điểm mới", value: "Hướng dẫn nhập rõ ràng, dễ nhìn hơn" },
-          { label: "Khuyên dùng", value: "Giảm nhầm ngày sao kê và thao tác ẩn dòng" }
-        ],
-        quickSteps: [
-          "Nhập dư nợ gốc tại THTT",
-          "Xác định ngày sao kê từ Way4",
-          "Upload file sao kê Excel",
-          "Bấm Robot, nhập pass, ẩn dòng"
-        ],
         guide: [
           "Bước 1: Sheet \"<strong>THTT</strong>\". Nhập dư nợ gốc sao cho hiện \"REF\".",
           "Bước 2: Ngày sao kê: Vào Way4 tìm dòng \"interest\", ví dụ 26/01 → nhập <strong>26</strong>.",
@@ -797,17 +860,6 @@
         featured: false,
         icon: "🎯",
         cssVar: "#f59e0b",
-        highlights: [
-          { label: "Trạng thái", value: "Đang phát triển" },
-          { label: "Tiến độ", value: "Hoàn thiện dần tính năng" },
-          { label: "Ghi chú", value: "Vui lòng quay lại sau" }
-        ],
-        quickSteps: [
-          "Chờ phát hành",
-          "Theo dõi thông báo mới",
-          "Cập nhật phiên bản sau",
-          "Trải nghiệm khi mở bán"
-        ],
         guide: [
           "🛠️ Tính năng đang được hoàn thiện.",
           "Vui lòng quay lại sau."
@@ -842,29 +894,8 @@
           <div class="tool-tags">
             <span class="tag">Excel Macro</span>
             <span class="tag">${item.short}</span>
-            ${item.hot ? `<span class="tag tag-hot">Dễ dùng hơn</span>` : ''}
+            ${item.hot ? `<span class="tag tag-hot">Giao diện mới</span>` : ''}
             ${item.updated ? `<span class="tag tag-update">Updated: ${item.updated}</span>` : ''}
-          </div>
-
-          <div class="tool-highlight">
-            ${item.highlights.map(info => `
-              <div class="highlight-box">
-                <div class="label">${info.label}</div>
-                <div class="value">${info.value}</div>
-              </div>
-            `).join('')}
-          </div>
-
-          <div class="quick-steps">
-            <h4>⚡ Quy trình nhanh</h4>
-            <div class="quick-step-list">
-              ${item.quickSteps.map((step, index) => `
-                <div class="quick-step">
-                  <span>${index + 1}</span>
-                  <div>${step}</div>
-                </div>
-              `).join('')}
-            </div>
           </div>
 
           <div class="tool-actions">
@@ -876,7 +907,7 @@
                   ⬇ Tải file ngay
                  </button>`}
             <button class="btn btn-soft" type="button" onclick="toggleGuide(this)">
-              📘 Xem hướng dẫn chi tiết
+              📘 Xem hướng dẫn
             </button>
           </div>
 
@@ -901,7 +932,7 @@
       const isVisible = guideBox.classList.contains('visible');
       if (isVisible) {
         guideBox.classList.remove('visible');
-        btn.innerHTML = '📘 Xem hướng dẫn chi tiết';
+        btn.innerHTML = '📘 Xem hướng dẫn';
       } else {
         guideBox.classList.add('visible');
         btn.innerHTML = '✕ Đóng hướng dẫn';
@@ -970,17 +1001,22 @@
       document.getElementById('themeToggle').innerHTML = icon;
     }
 
-    function showNews() {
+    function showNewsModal() {
       const dismissed = sessionStorage.getItem('bangke-news-dismissed');
       if (dismissed === '1') return;
+
       setTimeout(() => {
-        document.getElementById('newsAlert').classList.add('show');
-      }, 1000);
+        document.getElementById('newsModal').classList.add('active');
+      }, 700);
     }
 
-    function closeNews() {
-      document.getElementById('newsAlert').classList.remove('show');
+    function closeNewsModal() {
+      document.getElementById('newsModal').classList.remove('active');
+    }
+
+    function dismissNewsModal() {
       sessionStorage.setItem('bangke-news-dismissed', '1');
+      closeNewsModal();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -993,7 +1029,7 @@
       });
 
       renderList();
-      showNews();
+      showNewsModal();
 
       if (localStorage.getItem('bangke-setup-done') !== '1') {
         document.getElementById('setupGuide').classList.add('needs-attention');
@@ -1003,12 +1039,18 @@
         document.getElementById('donateModal').classList.add('active');
       });
 
+      document.getElementById('newsModal').addEventListener('click', (e) => {
+        if (e.target.id === 'newsModal') {
+          closeNewsModal();
+        }
+      });
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeModal('zoomOverlay');
           closeModal('donateModal');
           closeModal('setupWarningModal');
-          closeNews();
+          closeNewsModal();
         }
       });
     });
