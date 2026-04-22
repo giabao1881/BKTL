@@ -955,21 +955,21 @@
           <h2>📢 BẢNG THÔNG BÁO CẬP NHẬT</h2>
           <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
         </div>
-        <div class="news-badge">✅ Cập nhật ngày 20/04/2026</div>
+        <div class="news-badge">✅ Cập nhật ngày 23/04/2026</div>
       </div>
 
       <div class="news-grid">
         <div class="news-item">
-          <h3>Giao diện LD mới</h3>
-          <p>Sắp xếp lại bố cục trực quan hơn, dễ nhìn hơn và thao tác nhanh hơn khi xử lý nhiều bảng cùng lúc.</p>
+          <h3>Update 23/04/2026</h3>
+          <p>Đã đổi toàn bộ mốc cập nhật sang ngày 23/04/2026 để đồng bộ giữa popup thông báo và thẻ công cụ.</p>
         </div>
         <div class="news-item">
-          <h3>Giao diện THẺ mới</h3>
-          <p>Tối ưu khu vực hướng dẫn nhập liệu và quy trình xử lý để giảm nhầm thao tác khi bóc tách lãi.</p>
+          <h3>Fix lỗi nhỏ</h3>
+          <p>Điều chỉnh lại một số câu chữ, nhãn cập nhật và hướng dẫn thao tác để tránh gây hiểu nhầm khi tải và sử dụng file.</p>
         </div>
         <div class="news-item">
-          <h3>Nâng cấp trải nghiệm</h3>
-          <p>Thông báo được chuyển vào popup giữa màn hình, giao diện thẻ được làm gọn hơn và dễ dùng hơn.</p>
+          <h3>Hướng dẫn chi tiết hơn</h3>
+          <p>Phần hướng dẫn trong các box công cụ đã được viết kỹ hơn, bổ sung lưu ý nhập liệu và thứ tự thao tác để dễ theo dõi.</p>
         </div>
       </div>
 
@@ -989,19 +989,20 @@
         short: "Super Tool",
         subtitle: "Xử lý hàng loạt 10+ bảng LD cùng lúc. Giao diện gọn hơn, dễ thao tác hơn.",
         file: "BKTL_LD.xlsm",
-        updated: "20/04/2026 (v2.2.0)",
+        updated: "23/04/2026 (v2.2.1)",
         ribbon: "LD MỚI",
         hot: true,
         featured: true,
         icon: "💰",
         cssVar: "#10b981",
         guide: [
-          "Bước 1: Nhập thông tin tại sheet \"<strong>THTT</strong>\".",
-          "Bước 2: Tải LKGD & LKLS (Tool hỗ trợ tải HTML siêu tốc).",
-          "Bước 3: Upload file vào đúng Sheet.",
-          "Bước 4: Bấm <strong>ROBOT</strong> → Nhập pass: \"<span style='color:var(--accent)'>baotg10</span>\".",
-          "Bước 5: Kiểm tra kết quả (Gốc, giải ngân kỹ thuật...).",
-          "⚠️ <strong>Lưu ý nếu lãi hoặc gốc ra thấp hơn fin:</strong> Kiểm tra lại \"Ngày cần tính\" dưới đáy bảng. Có thể bạn đang tính lùi ngày nên sai → Hãy sửa ngày cho hợp lý và <span style='color:var(--accent)'>xóa hẳn dòng chứa ngày chưa đến</span> đi."
+          "Bước 1: Mở sheet \"<strong>THTT</strong>\" và nhập đầy đủ thông tin hồ sơ: mã KH, dư nợ, ngày cần tính, ngày giải ngân và các dữ liệu đầu vào liên quan.",
+          "Bước 2: Dùng tool hỗ trợ để tải <strong>LKGD</strong> và <strong>LKLS</strong> đúng hồ sơ cần làm. Kiểm tra file tải về không bị thiếu dòng hoặc sai tài khoản.",
+          "Bước 3: Upload từng file vào <strong>đúng sheet tương ứng</strong> trong workbook. Không dán chéo sheet để tránh lệch công thức.",
+          "Bước 4: Sau khi upload xong, bấm <strong>ROBOT</strong> và nhập pass: \"<span style='color:var(--accent)'>baotg10</span>\" để chạy xử lý tự động.",
+          "Bước 5: Kiểm tra lại kết quả đầu ra: dư nợ gốc, lãi, giải ngân kỹ thuật, ngày tính lãi và các dòng phát sinh bất thường nếu có.",
+          "Bước 6: Nếu cần chốt số, nên rà lại phần cuối bảng để chắc chắn không còn dòng ngày tương lai hoặc dòng dữ liệu rác chưa xóa.",
+          "⚠️ <strong>Lưu ý quan trọng:</strong> Nếu lãi hoặc gốc ra <strong>thấp hơn FIN</strong>, hãy kiểm tra lại mục \"Ngày cần tính\" ở cuối bảng. Trường hợp đang tính lùi ngày hoặc còn dòng chưa đến kỳ thì phải sửa lại ngày cho hợp lý và <span style='color:var(--accent)'>xóa hẳn dòng chứa ngày chưa đến</span> rồi chạy lại tool."
         ]
       },
       {
@@ -1011,18 +1012,19 @@
         short: "Smart Card",
         subtitle: "Bóc tách lãi thông minh với giao diện mới, gọn hơn và rõ thao tác hơn.",
         file: "BKTL_THE.xlsm",
-        updated: "20/04/2026 (v9.2.0)",
+        updated: "23/04/2026 (v9.2.1)",
         ribbon: "THẺ MỚI",
         hot: true,
         featured: true,
         icon: "💳",
         cssVar: "#ec4899",
         guide: [
-          "Bước 1: Sheet \"<strong>THTT</strong>\". Nhập dư nợ gốc sao cho hiện \"REF\".",
-          "Bước 2: Ngày sao kê: Vào Way4 tìm dòng \"interest\", ví dụ 26/01 → nhập <strong>26</strong>.",
-          "Bước 3: Tải sao kê Way4 (Excel) → Upload.",
-          "Bước 4: Bấm Robot → Pass → Ẩn dòng thừa.",
-          "Bước 5: Tính lãi kỳ hiện tại theo công thức hiển thị trên file."
+          "Bước 1: Vào sheet \"<strong>THTT</strong>\" và nhập dư nợ gốc đúng định dạng để file hiện trạng thái \"<strong>REF</strong>\" như yêu cầu.",
+          "Bước 2: Xác định <strong>ngày sao kê</strong> bằng cách vào Way4, tìm dòng có nội dung \"interest\". Ví dụ giao dịch hiển thị ngày 26/01 thì chỉ nhập <strong>26</strong> vào ô ngày sao kê.",
+          "Bước 3: Tải file sao kê <strong>Way4 dạng Excel</strong>, sau đó upload vào đúng khu vực dữ liệu của tool. Không chỉnh sửa cấu trúc cột trước khi upload.",
+          "Bước 4: Bấm <strong>Robot</strong>, nhập pass để tool tự xử lý dữ liệu. Sau khi chạy xong, kiểm tra và <strong>ẩn/xóa các dòng thừa</strong> nếu file yêu cầu làm sạch dữ liệu hiển thị.",
+          "Bước 5: Đối chiếu lãi kỳ hiện tại theo công thức có sẵn trên file, đặc biệt kiểm tra lại ngày sao kê, dư nợ đầu kỳ và các khoản phát sinh gần ngày chốt sao kê.",
+          "⚠️ <strong>Mẹo tránh sai số:</strong> Nếu kết quả chưa khớp, hãy kiểm tra lại ngày sao kê nhập đã đúng chưa, file Way4 có đủ dữ liệu chưa và có bị thiếu giao dịch interest/phí nào không."
         ]
       },
       {
@@ -1075,7 +1077,7 @@
             <span class="tag">Excel Macro</span>
             <span class="tag">${item.short}</span>
             ${item.hot ? `<span class="tag tag-hot">Giao diện mới</span>` : ''}
-            ${item.updated ? `<span class="tag tag-update">Updated: ${item.updated}</span>` : ''}
+            ${item.updated ? `<span class="tag tag-update">Cập nhật: ${item.updated}</span>` : ''}
           </div>
 
           <div class="tool-actions">
