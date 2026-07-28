@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thông báo bảo trì hệ thống</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Be Vietnam Pro',sans-serif;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.card{
+    width:100%;
+    max-width:700px;
+    background:rgba(255,255,255,.1);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:24px;
+    padding:45px;
+    text-align:center;
+    color:#fff;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+
+.icon{
+    font-size:72px;
+    margin-bottom:20px;
+    animation:spin 6s linear infinite;
+}
+
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+h1{
+    font-size:34px;
+    margin-bottom:12px;
+    font-weight:700;
+}
+
+.subtitle{
+    color:#dbeafe;
+    font-size:18px;
+    margin-bottom:35px;
+}
+
+.info{
+    background:rgba(255,255,255,.12);
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:30px;
+}
+
+.info p{
+    font-size:18px;
+    margin:12px 0;
+    line-height:1.7;
+}
+
+.time{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 24px;
+    border-radius:50px;
+    background:#f59e0b;
+    color:#111827;
+    font-size:20px;
+    font-weight:700;
+}
+
+.note{
+    color:#e5e7eb;
+    font-size:16px;
+    line-height:1.7;
+}
+
+.footer{
+    margin-top:35px;
+    color:#bfdbfe;
+    font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">⚙️</div>
+
+    <h1>THÔNG BÁO BẢO TRÌ HỆ THỐNG</h1>
+
+    <div class="subtitle">
+        Hệ thống <strong>Bảng Kê Tính Lãi</strong> đang được nâng cấp để cải thiện hiệu năng và bổ sung các tính năng mới.
+    </div>
+
+    <div class="info">
+        <p>🛠 <strong>Nội dung:</strong> Bảo trì & nâng cấp hệ thống Bảng Kê Tính Lãi</p>
+
+        <div class="time">
+            🕛 12:00 - 13:30 | 28/07/2026
+        </div>
+    </div>
+
+    <div class="note">
+        Trong thời gian bảo trì, hệ thống sẽ tạm ngừng hoạt động.
+        <br><br>
+        Rất mong Quý Anh/Chị thông cảm vì sự bất tiện này.
+        Sau thời gian trên, hệ thống sẽ hoạt động trở lại bình thường.
+    </div>
+
+    <div class="footer">
+        © 2026 BAOTG10 Digital Creator
+    </div>
+
+</div>
+
+</body>
+</html>
