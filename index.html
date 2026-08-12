@@ -959,65 +959,53 @@
     <img id="zoomTarget" src="" alt="Zoomed">
   </div>
 
-  <!-- Thông báo cập nhật -->
+ <!-- Thông báo cập nhật -->
 <div id="newsModal" class="modal-overlay">
-  <div class="modal-content news-modal-content" style="max-width: 620px;">
-    <button class="btn-close" onclick="closeNewsModal()">✕</button>
+  <div class="modal-content news-modal-content">
+    <button class="btn-close" onclick="closeNewsModal()" style="color: #ffffff;">✕</button>
 
-    <!-- Header -->
-    <div class="news-modal-header" style="border-bottom: 2px solid #edf2f7; padding-bottom: 12px; margin-bottom: 16px;">
+    <div class="news-modal-header">
       <div class="news-modal-title">
-        <span class="news-eyebrow" style="color: #e53e3e; font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px;">⚠️ Thông báo quan trọng</span>
-        <h2 style="font-size: 24px; font-weight: 800; color: #1a202c; margin: 4px 0 6px 0;">Bảng Cập Nhật Hệ Thống</h2>
-        <p style="font-size: 15px; color: #4a5568; margin: 0;">Vui lòng đọc kỹ các thay đổi dưới đây trước khi thao tác.</p>
+        <span class="news-eyebrow" style="color: #ff6b6b; font-weight: bold; font-size: 1.1rem; display: block;">⚠️ THÔNG BÁO QUAN TRỌNG</span>
+        <!-- Tiêu đề màu trắng to nổi bật trên nền tối -->
+        <h2 style="color: #ffffff !important; font-size: 1.8rem; font-weight: 700; margin: 4px 0;">Bảng Cập Nhật Hệ Thống</h2>
+        <!-- Dòng mô tả màu xám sáng -->
+        <p style="color: #cbd5e1 !important; font-size: 1.05rem; margin: 0;">Chi tiết các thay đổi trong phiên bản mới nhất của hệ thống bảng kê.</p>
       </div>
-      <div class="news-badge" style="background: #e53e3e; color: #ffffff; font-weight: 800; font-size: 14px; padding: 6px 14px; border-radius: 20px;">
-        13/08/2026
-      </div>
+      <div class="news-badge" style="background-color: #ff4d4f; color: #ffffff; font-weight: bold; font-size: 0.95rem; padding: 6px 14px; border-radius: 20px;">Cập nhật 13/08/2026</div>
     </div>
 
-    <!-- Danh sách nội dung -->
-    <div class="news-grid" style="display: flex; flex-direction: column; gap: 12px;">
+    <div class="news-grid" style="display: flex; flex-direction: column; gap: 14px; margin: 20px 0;">
       
-      <!-- Mục 1: Bắt buộc đổi bảng (Đỏ nổi bật) -->
-      <div class="news-item" style="background-color: #fff5f5; border: 1.5px solid #feb2b2; border-left: 6px solid #e53e3e; border-radius: 8px; padding: 14px 16px;">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-          <span style="background: #e53e3e; color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Quan trọng</span>
-          <h3 style="font-size: 17px; font-weight: 800; color: #9b2c2c; margin: 0;">Ngưng sử dụng toàn bộ bảng cũ</h3>
-        </div>
-        <p style="font-size: 15px; line-height: 1.5; color: #2d3748; margin: 0;">
-          Từ ngày <strong style="color: #e53e3e; font-size: 16px; text-decoration: underline;">13/08/2026</strong>, tất cả các file bảng cũ đều <strong>không còn sử dụng được</strong>. Vui lòng tải bảng mới về để tiếp tục làm việc.
+      <!-- Mục 1: Cảnh báo quan trọng (Chữ đỏ / highlight) -->
+      <div class="news-item" style="background-color: rgba(255, 77, 79, 0.15); border-left: 5px solid #ff4d4f; padding: 14px 18px; border-radius: 8px;">
+        <h3 style="color: #ff6b6b !important; font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">🚨 Yêu Cầu Tải Bảng Mới</h3>
+        <p style="color: #f1f5f9 !important; font-size: 1.05rem; line-height: 1.6; margin: 0;">
+          Từ ngày <strong>13/08/2026</strong>, <span style="color: #ff6b6b; font-weight: bold; text-decoration: underline;">tất cả các bảng cũ đều KHÔNG còn sử dụng được nữa</span>. Vui lòng tải bảng mới về để tiếp tục công việc.
         </p>
       </div>
 
-      <!-- Mục 2: Fix lag (Xanh lá) -->
-      <div class="news-item" style="background-color: #f0fff4; border: 1.5px solid #9ae6b4; border-left: 6px solid #38a169; border-radius: 8px; padding: 14px 16px;">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-          <span style="background: #38a169; color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Nâng cấp</span>
-          <h3 style="font-size: 17px; font-weight: 800; color: #22543d; margin: 0;">Khắc phục triệt để tình trạng giật lag</h3>
-        </div>
-        <p style="font-size: 15px; line-height: 1.5; color: #2d3748; margin: 0;">
-          Tối ưu hóa dữ liệu và giao diện, giúp bảng xử lý nhanh, mượt mà và ổn định hơn khi nhập liệu khối lượng lớn.
+      <!-- Mục 2: Sửa lỗi & Giảm lag (Chữ xanh lá) -->
+      <div class="news-item" style="background-color: rgba(82, 196, 26, 0.15); border-left: 5px solid #52c41a; padding: 14px 18px; border-radius: 8px;">
+        <h3 style="color: #73d13d !important; font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">⚡ Tối Ưu & Giảm Giật Lag</h3>
+        <p style="color: #f1f5f9 !important; font-size: 1.05rem; line-height: 1.6; margin: 0;">
+          Khắc phục các lỗi phát sinh, <strong style="color: #73d13d;">giảm tối đa tình trạng giật lag</strong> giúp thao tác trên bảng mượt mà hơn.
         </p>
       </div>
 
-      <!-- Mục 3: Thấu chi (Xanh dương) -->
-      <div class="news-item" style="background-color: #ebf8ff; border: 1.5px solid #bee3f8; border-left: 6px solid #3182ce; border-radius: 8px; padding: 14px 16px;">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-          <span style="background: #3182ce; color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Sắp ra mắt</span>
-          <h3 style="font-size: 17px; font-weight: 800; color: #2a4365; margin: 0;">Chuẩn bị cập nhật BKTL Thấu Chi</h3>
-        </div>
-        <p style="font-size: 15px; line-height: 1.5; color: #2d3748; margin: 0;">
-          Hệ thống đang hoàn thiện những khâu cuối cùng để sớm phát hành công cụ tính năng <strong>BKTL Thấu Chi</strong>.
+      <!-- Mục 3: Cập nhật mới (Chữ xanh dương) -->
+      <div class="news-item" style="background-color: rgba(24, 144, 255, 0.15); border-left: 5px solid #1890ff; padding: 14px 18px; border-radius: 8px;">
+        <h3 style="color: #40a9ff !important; font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">🚀 Sắp Cập Nhật BKTL Thấu Chi</h3>
+        <p style="color: #f1f5f9 !important; font-size: 1.05rem; line-height: 1.6; margin: 0;">
+          Hệ thống đang chuẩn bị các khâu cuối cùng để phát hành công cụ <strong style="color: #40a9ff;">BKTL Thấu Chi</strong> trong thời gian tới.
         </p>
       </div>
 
     </div>
 
-    <!-- Nút bấm -->
-    <div class="news-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-      <button class="btn btn-outline" onclick="closeNewsModal()" style="font-size: 15px; padding: 8px 18px; font-weight: 600;">Đóng</button>
-      <button class="btn btn-primary" onclick="dismissNewsModal()" style="font-size: 15px; padding: 8px 22px; font-weight: 700; background-color: #e53e3e; border-color: #e53e3e; color: #fff;">Đã hiểu</button>
+    <div class="news-actions">
+      <button class="btn btn-outline" onclick="closeNewsModal()" style="color: #cbd5e1; border-color: #475569;">Đóng</button>
+      <button class="btn btn-primary" onclick="dismissNewsModal()" style="background-color: #ff4d4f; border-color: #ff4d4f; color: #ffffff; font-weight: bold; font-size: 1.05rem; padding: 8px 18px;">Tôi đã hiểu & Bắt đầu tải</button>
     </div>
   </div>
 </div>
