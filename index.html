@@ -830,7 +830,7 @@
 
       <div class="hero-meta">
         <span>Phiên bản: <strong>2026.2</strong></span>
-        <span>Cập nhật gần nhất: <strong>28/07/2026</strong></span>
+        <span>Cập nhật gần nhất: <strong>13/08/2026</strong></span>
         <span>Trạng thái: <strong>Đang hoạt động</strong></span>
       </div>
 
@@ -961,36 +961,63 @@
 
   <!-- Thông báo cập nhật -->
 <div id="newsModal" class="modal-overlay">
-  <div class="modal-content news-modal-content">
+  <div class="modal-content news-modal-content" style="max-width: 620px;">
     <button class="btn-close" onclick="closeNewsModal()">✕</button>
 
-    <div class="news-modal-header">
+    <!-- Header -->
+    <div class="news-modal-header" style="border-bottom: 2px solid #edf2f7; padding-bottom: 12px; margin-bottom: 16px;">
       <div class="news-modal-title">
-        <span class="news-eyebrow">Thông báo</span>
-        <h2>Bảng cập nhật hệ thống</h2>
-        <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
+        <span class="news-eyebrow" style="color: #e53e3e; font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px;">⚠️ Thông báo quan trọng</span>
+        <h2 style="font-size: 24px; font-weight: 800; color: #1a202c; margin: 4px 0 6px 0;">Bảng Cập Nhật Hệ Thống</h2>
+        <p style="font-size: 15px; color: #4a5568; margin: 0;">Vui lòng đọc kỹ các thay đổi dưới đây trước khi thao tác.</p>
       </div>
-      <div class="news-badge">Cập nhật 13/08/2026</div>
-    </div>
-
-    <div class="news-grid">
-      <div class="news-item">
-        <h3>Yêu cầu tải bảng mới</h3>
-        <p>Từ ngày <strong>13/08/2026</strong>, tất cả các bảng cũ không còn sử dụng được nữa. Vui lòng tải bảng mới về để tiếp tục công việc.</p>
-      </div>
-      <div class="news-item">
-        <h3>Tối ưu hiệu năng & Giảm giật lag</h3>
-        <p>Khắc phục các lỗi phát sinh và tối ưu giao diện giúp thao tác trên bảng mượt mà, hạn chế tình trạng giật lag.</p>
-      </div>
-      <div class="news-item">
-        <h3>BKTL Thấu Chi</h3>
-        <p>Hệ thống đang hoàn tất các khâu chuẩn bị cuối cùng để phát hành công cụ BKTL Thấu Chi trong thời gian tới.</p>
+      <div class="news-badge" style="background: #e53e3e; color: #ffffff; font-weight: 800; font-size: 14px; padding: 6px 14px; border-radius: 20px;">
+        13/08/2026
       </div>
     </div>
 
-    <div class="news-actions">
-      <button class="btn btn-outline" onclick="closeNewsModal()">Đóng</button>
-      <button class="btn btn-primary" onclick="dismissNewsModal()">Đã hiểu</button>
+    <!-- Danh sách nội dung -->
+    <div class="news-grid" style="display: flex; flex-direction: column; gap: 12px;">
+      
+      <!-- Mục 1: Bắt buộc đổi bảng (Đỏ nổi bật) -->
+      <div class="news-item" style="background-color: #fff5f5; border: 1.5px solid #feb2b2; border-left: 6px solid #e53e3e; border-radius: 8px; padding: 14px 16px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: #e53e3e; color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Quan trọng</span>
+          <h3 style="font-size: 17px; font-weight: 800; color: #9b2c2c; margin: 0;">Ngưng sử dụng toàn bộ bảng cũ</h3>
+        </div>
+        <p style="font-size: 15px; line-height: 1.5; color: #2d3748; margin: 0;">
+          Từ ngày <strong style="color: #e53e3e; font-size: 16px; text-decoration: underline;">13/08/2026</strong>, tất cả các file bảng cũ đều <strong>không còn sử dụng được</strong>. Vui lòng tải bảng mới về để tiếp tục làm việc.
+        </p>
+      </div>
+
+      <!-- Mục 2: Fix lag (Xanh lá) -->
+      <div class="news-item" style="background-color: #f0fff4; border: 1.5px solid #9ae6b4; border-left: 6px solid #38a169; border-radius: 8px; padding: 14px 16px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: #38a169; color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Nâng cấp</span>
+          <h3 style="font-size: 17px; font-weight: 800; color: #22543d; margin: 0;">Khắc phục triệt để tình trạng giật lag</h3>
+        </div>
+        <p style="font-size: 15px; line-height: 1.5; color: #2d3748; margin: 0;">
+          Tối ưu hóa dữ liệu và giao diện, giúp bảng xử lý nhanh, mượt mà và ổn định hơn khi nhập liệu khối lượng lớn.
+        </p>
+      </div>
+
+      <!-- Mục 3: Thấu chi (Xanh dương) -->
+      <div class="news-item" style="background-color: #ebf8ff; border: 1.5px solid #bee3f8; border-left: 6px solid #3182ce; border-radius: 8px; padding: 14px 16px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: #3182ce; color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Sắp ra mắt</span>
+          <h3 style="font-size: 17px; font-weight: 800; color: #2a4365; margin: 0;">Chuẩn bị cập nhật BKTL Thấu Chi</h3>
+        </div>
+        <p style="font-size: 15px; line-height: 1.5; color: #2d3748; margin: 0;">
+          Hệ thống đang hoàn thiện những khâu cuối cùng để sớm phát hành công cụ tính năng <strong>BKTL Thấu Chi</strong>.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Nút bấm -->
+    <div class="news-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+      <button class="btn btn-outline" onclick="closeNewsModal()" style="font-size: 15px; padding: 8px 18px; font-weight: 600;">Đóng</button>
+      <button class="btn btn-primary" onclick="dismissNewsModal()" style="font-size: 15px; padding: 8px 22px; font-weight: 700; background-color: #e53e3e; border-color: #e53e3e; color: #fff;">Đã hiểu</button>
     </div>
   </div>
 </div>
@@ -1022,7 +1049,7 @@
         short: "Xử lý hàng loạt",
         subtitle: "Xử lý đồng thời 10+ bảng LD. Giao diện tinh gọn, thao tác rõ ràng.",
         file: "BKTL_LD.xlsm",
-        updated: "28/07/2026",
+        updated: "13/08/2026",
         ribbon: "CẬP NHẬT",
         hot: true,
         featured: true,
@@ -1044,7 +1071,7 @@
         short: "Bóc tách thông minh",
         subtitle: "Bóc tách lãi thẻ tín dụng với giao diện mới, gọn hơn và rõ thao tác hơn.",
         file: "BKTL_THE.xlsm",
-        updated: "28/07/2026",
+        updated: "13/08/2026",
         ribbon: "CẬP NHẬT",
         hot: true,
         featured: true,
