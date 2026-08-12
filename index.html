@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Bảng Kê Tính Lãi — VPBank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-display: 'Fraunces', serif;
+      --font-main: 'IBM Plex Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --radius-sm: 3px;
+      --radius-md: 5px;
+      --radius-lg: 8px;
+      --trans-default: 0.25s ease;
+    }
+
+    body[data-theme="light"] {
+      --bg-body: #F2F4F3;
+      --bg-surface: #FFFFFF;
+      --bg-surface-hover: #F7F8F7;
+      --bg-header: rgba(255, 255, 255, 0.94);
+      --border-color: #DBDFE2;
+      --border-strong: #B7BFC6;
+      --text-main: #101826;
+      --text-muted: #5B6B7F;
+      --primary: #10294A;
+      --primary-hover: #1B3B66;
+      --primary-soft: #E7EBF1;
+      --gold: #9C7A2E;
+      --gold-soft: #F1E8D2;
+      --success: #2F6B4F;
+      --success-soft: #E2EFE7;
+      --warning: #A0590F;
+      --warning-soft: #F5E7D6;
+      --danger: #8C2F39;
+      --danger-soft: #F4E1E2;
+      --shadow-sm: 0 1px 2px 0 rgba(16, 24, 38, 0.06);
+      --shadow-md: 0 6px 16px -6px rgba(16, 24, 38, 0.14);
+      --shadow-lg: 0 20px 40px -12px rgba(16, 24, 38, 0.22);
+      --chip-bg: #F2F4F3;
+      --timeline-line: #C7CDD3;
+      --icon-filter: grayscale(1) contrast(1.05) brightness(0.92);
+    }
+
+    body[data-theme="dark"] {
+      --bg-body: #0B121D;
+      --bg-surface: #121B2B;
+      --bg-surface-hover: #16223570;
+      --bg-header: rgba(11, 18, 29, 0.9);
+      --border-color: #263349;
+      --border-strong: #38496640;
+      --text-main: #EDF0F4;
+      --text-muted: #8FA0B8;
+      --primary: #A9C1E0;
+      --primary-hover: #C6D8EF;
+      --primary-soft: #1B2A42;
+      --gold: #D3B15C;
+      --gold-soft: #2B2413;
+      --success: #6FBE95;
+      --success-soft: #163024;
+      --warning: #E0A25B;
+      --warning-soft: #2E2113;
+      --danger: #E3919B;
+      --danger-soft: #331A1F;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 8px 22px -8px rgba(0, 0, 0, 0.55);
+      --shadow-lg: 0 24px 48px -14px rgba(0, 0, 0, 0.65);
+      --chip-bg: #16223A;
+      --timeline-line: #2C3B54;
+      --icon-filter: grayscale(1) contrast(1.1) brightness(1.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.65;
+      transition: background-color var(--trans-default), color var(--trans-default);
+      padding-top: 88px;
+      padding-bottom: 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Masthead ---------- */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 76px;
+      background: var(--bg-header);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      z-index: 80;
+    }
+
+    .navbar::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -3px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+      opacity: 0.6;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border: 1.5px solid var(--gold);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--gold);
+      position: relative;
+    }
+
+    .brand-mark::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .brand-text .brand-eyebrow {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .brand-text .brand-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-text .brand-title .accent { color: var(--gold); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 13.5px;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      font-family: var(--font-main);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border-strong);
+      color: var(--text-main);
+    }
+    .btn-outline:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-donate {
+      background: transparent;
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+    .btn-donate:hover {
+      background: var(--gold);
+      color: var(--bg-surface);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--bg-surface);
+      box-shadow: var(--shadow-sm);
+    }
+    body[data-theme="dark"] .btn-primary { color: #0B121D; }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-soft {
+      background: var(--chip-bg);
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+    .btn-soft:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 15px;
+    }
+    .theme-toggle img, .theme-toggle span { filter: var(--icon-filter); }
+    .theme-toggle:hover { border-color: var(--gold); }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+    /* ---------- Hero / document header ---------- */
+    .hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 40px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .hero-eyebrow::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
+      line-height: 1.15;
+      max-width: 620px;
+    }
+
+    .hero p {
+      font-size: 15.5px;
+      color: var(--text-muted);
+      max-width: 620px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 22px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .hero-meta span strong { color: var(--text-main); font-weight: 600; }
+
+    .hero-actions { margin-top: 28px; }
+
+    /* ---------- Setup notice ---------- */
+    .setup-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 26px 28px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .setup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      gap: 16px;
+    }
+
+    .setup-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .setup-icon {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .setup-icon span { filter: var(--icon-filter); }
+
+    .toggle-icon {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .setup-section.active .toggle-icon { transform: rotate(180deg); }
+
+    .setup-content {
+      display: none;
+      margin-top: 24px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 24px;
+      animation: fadeIn 0.25s ease;
+    }
+    .setup-section.active .setup-content { display: block; }
+
+    .setup-intro {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 26px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .clauses { display: flex; flex-direction: column; gap: 0; }
+
+    .clause {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 18px;
+      padding: 22px 0;
+      border-top: 1px solid var(--border-color);
+    }
+    .clause:first-child { border-top: none; padding-top: 0; }
+
+    .clause-num {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      padding-top: 2px;
+    }
+
+    .clause-body h3 {
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: 14.5px;
+      letter-spacing: 0.01em;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    .clause-body p {
+      font-size: 13.5px;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+    .clause-body p strong { color: var(--text-main); font-weight: 600; }
+    .clause-body p em { color: var(--text-muted); }
+
+    .setup-img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .setup-img-wrap {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: zoom-in;
+      background: #05070B;
+      position: relative;
+    }
+    .setup-img-wrap::after {
+      content: '＋';
+      position: absolute;
+      right: 8px; bottom: 8px;
+      width: 22px; height: 22px;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .setup-img-wrap img {
+      width: 100%;
+      display: block;
+      transition: 0.3s opacity;
+    }
+    .setup-img-wrap:hover img { opacity: 0.8; }
+
+    @keyframes pulseWarning {
+      0% { box-shadow: 0 0 0 0 rgba(160, 89, 15, 0.28); border-color: var(--warning); }
+      70% { box-shadow: 0 0 0 12px rgba(160, 89, 15, 0); border-color: var(--border-color); }
+      100% { box-shadow: 0 0 0 0 rgba(160, 89, 15, 0); border-color: var(--border-color); }
+    }
+
+    .setup-section.needs-attention {
+      animation: pulseWarning 2.6s infinite;
+      border: 1px solid var(--warning);
+    }
+    .setup-section.needs-attention .setup-icon {
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+
+    /* ---------- Tool dossier cards ---------- */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
+
+    .tools-grid { display: grid; gap: 20px; }
+
+    .tool-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 26px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+    .tool-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: var(--tool-color, var(--primary));
+    }
+
+    .tool-card.featured { box-shadow: var(--shadow-md); }
+
+    .tool-stamp {
+      position: absolute;
+      top: 20px; right: 24px;
+      width: 68px; height: 68px;
+      border: 1.5px dashed var(--tool-color, var(--gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transform: rotate(-8deg);
+      opacity: 0.9;
+    }
+    .tool-stamp span {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--tool-color, var(--gold));
+      text-transform: uppercase;
+      line-height: 1.3;
+      padding: 0 6px;
+    }
+
+    .tool-header {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-right: 96px;
+    }
+
+    .tool-monogram {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 16px;
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--border-strong);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--tool-color, var(--primary));
+    }
+
+    .tool-title h2 {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .tool-subtitle { font-size: 13.5px; color: var(--text-muted); }
+
+    .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 5px 10px;
+      border-radius: 2px;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      background: transparent;
+    }
+    .tag-update { border-color: var(--success); color: var(--success); }
+    .tag-hot { border-color: var(--gold); color: var(--gold); }
+
+    .tool-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .tool-guide {
+      margin-top: 20px;
+      background: var(--chip-bg);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+      display: none;
+      border: 1px solid var(--border-color);
+      animation: fadeIn 0.25s ease;
+    }
+    .tool-guide.visible { display: block; }
+
+    .tool-guide h4 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .guide-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 13.5px;
+      color: var(--text-main);
+    }
+    .guide-item:last-child { margin-bottom: 0; }
+
+    .guide-dot {
+      font-family: var(--font-mono);
+      color: var(--tool-color, var(--gold));
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .guide-item div strong { color: var(--tool-color, var(--primary)); font-weight: 600; }
+
+    /* ---------- Modals ---------- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 10, 17, 0.68);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 120;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      background: var(--bg-surface);
+      width: 90%;
+      max-width: 420px;
+      padding: 32px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.97);
+      transition: transform 0.2s;
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+    }
+
+    .btn-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      width: 32px; height: 32px;
+      border-radius: 2px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .btn-close:hover { border-color: var(--danger); color: var(--danger); }
+
+    .modal-content h2 { font-family: var(--font-display); font-weight: 600; }
+
+    .qr-container {
+      background: #fff;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      margin: 20px 0;
+      border: 1px solid #e2e8f0;
+    }
+    .qr-container img { width: 100%; border-radius: 2px; display: block; }
+
+    #zoomOverlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .news-modal-content {
+      max-width: 740px;
+      width: 100%;
+      text-align: left;
+      padding: 30px 32px;
+      overflow: hidden;
+    }
+    .news-modal-content::before { background: var(--gold); }
+
+    .news-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-right: 34px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .news-modal-title .news-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .news-modal-title h2 {
+      font-size: 26px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .news-modal-title p { font-size: 14px; color: var(--text-muted); }
+
+    .news-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 2px;
+      border: 1px solid var(--success);
+      color: var(--success);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-color);
+      border: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .news-item { background: var(--bg-surface); padding: 18px 16px; }
+    .news-item h3 {
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: 0.01em;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+    .news-item p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    .news-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 64px;
+      padding: 24px 20px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 0 20px; }
+      .brand-text .brand-title { font-size: 15px; }
+      .hero h1 { font-size: 30px; }
+      .hero-meta { flex-direction: column; gap: 6px; }
+      .tool-actions, .news-grid { grid-template-columns: 1fr; }
+      .tool-header { padding-right: 0; flex-wrap: wrap; }
+      .tool-stamp { position: static; margin-bottom: 14px; transform: rotate(0); }
+      .clause { grid-template-columns: 32px 1fr; }
+      .news-modal-header { flex-direction: column; align-items: flex-start; padding-right: 0; }
+      .news-modal-title h2 { font-size: 22px; }
+      .news-actions { justify-content: stretch; }
+      .news-actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body data-theme="dark">
+
+  <nav class="navbar">
+    <a href="#" class="nav-brand">
+      <div class="brand-mark">VP</div>
+      <div class="brand-text">
+        <span class="brand-eyebrow">Hệ thống nội bộ</span>
+        <div class="brand-title">Bảng Kê Tính Lãi <span class="accent">— VPBank</span></div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <a href="https://giabao1881.github.io/baotg10/" class="btn btn-outline" target="_blank">
+        Công cụ khác
+      </a>
+      <button id="themeToggle" class="theme-toggle" aria-label="Đổi giao diện"><span>🌞</span></button>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-eyebrow">Tài liệu vận hành — BKTL</div>
+      <h1>Hệ Thống Tính Lãi Tự Động</h1>
+      <p>Bộ công cụ Excel hỗ trợ bóc tách và đối chiếu lãi tự động, được xây dựng và duy trì bởi baotg10. Vui lòng thực hiện đủ bước cấu hình trước khi sử dụng để đảm bảo độ chính xác.</p>
+
+      <div class="hero-meta">
+        <span>Phiên bản: <strong>2026.2</strong></span>
+        <span>Cập nhật gần nhất: <strong>28/07/2026</strong></span>
+        <span>Trạng thái: <strong>Đang hoạt động</strong></span>
+      </div>
+
+      <div class="hero-actions">
+        <button id="donateBtn" class="btn btn-donate">Ủng hộ tác giả</button>
+      </div>
+    </section>
+
+    <section class="setup-section" id="setupGuide">
+      <div class="setup-header" onclick="this.parentElement.classList.toggle('active')">
+        <div class="setup-title">
+          <div class="setup-icon"><span>⚙</span></div>
+          Cấu hình hệ thống lần đầu
+        </div>
+        <div class="toggle-icon">▾</div>
+      </div>
+
+      <div class="setup-content">
+        <p class="setup-intro">
+          Thực hiện một lần duy nhất để đảm bảo file Excel hoạt động chính xác trên máy tính của bạn.
+        </p>
+
+        <div class="clauses">
+          <div class="clause">
+            <div class="clause-num">I</div>
+            <div class="clause-body">
+              <h3>Cài đặt Region (Control Panel)</h3>
+              <p>1. Mở <strong>Control Panel</strong> từ menu Windows.</p>
+              <p>2. Chọn <strong>Clock and Region → Region</strong>.</p>
+              <p>3. Tại tab Format, chọn <strong>Vietnamese (Vietnam)</strong> để chuẩn hóa định dạng ngày giờ (dd/mm/yyyy).</p>
+
+              <div class="setup-img-grid">
+                <div class="setup-img-wrap" onclick="zoomImg(this)">
+                  <img src="media/image1.jpeg" alt="Control Panel" onerror="this.style.display='none'">
+                </div>
+                <div class="setup-img-wrap" onclick="zoomImg(this)">
+                  <img src="media/image2.jpeg" alt="Region" onerror="this.style.display='none'">
+                </div>
+                <div class="setup-img-wrap" onclick="zoomImg(this)">
+                  <img src="media/image3.jpeg" alt="Format VN" onerror="this.style.display='none'">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="clause">
+            <div class="clause-num">II</div>
+            <div class="clause-body">
+              <h3>Cài đặt Excel (dấu phân cách)</h3>
+              <p>1. Mở Excel → <strong>File → Options → Advanced</strong>.</p>
+              <p>
+                2. Bỏ chọn "Use system separators".<br>
+                Decimal separator: <strong>.</strong> (dấu chấm)<br>
+                Thousands separator: <strong>,</strong> (dấu phẩy)<br>
+                <em>(Trên chấm, dưới phẩy)</em>
+              </p>
+
+              <div class="setup-img-grid">
+                <div class="setup-img-wrap" onclick="zoomImg(this)" style="max-width: 300px;">
+                  <img src="media/image4.png" alt="Excel Setting" onerror="this.style.display='none'">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="clause">
+            <div class="clause-num">III</div>
+            <div class="clause-body">
+              <h3>Bật Macro &amp; tắt Protected View (bắt buộc)</h3>
+              <p>1. Vào <strong>File → Options → Trust Center → Trust Center Settings...</strong></p>
+              <p>2. Tab <strong>Macro Settings</strong>: chọn dòng cuối <strong>Enable VBA macros...</strong> (tích thêm "Trust access to the VBA project model" nếu cần).</p>
+              <p>3. Tab <strong>Protected View</strong>: bỏ chọn cả 3 ô để tắt chế độ bảo vệ khi mở file tải từ mạng (tránh lỗi file bị khóa).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">Danh mục công cụ</div>
+    <section class="tools-grid" id="list"></section>
+
+  </main>
+
+  <footer>
+    © 2026 Thiết kế bởi baotg10 — Bảng Kê Tính Lãi VPBank
+  </footer>
+
+  <!-- Modal xác nhận cấu hình -->
+  <div id="setupWarningModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 560px;">
+      <button class="btn-close" onclick="closeModal('setupWarningModal')">✕</button>
+
+      <h2 style="color: var(--warning); margin-bottom: 12px; font-size: 21px;">Bắt buộc cấu hình máy tính</h2>
+
+      <p style="font-size: 14.5px; margin-bottom: 24px; color: var(--text-main); line-height: 1.8;">
+        Để công cụ hoạt động <strong>chính xác</strong> (không sai lệch ngày tính, không lỗi font),
+        bạn cần hoàn tất cấu hình Region và Excel theo hướng dẫn trước khi sử dụng.
+      </p>
+
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn btn-outline" onclick="reviewSetup()">Xem hướng dẫn</button>
+        <button class="btn btn-primary" onclick="confirmSetup()">Đã cấu hình — Tải file</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal donate -->
+  <div id="donateModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="btn-close" onclick="closeModal('donateModal')">✕</button>
+      <h2 style="color: var(--text-main); margin-bottom: 8px; font-size: 20px;">Cảm ơn bạn</h2>
+      <p style="font-size: 13.5px; color: var(--text-muted);">
+        Sự ủng hộ của bạn là động lực để duy trì và nâng cấp công cụ tốt hơn mỗi ngày.
+      </p>
+
+      <div class="qr-container">
+        <img src="momo_qr.png" alt="QR Code" onerror="this.src='https://via.placeholder.com/200x200?text=QR+Image+Missing'">
+      </div>
+
+      <p style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;">Hỗ trợ MoMo &amp; các ngân hàng (VietQR)</p>
+    </div>
+  </div>
+
+  <!-- Zoom ảnh -->
+  <div id="zoomOverlay" class="modal-overlay" onclick="closeModal('zoomOverlay')">
+    <img id="zoomTarget" src="" alt="Zoomed">
+  </div>
+
+  <!-- Thông báo cập nhật -->
+  <div id="newsModal" class="modal-overlay">
+    <div class="modal-content news-modal-content">
+      <button class="btn-close" onclick="closeNewsModal()">✕</button>
+
+      <div class="news-modal-header">
+        <div class="news-modal-title">
+          <span class="news-eyebrow">Thông báo</span>
+          <h2>Bảng cập nhật hệ thống</h2>
+          <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
+        </div>
+        <div class="news-badge">Cập nhật 28/07/2026</div>
+      </div>
+
+      <div class="news-grid">
+        <div class="news-item">
+          <h3>Tăng số dòng cần tính</h3>
+          <p>Mở rộng phạm vi xử lý để bảng kê làm việc tốt hơn với dữ liệu dài, hạn chế thiếu dòng khi hồ sơ có nhiều phát sinh.</p>
+        </div>
+        <div class="news-item">
+          <h3>Sửa lỗi nhỏ</h3>
+          <p>Khắc phục các lỗi hiển thị và thao tác phát sinh trong quá trình sử dụng, giúp hệ thống chạy ổn định hơn.</p>
+        </div>
+        <div class="news-item">
+          <h3>Tối ưu hiệu năng</h3>
+          <p>Tối ưu phần hiển thị và xử lý giao diện, giảm thao tác DOM không cần thiết để trang phản hồi mượt hơn.</p>
+        </div>
+        <div class="news-item">
+          <h3>BKTL Thấu Chi</h3>
+          <p>Đưa công cụ Thấu Chi lên vị trí đầu danh sách. Dự kiến phát hành ngày <strong>18/08/2026</strong>.</p>
+        </div>
+      </div>
+
+      <div class="news-actions">
+        <button class="btn btn-outline" onclick="closeNewsModal()">Đóng</button>
+        <button class="btn btn-primary" onclick="dismissNewsModal()">Đã hiểu</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BANG_KE_LIST = [
+      {
+        id: "pd",
+        code: "PD",
+        name: "BKTL Thấu Chi",
+        short: "Sắp ra mắt",
+        subtitle: "Đang trong quá trình phát triển và kiểm thử nội bộ.",
+        file: "#",
+        updated: "Dự kiến 18/08/2026",
+        ribbon: "SẮP RA MẮT",
+        hot: false,
+        featured: true,
+        cssVar: "#A0590F",
+        guide: [
+          "Tính năng đang được hoàn thiện và kiểm thử trước khi phát hành.",
+          "Dự kiến phát hành: <strong>18/08/2026</strong>.",
+          "Vui lòng quay lại kiểm tra sau."
+        ]
+      },
+      {
+        id: "ld",
+        code: "LD",
+        name: "BKTL LD Pro",
+        short: "Xử lý hàng loạt",
+        subtitle: "Xử lý đồng thời 10+ bảng LD. Giao diện tinh gọn, thao tác rõ ràng.",
+        file: "BKTL_LD.xlsm",
+        updated: "28/07/2026",
+        ribbon: "CẬP NHẬT",
+        hot: true,
+        featured: true,
+        cssVar: "#2F6B4F",
+        guide: [
+          "Bước 1: Mở sheet <strong>THTT</strong> và nhập đầy đủ thông tin hồ sơ: mã KH, dư nợ, ngày cần tính, ngày giải ngân và các dữ liệu đầu vào liên quan.",
+          "Bước 2: Dùng tool hỗ trợ để tải <strong>LKGD</strong> và <strong>LKLS</strong> đúng hồ sơ cần làm. Kiểm tra file tải về không bị thiếu dòng hoặc sai tài khoản.",
+          "Bước 3: Upload từng file vào <strong>đúng sheet tương ứng</strong> trong workbook. Không dán chéo sheet để tránh lệch công thức.",
+          "Bước 4: Sau khi upload xong, bấm <strong>ROBOT</strong> và nhập pass: <span style='color:var(--gold)'>baotg10</span> để chạy xử lý tự động.",
+          "Bước 5: Kiểm tra lại kết quả đầu ra: dư nợ gốc, lãi, giải ngân kỹ thuật, ngày tính lãi và các dòng phát sinh bất thường nếu có.",
+          "Bước 6: Nếu cần chốt số, nên rà lại phần cuối bảng để chắc chắn không còn dòng ngày tương lai hoặc dòng dữ liệu rác chưa xóa.",
+          "<strong>Lưu ý quan trọng:</strong> Nếu lãi hoặc gốc ra <strong>thấp hơn FIN</strong>, kiểm tra lại mục <strong>Ngày cần tính</strong> ở cuối bảng. Trường hợp đang tính lùi ngày hoặc còn dòng chưa đến kỳ thì phải sửa lại ngày cho hợp lý và <span style='color:var(--danger)'>xóa hẳn dòng chứa ngày chưa đến</span> rồi chạy lại tool."
+        ]
+      },
+      {
+        id: "the",
+        code: "TH",
+        name: "BKTL Thẻ Tín Dụng",
+        short: "Bóc tách thông minh",
+        subtitle: "Bóc tách lãi thẻ tín dụng với giao diện mới, gọn hơn và rõ thao tác hơn.",
+        file: "BKTL_THE.xlsm",
+        updated: "28/07/2026",
+        ribbon: "CẬP NHẬT",
+        hot: true,
+        featured: true,
+        cssVar: "#7A4FA3",
+        guide: [
+          "Bước 1: Vào sheet <strong>THTT</strong> và nhập dư nợ gốc đúng định dạng để file hiện trạng thái <strong>REF</strong> như yêu cầu.",
+          "Bước 2: Xác định <strong>ngày sao kê</strong> bằng cách vào Way4, tìm dòng có nội dung <strong>interest</strong>. Ví dụ giao dịch hiển thị ngày 26/01 thì chỉ nhập <strong>26</strong> vào ô ngày sao kê.",
+          "Bước 3: Tải file sao kê <strong>Way4 dạng Excel</strong>, sau đó upload vào đúng khu vực dữ liệu của tool. Không chỉnh sửa cấu trúc cột trước khi upload.",
+          "Bước 4: Bấm <strong>Robot</strong>, nhập pass để tool tự xử lý dữ liệu. Sau khi chạy xong, kiểm tra và <strong>ẩn/xóa các dòng thừa</strong> nếu file yêu cầu làm sạch dữ liệu hiển thị.",
+          "Bước 5: Đối chiếu lãi kỳ hiện tại theo công thức có sẵn trên file, đặc biệt kiểm tra lại ngày sao kê, dư nợ đầu kỳ và các khoản phát sinh gần ngày chốt sao kê.",
+          "<strong>Mẹo tránh sai số:</strong> Nếu kết quả chưa khớp, kiểm tra lại ngày sao kê đã nhập đúng chưa, file Way4 có đủ dữ liệu chưa và có bị thiếu giao dịch interest/phí nào không."
+        ]
+      }
+    ];
+
+    let pendingDownloadUrl = '';
+
+    function renderList() {
+      const listEl = document.getElementById('list');
+      const fragment = document.createDocumentFragment();
+
+      BANG_KE_LIST.forEach(item => {
+        const wrap = document.createElement('div');
+        wrap.className = `tool-card ${item.featured ? 'featured' : ''}`;
+        wrap.style.setProperty('--tool-color', item.cssVar);
+
+        const isComingSoon = item.file === '#';
+        const updateText = item.updated
+          ? (isComingSoon ? item.updated : `Cập nhật: ${item.updated}`)
+          : '';
+
+        wrap.innerHTML = `
+          ${item.ribbon ? `<div class="tool-stamp"><span>${item.ribbon}</span></div>` : ''}
+
+          <div class="tool-header">
+            <div class="tool-monogram">${item.code}</div>
+            <div class="tool-title">
+              <h2>${item.name}</h2>
+              <div class="tool-subtitle">${item.subtitle}</div>
+            </div>
+          </div>
+
+          <div class="tool-tags">
+            <span class="tag">Excel Macro</span>
+            <span class="tag">${item.short}</span>
+            ${item.hot ? `<span class="tag tag-hot">Giao diện mới</span>` : ''}
+            ${updateText ? `<span class="tag tag-update">${updateText}</span>` : ''}
+          </div>
+
+          <div class="tool-actions">
+            ${isComingSoon
+              ? `<button class="btn btn-outline" type="button" onclick="alert('BKTL Thấu Chi dự kiến phát hành ngày 18/08/2026.');">Chưa phát hành</button>`
+              : `<button class="btn btn-primary" type="button" onclick="checkSetupAndDownload('${item.file}')">Tải file ngay</button>`
+            }
+            <button class="btn btn-soft" type="button" onclick="toggleGuide(this)">Xem hướng dẫn</button>
+          </div>
+
+          <div class="tool-guide">
+            <h4>Chi tiết các bước thực hiện</h4>
+            ${item.guide.map(line => `
+              <div class="guide-item">
+                <span class="guide-dot">—</span>
+                <div>${line}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        fragment.appendChild(wrap);
+      });
+
+      listEl.replaceChildren(fragment);
+    }
+
+    function toggleGuide(btn) {
+      const guideBox = btn.closest('.tool-card').querySelector('.tool-guide');
+      const isVisible = guideBox.classList.contains('visible');
+
+      if (isVisible) {
+        guideBox.classList.remove('visible');
+        btn.innerHTML = 'Xem hướng dẫn';
+      } else {
+        guideBox.classList.add('visible');
+        btn.innerHTML = 'Đóng hướng dẫn';
+      }
+    }
+
+    function checkSetupAndDownload(url) {
+      pendingDownloadUrl = url;
+      document.getElementById('setupWarningModal').classList.add('active');
+    }
+
+    function triggerDownload(url) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function confirmSetup() {
+      document.getElementById('setupWarningModal').classList.remove('active');
+
+      if (pendingDownloadUrl) {
+        triggerDownload(pendingDownloadUrl);
+        pendingDownloadUrl = '';
+      }
+    }
+
+    function reviewSetup() {
+      document.getElementById('setupWarningModal').classList.remove('active');
+
+      const setupSection = document.getElementById('setupGuide');
+      setupSection.classList.add('active');
+      setupSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      setupSection.style.transition = 'transform 0.2s';
+      setupSection.style.transform = 'scale(1.01)';
+      setTimeout(() => {
+        setupSection.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    function zoomImg(el) {
+      const img = el.querySelector('img');
+      if (!img || !img.src) return;
+      document.getElementById('zoomTarget').src = img.src;
+      document.getElementById('zoomOverlay').classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    function applyTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      localStorage.setItem('bangke-theme', theme);
+      document.getElementById('themeToggle').innerHTML = theme === 'dark' ? '<span>🌞</span>' : '<span>🌙</span>';
+    }
+
+    function showNewsModal() {
+      const dismissed = sessionStorage.getItem('bangke-news-dismissed-20260728');
+      if (dismissed === '1') return;
+
+      setTimeout(() => {
+        document.getElementById('newsModal').classList.add('active');
+      }, 700);
+    }
+
+    function closeNewsModal() {
+      document.getElementById('newsModal').classList.remove('active');
+    }
+
+    function dismissNewsModal() {
+      sessionStorage.setItem('bangke-news-dismissed-20260728', '1');
+      closeNewsModal();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('bangke-theme') || 'dark';
+      applyTheme(savedTheme);
+
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const current = document.body.getAttribute('data-theme');
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+
+      document.getElementById('donateBtn').addEventListener('click', () => {
+        document.getElementById('donateModal').classList.add('active');
+      });
+
+      document.getElementById('newsModal').addEventListener('click', (e) => {
+        if (e.target.id === 'newsModal') {
+          closeNewsModal();
+        }
+      });
+
+      renderList();
+      showNewsModal();
+
+      document.getElementById('setupGuide').classList.add('needs-attention');
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal('zoomOverlay');
+          closeModal('donateModal');
+          closeModal('setupWarningModal');
+          closeNewsModal();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
