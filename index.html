@@ -960,44 +960,40 @@
   </div>
 
   <!-- Thông báo cập nhật -->
-  <div id="newsModal" class="modal-overlay">
-    <div class="modal-content news-modal-content">
-      <button class="btn-close" onclick="closeNewsModal()">✕</button>
+<div id="newsModal" class="modal-overlay">
+  <div class="modal-content news-modal-content">
+    <button class="btn-close" onclick="closeNewsModal()">✕</button>
 
-      <div class="news-modal-header">
-        <div class="news-modal-title">
-          <span class="news-eyebrow">Thông báo</span>
-          <h2>Bảng cập nhật hệ thống</h2>
-          <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
-        </div>
-        <div class="news-badge">Cập nhật 28/07/2026</div>
+    <div class="news-modal-header">
+      <div class="news-modal-title">
+        <span class="news-eyebrow">Thông báo</span>
+        <h2>Bảng cập nhật hệ thống</h2>
+        <p>Thông tin phiên bản mới nhất của hệ thống bảng kê.</p>
       </div>
+      <div class="news-badge">Cập nhật 13/08/2026</div>
+    </div>
 
-      <div class="news-grid">
-        <div class="news-item">
-          <h3>Tăng số dòng cần tính</h3>
-          <p>Mở rộng phạm vi xử lý để bảng kê làm việc tốt hơn với dữ liệu dài, hạn chế thiếu dòng khi hồ sơ có nhiều phát sinh.</p>
-        </div>
-        <div class="news-item">
-          <h3>Sửa lỗi nhỏ</h3>
-          <p>Khắc phục các lỗi hiển thị và thao tác phát sinh trong quá trình sử dụng, giúp hệ thống chạy ổn định hơn.</p>
-        </div>
-        <div class="news-item">
-          <h3>Tối ưu hiệu năng</h3>
-          <p>Tối ưu phần hiển thị và xử lý giao diện, giảm thao tác DOM không cần thiết để trang phản hồi mượt hơn.</p>
-        </div>
-        <div class="news-item">
-          <h3>BKTL Thấu Chi</h3>
-          <p>Đưa công cụ Thấu Chi lên vị trí đầu danh sách. Dự kiến phát hành ngày <strong>18/08/2026</strong>.</p>
-        </div>
+    <div class="news-grid">
+      <div class="news-item">
+        <h3>Yêu cầu tải bảng mới</h3>
+        <p>Từ ngày <strong>13/08/2026</strong>, tất cả các bảng cũ không còn sử dụng được nữa. Vui lòng tải bảng mới về để tiếp tục công việc.</p>
       </div>
-
-      <div class="news-actions">
-        <button class="btn btn-outline" onclick="closeNewsModal()">Đóng</button>
-        <button class="btn btn-primary" onclick="dismissNewsModal()">Đã hiểu</button>
+      <div class="news-item">
+        <h3>Tối ưu hiệu năng & Giảm giật lag</h3>
+        <p>Khắc phục các lỗi phát sinh và tối ưu giao diện giúp thao tác trên bảng mượt mà, hạn chế tình trạng giật lag.</p>
+      </div>
+      <div class="news-item">
+        <h3>BKTL Thấu Chi</h3>
+        <p>Hệ thống đang hoàn tất các khâu chuẩn bị cuối cùng để phát hành công cụ BKTL Thấu Chi trong thời gian tới.</p>
       </div>
     </div>
+
+    <div class="news-actions">
+      <button class="btn btn-outline" onclick="closeNewsModal()">Đóng</button>
+      <button class="btn btn-primary" onclick="dismissNewsModal()">Đã hiểu</button>
+    </div>
   </div>
+</div>
 
   <script>
     const BANG_KE_LIST = [
